@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="employee_attendance_map_form_view" model="ir.ui.view">
+        <field name="name">employee.attendance.map.form</field>
+        <field name="model">employee.attendance.map</field>
+        <field name="arch" type="xml">
+            <form string="Search Map" class="oe_form_configuration">
+                <header>
+<!--                    <button string="Search" type="object" name="show_map" class="oe_highlight"/>-->
+                    <button string="Search" id="test_button" class="oe_highlight" attrs="{'invisible': [('attendance_date','=',False)]}"/>
+                    <button special="cancel" string="Cancel" name="cancel" class="oe_link"/>
+                </header>
+                <sheet>
+                    <group col='2'>
+                        <field name="department_id" style="width:200px;"/>
+                        <field name="job_position" style="width:200px;"/>
+                        <field name="employee_ids" widget="many2many_tags" force_save="1"/>
+                        <field name="attendance_date" style="width:200px;"/>
+                    </group>
+                    <notebook>
+                        <page string="Map">
+                            <div id="map" style="width: 800px;height: 500px;"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_attendance_map" model="ir.actions.act_window">
+        <field name="name">employee attendance map</field>
+        <field name="res_model">employee.attendance.map</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="location_name"/>
+                <field name="os_name"/>
+                <field name="browser_name"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="employee_attendance_map_menu" name="Map" parent="hr_attendance.menu_hr_attendance_root"
+              sequence="50"/>
+    <menuitem id="employee_attendance_map_submenu" name="Search Map" parent="employee_attendance_map_menu"
+              sequence="1"
+              action="action_employee_attendance_map"/>
+
+
+    <record id="hr_employee_form_view_map_configuration" model="ir.ui.view">
+        <field name="name">hr.employee</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Map Configuration">
+                        <div id="employee_map" class="col-md-9" style="margin-left:150px;height:300px;"/>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

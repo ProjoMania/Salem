@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="esco_report_delivery_document">
+        <t t-call="web.html_container">
+        <t t-call="esco_account_report.external_layout_bait">
+            <style>
+
+            </style>
+            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
+<!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
+            <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
+                <br/>
+                <t t-if="o.picking_type_code == 'outgoing'">
+                    <h3><strong class="bold_header">Inventory Delivery Slip</strong></h3>
+                </t>
+                <t t-if="o.picking_type_code == 'incoming'">
+                    <h3><strong class="bold_header">Inventory Receipt Slip</strong></h3>
+                </t>
+                <br/>
+                <div t-if="o.state" class="col-auto" name="div_sched_date">
+                </div>
+                <div class="row" style="width: 100%; margin-right: 20px;">
+                    <table style="width: 50%; border-collapse: collapse; margin-left: 2%;border: none; table-layout: fixed;">
+                        <tr>
+                            <td style="width:30%;">
+                                <span>Document No.</span>
+                            </td>
+                            <td style="width:70%;" class="text-center top_border left_border right_border">
+                                <span t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%;">
+                                <span>Date</span>
+                            </td>
+                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.delivery_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%;">
+                                <t t-if="o.picking_type_code == 'outgoing'">
+                                    <span>Customer Name</span>
+                                </t>
+                                <t t-if="o.picking_type_code == 'incoming'">
+                                    <span>Vendor Name</span>
+                                </t>
+                            </td>
+                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+<!--                    <div style="width: 40%; margin-left:10%; text-align: left; ">-->
+                    <div style="width: 50%;">
+<!--                        <table style="width: 100%; border-collapse: collapse; border: none; ">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <td class="table_header top_border left_border right_border bottom_border">-->
+<!--                                        <span style="margin-left: 2%;">Vendor</span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                        </table>-->
+<!--                        <div style="border: none;">-->
+<!--                            <div t-field="o.partner_id.name" style="margin-left: 2%"/>-->
+<!--                            <div class="row" style="margin-left: 2%;">-->
+<!--                                <div t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></div><span>&#160;</span>-->
+<!--                                <div t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row " style="border: none; margin-left: 2%; ">-->
+<!--                            <span>INV. NO.</span>-->
+<!--                            <div class="text-center" style="width: 80%;height: 30px; border: 1px solid black;">-->
+<!--&lt;!&ndash;                                <span t-field="o.name"/>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row " style="border: none; margin-left: 2%;">-->
+<!--                            <span>Ref.</span>-->
+<!--                            <div class="text-center" style="width: 80%;height: 30px; border: 1px solid black;">-->
+<!--                                <span t-field="o.origin"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <table style="width: 86%; border-collapse: collapse; margin-left: 7%; margin-right: 7%;border: none !important; table-layout: fixed;">
+                            <tr style="border: none !important; ">
+                                <td style="width:39%; background-color: white !important; color: black !important">
+                                    <t t-if="o.picking_type_code == 'outgoing'">
+                                        <span>INV. NO.</span>
+                                    </t>
+                                    <t t-if="o.picking_type_code == 'incoming'">
+                                        <span>Vendor Bill No.</span>
+                                    </t>
+                                </td>
+                                <td class="text-center top_border left_border right_border bottom_border"
+                                    style="width: 61%; background-color: white !important; color: black !important">
+                                    <span t-field="o.invoice_number"/>
+                                </td>
+<!--                                <td t-if="not o.invoice_number"-->
+<!--                                    style="background-color: white !important; color: black !important; border: none !important; border-style : hidden !important;"></td>-->
+                            </tr>
+                            <tr t-if="o.picking_type_code == 'outgoing'">
+<!--                                <td style="width:39%; background-color: white !important; color: black !important">-->
+<!--                                    <span>Ref.</span>-->
+<!--                                </td>-->
+<!--                                <td class="text-center top_border left_border right_border bottom_border"-->
+<!--                                    style="width: 61%; background-color: white !important; color: black !important">-->
+<!--                                    <span t-field="o.origin"/>-->
+<!--                                </td>-->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <t t-set="i" t-value="1" />
+                <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed;">
+                    <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" />
+                    <thead style="background-color: #30378c;">
+                        <tr>
+                            <td style="width: 11%;" class="table_header text-center"><span>Item #</span></td>
+                            <td style="width: 58%;" class="table_header text-center"><span>Product</span></td>
+<!--                            <td class="table_header text-center"><span>UOM</span></td>-->
+                            <td style="width: 15%;" class="table_header text-center"><span>Batch No.</span></td>
+                            <td style="width: 15%;" class="table_header text-center"><span>QTY</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.move_line_ids" t-as="line">
+                            <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
+                            <td style="padding-left: 15px;padding-right: 15px;"><span t-field="line.product_id.name"/></td>
+<!--                            <td class="text-center"><span t-field="line.product_uom_id"/></td>-->
+                            <td class="text-center">
+                                <span t-if="line.lot_id.name" t-field="line.lot_id.name"/>
+                                <span t-if="not line.lot_id.name" t-field="line.lot_name"/>
+                            </td>
+                            <td class="text-center" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.qty_done))'/></td>
+                        </tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+                    </tbody>
+                </table>
+<!--                <table class="table table-sm table_with_header" style="border-collapse: collapse;">-->
+<!--                    <thead style="background-color: #30378c;">-->
+<!--                        <tr>-->
+<!--                            <td class="table_header"><span>Item #</span></td>-->
+<!--                            <td class="table_header text-center"><span>Product</span></td>-->
+<!--                            <td class="table_header text-center"><span>UOM</span></td>-->
+<!--                            <td class="table_header text-center"><span>Batch No.</span></td>-->
+<!--                            <td class="table_header text-center"><span>QTY</span></td>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                        <tr t-foreach="o.move_ids_without_package" t-as="line">-->
+<!--                            <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>-->
+<!--                            <td><span t-field="line.product_id.name"/></td>-->
+<!--                            <td><span t-field="line.product_uom"/></td>-->
+<!--                            <td><span t-field="line.product_id.barcode"/></td>-->
+<!--                            <td class="text-center" style="background-color: white !important;"><span t-field="line.product_qty"/></td>-->
+<!--                        </tr>-->
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+                <br/><br/><br/><br/><br/>
+                <t t-if="o.picking_type_code == 'outgoing'" style="margin-top: 400px;">
+                    <div class="text-center row col-12"
+                         style="margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                        <div class="col-4">
+                            <br/><br/>
+                            <center>
+                            <div style="bottom:0; padding-bottom: 0; width: 100%;">
+                                <span>Recipient Signature</span>
+                            </div>
+                            </center>
+                            <hr style="border-color: black;"/>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4">
+    <!--                        Signature-->
+                            <div style="height:140px; min-height:140px;">
+                                <img t-if="o.get_current_user().signature_image"  t-att-src="image_data_uri(o.get_current_user().signature_image)"
+                                     alt="Signature" style="height:140px;width:260px; margin-top: -30px;"/>
+                            </div>
+                            <hr style="border-color: black; margin-top: -50px;"/>
+                            <span t-esc="o.get_current_user().name"/>
+                        </div>
+                    </div>
+                </t>
+                <t t-if="o.picking_type_code == 'incoming'" style="margin-top: 400px;">
+                    <div class="text-center row col-12"
+                         style="margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4" style="margin-top: 40px;">
+                        </div>
+                        <div class="col-4" style="">
+                            Inventory Keeper Signature
+<!--                            <div style="height:140px; min-height:140px;">-->
+<!--                                <img t-if="o.get_inventory_manager().signature_image" t-att-src="image_data_uri(o.get_inventory_manager().signature_image)"-->
+<!--                                         alt="Signature" style="height:140px;width:280px; "/>-->
+<!--                            </div>-->
+                            <hr style="border-color: black; "/>
+<!--                            <span t-esc="o.get_inventory_manager().name"/>-->
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+        </t>
+    </template>
+
+    <template id="stock.report_deliveryslip">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="esco_account_report.esco_report_delivery_document"/>
+        </t>
+    </template>
+
+</odoo>

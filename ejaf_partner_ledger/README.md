@@ -1,0 +1,3 @@
+- this module adding company logo on the Partner Ledger printed report
+- working with multicompany
+- odoo 13

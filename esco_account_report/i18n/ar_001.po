@@ -1,0 +1,872 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* esco_account_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-23 05:09+0000\n"
+"PO-Revision-Date: 2021-08-23 05:09+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: esco_account_report
+#: code:addons/esco_account_report/models/account_payment.py:0
+#, python-format
+msgid "Write-Off"
+msgstr "شطب مبلغ"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.view_account_payment_form
+msgid "Post Difference In"
+msgstr "ترحيل الفرق الى"
+
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.view_account_payment_form_inherit_discount
+msgid "Post Difference In"
+msgstr "ترحيل الفرق الى"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Discount Amount</span>"
+msgstr "مبلغ الخصم"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_payment__discount_amount
+#: model_terms:ir.ui.view,arch_db:esco_account_report.view_account_payment_form_inherit_discount
+msgid "Discount Amount"
+msgstr "مبلغ الخصم"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_payment__writeoff_label
+#: model:ir.model.fields,field_description:account.field_account_reconcile_model__label
+#: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__label
+#: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
+msgid "Journal Item Label"
+msgstr "شطب مبلغ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_payment__writeoff_label
+msgid "Journal Item Label"
+msgstr "عنوان عنصر اليومية"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.view_account_payment_form_inherit_discount
+msgid "Label"
+msgstr "شطب مبلغ"
+
+#. module: esco_account_report
+#: model:ir.model.fields.selection,name:esco_account_report.selection__account_payment__payment_difference_handling__discount
+msgid "Pay with discount"
+msgstr "خصم اثناء الدفع"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<b><strong class=\"bold_header\">Sale Order</strong></b>"
+msgstr "<strong class=\"bold_header\">فاتورة مبيعات</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid ""
+"<br/>\n"
+"                                <span class=\"bold_text\">Total</span>"
+msgstr ""
+"<br/>\n"
+"                                <span class=\"bold_text\">الاجمالي بعد الخصم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span class=\"bold_header\">Purchase Order</span>"
+msgstr "<span class=\"bold_header\">اﻣﺮ اﻟﺸﺮاء</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Payment: </span>"
+msgstr "<span>طريقة السداد :</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span class=\"bold_text\">Total</span>"
+msgstr "<span class=\"bold_text\">الاجمالي</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid ""
+"<br/>\n"
+"                                <span class=\"bold_text\">Total</span>"
+msgstr ""
+"<br/>\n"
+"                                <span class=\"bold_text\">الاجمالي</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Other</span>"
+msgstr "<span>اخرى</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+msgid "<span style=\"margin-left: 2%; margin-right: 2%;\">Vendor</span>"
+msgstr "<span style=\"margin-left: 2%; margin-right: 2%;\">المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Address</span>"
+msgstr "<span>العنوان</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span> Amount </span>"
+msgstr "<span>المبلغ الاصلي</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Amount</span>"
+msgstr "<span>المبلغ</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Balance</span>"
+msgstr "<span>الرصيد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>Batch No.</span>"
+msgstr "<span>رقم الوجبة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Batch Number</span>"
+msgstr "<span>رقم الوجبة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Bill Date</span>"
+msgstr "<span>تاريخ الفاتورة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Bill No.</span>"
+msgstr "<span>رقم الفاتورة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Customer </span>"
+msgstr "العميل"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Customer ID </span>"
+msgstr "<span>رقم العميل</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Customer ID</span>"
+msgstr "<span>رقم الزبون</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Customer Name</span>"
+msgstr "<span>اسم العميل</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>Customer Name</span>"
+msgstr "<span>اسم الزبون</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Date</span>"
+msgstr "<span>التاريخ</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Delivery Date</span>"
+msgstr "<span>تاريخ التسليم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Delivery Terms</span>"
+msgstr "<span>شروط التسليم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Conditions Terms</span>"
+msgstr "<span>شروط التسليم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Description</span>"
+msgstr "<span>الوصــــف</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Discount</span>"
+msgstr "<span>الخصم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Doc No.</span>"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Document No.</span>"
+msgstr "<span>رقم المستند</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+msgid "<span>Expecting Date</span>"
+msgstr "<span>التاريخ المتوقع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+msgid "<span>ID No.</span><span> </span>"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>INV No.</span>"
+msgstr "<span>رقم الفاتورة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>INV. Date</span>"
+msgstr "تاريخ الفاتورة"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>INV. NO.</span>"
+msgstr "<span>رقم فاتورة المبيعات</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>INV. No.</span>"
+msgstr "رقم الفاتورة"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Item #</span>"
+msgstr "<span>التسلسل</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Order No.</span>"
+msgstr "<span>رقم امر الشراء</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Other</span>"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>PO. No.</span>"
+msgstr "<span>رﻗﻢ اﻣﺮ اﻟﺸﺮاء</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+msgid "<span>PO. No.</span>"
+msgstr "<span>رقم طلب الشراء</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Paid Amount</span>"
+msgstr "<span>المبلغ المدفوع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Amount</span>"
+msgstr "<span>المبلغ</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Payment</span>"
+msgstr "<span>طريقة الدفع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Product</span>"
+msgstr "<span>المادة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>Product</span>"
+msgstr "<span>المنتج</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>QTY</span>"
+msgstr "<span>الكمية</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Received Amount</span>"
+msgstr "المبلغ المقبوض"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>Recipient Signature</span>"
+msgstr "<span>توقيع المستلم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Ref.</span>"
+msgstr "<span>المصدر/المرجع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Shipping to</span>"
+msgstr "<span>الشحن الى </span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Subtotal</span>"
+msgstr "<span>المجموع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Subtotal</span>"
+msgstr "<span>المجموع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Total</span>"
+msgstr "<span>الاجمالي</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Total</span>"
+msgstr "<span>المبلغ</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span class=\"bold_text\">Total</span>"
+msgstr "<span class=\"bold_text\">الاجمالي بعد الخصم</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>سعر البيع</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>سعر القطعة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>سعر الوحدة</span>"
+
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Vendor </span>"
+msgstr "<span>المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<span>Vendor Bill No.</span>"
+msgstr "<span>رقم فاتورة المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Vendor ID </span>"
+msgstr "<span>رقم المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Vendor ID</span>"
+msgstr "<span>رقم المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<span>Vendor Name</span>"
+msgstr "<span>اسم المورد</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<span>Written Amount </span>"
+msgstr "<span>المبلغ كتابة</span>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<strong class=\"bold_header\">BILL</strong>"
+msgstr "<strong class=\"bold_header\">الفواتير</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<strong class=\"bold_header\">Cash Receipt Voucher</strong>"
+msgstr "<strong class=\"bold_header\">ايصال قبض</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<strong class=\"bold_header\">Credit Note</strong>"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<strong class=\"bold_header\">Debit Note</strong>"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+msgid "<strong class=\"bold_header\">INVOICE</strong>"
+msgstr "<strong class=\"bold_header\">فاتورة مبيعات</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<strong class=\"bold_header\">Inventory Delivery Slip</strong>"
+msgstr "<strong class=\"bold_header\">اخراج مخزني</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "<strong class=\"bold_header\">Inventory Receipt Slip</strong>"
+msgstr "<strong class=\"bold_header\">ادخال مخزني</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "<strong class=\"bold_header\">Payment Voucher</strong>"
+msgstr "<strong class=\"bold_header\">ايصال دفع</strong>"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+msgid "<strong class=\"bold_header\">Purchase Request</strong>"
+msgstr "<strong class=\"bold_header\">طلب الشراء</strong>"
+
+#. module: esco_account_report
+#: code:addons/esco_account_report/wizard/partner_wiz.py:0
+#, python-format
+msgid "Account Is not found for %s !"
+msgstr "<span></span>"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__active
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__active
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__amount_currency
+msgid "Amount In Currency"
+msgstr "المبلغ/العملة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__balance
+msgid "Balance"
+msgstr "الرصيد"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__company_currency_id
+msgid "Base Currency"
+msgstr "العملة الاساسية"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_report_form_view
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: esco_account_report
+#: model_terms:ir.actions.act_window,help:esco_account_report.action_condition_terms_act_window
+msgid "Click to add new Delivery Term."
+msgstr "اضافة شروط التسليم"
+
+#. module: esco_account_report
+#: model_terms:ir.actions.act_window,help:esco_account_report.action_shipping_data_act_window
+msgid "Click to add new Shipping To."
+msgstr "اضافة جهة تسليم"
+
+#. module: esco_account_report
+#: model_terms:ir.actions.act_window,help:esco_account_report.action_payment_type_act_window
+msgid "Click to add new payment type."
+msgstr "اضافة نوع سداد"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__condition_term_id
+msgid "Condition Terms"
+msgstr ""
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__create_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__create_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__create_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__create_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__create_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__create_uid
+msgid "Created by"
+msgstr "انشئ بواسطة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__create_date
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__create_date
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__create_date
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__create_date
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__create_date
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__create_date
+msgid "Created on"
+msgstr "انشئ بتاريخ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__currency_id
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: esco_account_report
+#: model:ir.actions.act_window,name:esco_account_report.action_customer_statement_report
+#: model:ir.actions.report,name:esco_account_report.customer_statement_details_qweb
+#: model:ir.ui.menu,name:esco_account_report.customer_statement_menu
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_report_form_view
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_view_form
+msgid "Customer Statement"
+msgstr "تقرير حساب زبون"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_report_esco_account_report_report_customer_statement_xlsx
+msgid "Customer Statement Report"
+msgstr "كشف حساب زبون"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__date
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__date
+#: model:ir.model.fields,field_description:esco_account_report.field_stock_picking__delivery_date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__order_date
+#: model:ir.model.fields,field_description:esco_account_report.field_sale_order__order_date
+msgid "Date Order"
+msgstr "تاريخ الامر"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__date_to
+msgid "Date To"
+msgstr "الى تاريخ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__delivery_date
+msgid "Delivery Date"
+msgstr "تاريخ التوصيل"
+
+#. module: esco_account_report
+#: model:ir.actions.act_window,name:esco_account_report.action_condition_terms_act_window
+#: model:ir.model,name:esco_account_report.model_condition_terms
+#: model:ir.ui.menu,name:esco_account_report.menu_condition_terms
+msgid "Delivery Terms"
+msgstr "شروط التسليم"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_report_esco_account_report_report_customer_statement_xlsx__display_name
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__display_name
+msgid "Display Name"
+msgstr "الاسم"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__date_to
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_report_form_view
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_view_form
+msgid "End Date"
+msgstr "الى تاريخ"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__id
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__id
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__id
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__id
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__id
+#: model:ir.model.fields,field_description:esco_account_report.field_report_esco_account_report_report_customer_statement_xlsx__id
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__id
+msgid "ID"
+msgstr "الرقم التعريفي"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__inital_total
+msgid "Initial Total"
+msgstr "رصيد اول المدة"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+msgid "Inventory Keeper Signature"
+msgstr "توقيع أمين المخزن"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_stock_picking__invoice_number
+msgid "Invoice Number"
+msgstr "رقم الفاتورة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__invoice_ref
+msgid "Invoices"
+msgstr "الفواتير"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_account_move
+msgid "Journal Entries"
+msgstr "القيود اليومية"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_report_esco_account_report_report_customer_statement_xlsx____last_update
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data____last_update
+msgid "Last Modified on"
+msgstr "ت. آخر تعديل"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__write_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__write_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__write_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__write_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__write_uid
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__write_uid
+msgid "Last Updated by"
+msgstr "أخر تعديل بواسطة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__write_date
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__write_date
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__write_date
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__write_date
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__write_date
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__write_date
+msgid "Last Updated on"
+msgstr "ت. آخر تعديل"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_condition_terms__name
+#: model:ir.model.fields,field_description:esco_account_report.field_payment_type__name
+#: model:ir.model.fields,field_description:esco_account_report.field_shipping_data__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__order_lines
+msgid "Order Lines"
+msgstr "المواد"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__order_ref
+msgid "Order Ref"
+msgstr "المرجع/المصدر"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__order_id
+msgid "Order#"
+msgstr "رقم امرالعمل"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__partner_id
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__partner_id
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_partner_print_wizard
+msgid "Partner Print Wizard"
+msgstr ""
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_account_partner_statement
+msgid "Partner Statement"
+msgstr "طباعة الكشف"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__acc_payment_id
+msgid "Payment"
+msgstr "طريقة السداد"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_view_form
+msgid "Payment Details"
+msgstr "تفاصيل الدفعة"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__payment_lines
+msgid "Payment Lines"
+msgstr "المفردات"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__payment_status
+msgid "Payment Status"
+msgstr "حالة الدفع"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__payment_total
+msgid "Payment Total"
+msgstr "اجمالي المدفوع"
+
+#. module: esco_account_report
+#: model:ir.actions.act_window,name:esco_account_report.action_payment_type_act_window
+#: model:ir.model,name:esco_account_report.model_payment_type
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__payment_type_id
+#: model:ir.ui.menu,name:esco_account_report.menu_payment_type
+msgid "Payment Type"
+msgstr "نوع الدفع"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__payment_id
+msgid "Payments"
+msgstr "الدفعات"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_purchase_order
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__name
+msgid "Report Name"
+msgstr "اسم التقرير"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_res_company
+msgid "Report add Company Logo ,Company Name & Background Image"
+msgstr ""
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_account_partner_statement__so_total
+msgid "SO Total"
+msgstr "اجمالي اوامر البيع"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_view_form
+msgid "Sale Details"
+msgstr "تفاصيل المبيعات"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_sale_order
+msgid "Sales Order"
+msgstr "أمر البيع"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_shipping_data
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__shipping_data_id
+msgid "Shipping Data"
+msgstr "تاريخ الشحن"
+
+#. module: esco_account_report
+#: model:ir.actions.act_window,name:esco_account_report.action_shipping_data_act_window
+#: model:ir.ui.menu,name:esco_account_report.menu_shipping_data
+msgid "Shipping To"
+msgstr "الشحن الى"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_delivery_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_invoice_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_payment_receipt_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_purchasequotation_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.esco_report_saleorder_document
+#: model_terms:ir.ui.view,arch_db:esco_account_report.view_users_form_inherit_signature
+msgid "Signature"
+msgstr "التوقيع"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_res_users__signature_image
+msgid "Signature Image"
+msgstr "صورة التوقيع"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_print_wizard__date_from
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_report_form_view
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_view_form
+msgid "Start Date"
+msgstr "ابتداءا من"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_partner_detail_lines__statement_id
+msgid "Statement"
+msgstr "كشف حساب"
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.report_customer_statement_print
+msgid "Tax ID"
+msgstr ""
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_stock_picking
+msgid "Transfer"
+msgstr "الشحنة"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_res_users
+msgid "Users"
+msgstr "المستخدمون"
+
+#. module: esco_account_report
+#: model:ir.model.fields,field_description:esco_account_report.field_purchase_order__validated_by_id
+msgid "Validated By"
+msgstr ""
+
+#. module: esco_account_report
+#: model_terms:ir.ui.view,arch_db:esco_account_report.customer_statement_report_form_view
+msgid "View Statement"
+msgstr "استعراض الكشف"
+
+#. module: esco_account_report
+#: model:ir.model,name:esco_account_report.model_partner_detail_lines
+msgid "partner.detail.lines"
+msgstr "<span></span>"

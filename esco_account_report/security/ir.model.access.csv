@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_access_token,access_partner,model_account_partner_statement,,1,1,1,1
+partner_detail_lines,access_partner,model_partner_detail_lines,,1,1,1,1
+access_payment_type_all,payment_type all,model_payment_type,,1,0,0,0
+access_payment_type_manager,payment_type manager,model_payment_type,base.group_erp_manager,1,1,1,1
+access_condition_terms_all,condition_terms all,model_condition_terms,,1,0,0,0
+access_condition_terms_manager,condition_terms manager,model_condition_terms,base.group_erp_manager,1,1,1,1
+access_shipping_data_all,shipping_data all,model_shipping_data,,1,0,0,0
+access_shipping_data_manager,shipping_data manager,model_shipping_data,base.group_erp_manager,1,1,1,1

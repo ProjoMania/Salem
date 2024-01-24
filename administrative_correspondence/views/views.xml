@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <menuitem id="menu_administrative_correspondence_root" name="Administrative Correspondence" sequence="30" web_icon="administrative_correspondence,static/description/icon.png"/>
+        <menuitem id="menu_administrative_correspondence_settings_categ" name="Configuration" parent="menu_administrative_correspondence_root" sequence="99"/>
+
+        <record id="view_administrative_correspondence_tags_form" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.tags.form</field>
+            <field name="model">administrative.correspondence.tags</field>
+            <field name="arch" type="xml">
+                <form string="Administrative Correspondence Tags Form">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Tag Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="color" widget="color_picker"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_administrative_correspondence_tags_tree" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.tags.tree</field>
+            <field name="model">administrative.correspondence.tags</field>
+            <field name="arch" type="xml">
+                <tree string="Administrative Correspondence Tags Tree">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_administrative_correspondence_tags_view" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">administrative.correspondence.tags</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_administrative_correspondence_tags_view" name="Tags" parent="menu_administrative_correspondence_settings_categ" action="action_administrative_correspondence_tags_view" sequence="3"/>
+
+        <record id="view_administrative_correspondence_form" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.form</field>
+            <field name="model">administrative.correspondence</field>
+            <field name="arch" type="xml">
+                <form string="Administrative Correspondence Form">
+                    <header>
+                        <button name="set_pending" string="Set Pending" class="oe_highlight" states="draft"
+                                type="object"/>
+                        <button name="set_submitted" string="Set Submitted" class="oe_highlight" states="draft"
+                                type="object"/>
+                        <button name="reset_draft" string="Reset to Draft" states="submitted,pending,cancelled" type="object"/>
+                        <button name="set_cancelled" string="Cancel" states="draft,pending" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,submitted"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="template_id" options="{'no_open':True,'no_create_edit': True}"/>
+                                <field name="type" readonly="1"/>
+                                <field name="parent_id" domain="[('company_id', '=', company_id)]"/>
+                                <field name="sent_from_id" attrs="{'readonly':[('state', 'in', ['cancelled', 'submitted'])]}" required="1"/>
+                                <field name="sent_to_id" attrs="{'readonly':[('state', 'in', ['cancelled', 'submitted'])], 'invisible':[('type', '=', 'inbound')], 'required': [('type', 'in', ['internal', 'outbound'])]}"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group>
+                                <field name="created_on"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="user_id" widget="many2one_avatar_user" readonly="1"/>
+                                <field name="assigned_id" widget="many2one_avatar_user"/>
+                                <field name="validated_by_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Correspondence Content">
+                                <field name="body"/>
+                            </page>
+                            <page string="Attachments">
+                                <field name="correspondence_attachment_ids">
+                                    <tree editable="top">
+                                        <field name="name"/>
+                                        <field name="file" filename="file_name" class="oe_edit_only"/>
+                                        <field name="file_name" class="oe_read_only"/>
+                                        <button name="download_file" string="Download" type="object" icon="fa-download"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_administrative_correspondence_tree" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.tree</field>
+            <field name="model">administrative.correspondence</field>
+            <field name="arch" type="xml">
+                <tree string="Administrative Correspondence Tree">
+                    <field name="name"/>
+                    <field name="template_id"/>
+                    <field name="sent_from_id"/>
+                    <field name="sent_to_id"/>
+                    <field name="created_on"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_administrative_correspondence_inbound_view" model="ir.actions.act_window">
+            <field name="name">Administrative Correspondence Incoming</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">administrative.correspondence</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type', '=', 'inbound')]</field>
+            <field name="context">{'default_type': 'inbound', 'type': 'inbound'}</field>
+        </record>
+
+        <menuitem id="menu_administrative_correspondence_inbound_view" name="Incoming Correspondences" parent="menu_administrative_correspondence_root" action="action_administrative_correspondence_inbound_view" sequence="1"/>
+
+        <record id="action_administrative_correspondence_outbound_view" model="ir.actions.act_window">
+            <field name="name">Administrative Correspondence Outgoing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">administrative.correspondence</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type', '=', 'outbound')]</field>
+            <field name="context">{'default_type': 'outbound', 'type': 'outbound'}</field>
+        </record>
+
+        <menuitem id="menu_administrative_correspondence_outbound_view" name="Outgoing Correspondences" parent="menu_administrative_correspondence_root" action="action_administrative_correspondence_outbound_view" sequence="2"/>
+
+        <record id="action_administrative_correspondence_internal_view" model="ir.actions.act_window">
+            <field name="name">Administrative Correspondence Internal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">administrative.correspondence</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type', '=', 'internal')]</field>
+            <field name="context">{'default_type': 'internal', 'type': 'internal'}</field>
+        </record>
+
+        <menuitem id="menu_administrative_correspondence_internal_view" name="Internal Correspondences" parent="menu_administrative_correspondence_root" action="action_administrative_correspondence_internal_view" sequence="3"/>
+
+        <record id="view_administrative_correspondence_template_form" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.template.form</field>
+            <field name="model">administrative.correspondence.template</field>
+            <field name="arch" type="xml">
+                <form string="Administrative Correspondence Templates Form">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Subject Name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Content Template">
+                                <group>
+                                    <field name="body" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_administrative_correspondence_template_tree" model="ir.ui.view">
+            <field name="name">view.administrative.correspondence.template.tree</field>
+            <field name="model">administrative.correspondence.template</field>
+            <field name="arch" type="xml">
+                <tree string="Administrative Correspondence Template Tree">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_administrative_correspondence_template_view" model="ir.actions.act_window">
+            <field name="name">Admin. Correspondence Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">administrative.correspondence.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_administrative_correspondence_templates_view" name="Templates" parent="menu_administrative_correspondence_settings_categ" action="action_administrative_correspondence_template_view" sequence="1"/>
+    </data>
+</odoo>

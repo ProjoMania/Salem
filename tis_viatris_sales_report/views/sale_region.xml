@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+      <record id="sale_region_action_config" model="ir.actions.act_window">
+        <field name="name">Sales Region</field>
+        <field name="res_model">sales.region</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Sales Region
+            </p><p>
+                Use Sales Region to organize your sales teams region  and draw up reports.
+            </p>
+        </field>
+    </record>
+
+
+      <menuitem id="sale_region_menu"
+            name="Sales Regions"
+            parent="sale.menu_sale_config"
+            action="tis_viatris_sales_report.sale_region_action_config"
+            sequence="3"/>
+
+
+
+
+</odoo>

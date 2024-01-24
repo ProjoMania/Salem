@@ -1,0 +1,13 @@
+<odoo>
+
+    <data>
+
+        <record id="action_custom_account_report" model="ir.actions.client">
+            <field name="name">Aged Receivable Extend</field>
+            <field name="tag">account_report_new</field>
+            <field name="context" eval="{'model': 'account.aged.receivable.extend','is_extend':1}" />
+        </record>
+
+
+    </data>
+</odoo>

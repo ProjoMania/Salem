@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="paperformat_bait" model="report.paperformat">
+        <field name="name">Custom Reports A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">33</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">32</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="external_layout_bait">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}"><t t-raw="0"/></t>
+        <t t-call="esco_account_report.external_layout_background_bait">
+            <t t-raw="0"/>
+        </t>
+
+    </template>
+
+    <template id="external_layout_background_bait">
+<!--        <link rel="stylesheet" type="text/css" href="/esco_account_report/static/src/css/font.css"/>-->
+        <!--        <div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">-->
+        <!--            <div class="o_background_header">-->
+        <!--            <div class="float-right">-->
+        <!--                <h3 class="mt0 text-right" t-field="company.report_header"/>-->
+        <!--            </div>-->
+        <!--            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left" alt="Logo"/>-->
+        <!--            <div class="float-left company_address">-->
+        <!--                <div>-->
+        <!--                    <strong t-field="company.partner_id.name"/>-->
+        <!--                </div>-->
+        <!--                <span t-field="company.partner_id"-->
+        <!--                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>-->
+        <!--            </div>-->
+        <!--            <div class="clearfix mb8"/>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">
+<!--            <div class="o_clean_header">-->
+<!--                <br/>-->
+<!--                <br/>-->
+<!--                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-right" alt="Logo"-->
+<!--                     style="margin-right:10px;"/>-->
+<!--            </div>-->
+            <div class="" style="font-size:14px;">
+                    <br/>
+                    <img t-if="company.header_image" t-att-src="'data:image/png;base64,%s' % to_text(company.header_image)"
+                    style="width:100%; padding: 0px 18px 0px 18px;"/>
+                </div>
+            <div class="clearfix mb8"/>
+        </div>
+
+        <!--        <div t-attf-class="o_company_#{company.id}_layout article " t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">-->
+        <!--            <t t-call="web.address_layout"/>-->
+        <!--            <t t-raw="0"/>-->
+        <!--        </div>-->
+
+        <!--        <div t-if ="company.watermark_option == 'backgroundimage'" style="opacity: 0.50;">-->
+        <!--            <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)" style="top:400px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>-->
+        <!--        </div>-->
+<!--        <span t-esc="company"/>-->
+        <div t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+            <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)"
+                 style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>
+            <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="top:300px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>-->
+        </div>
+        <!--        <img t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)"-->
+        <!--                     style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>-->
+        <!--        <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer">-->
+        <!--            <div class="text-center">-->
+        <!--                <ul class="list-inline">-->
+        <!--                    <li t-if="company.phone" class="list-inline-item"><i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/> <span class="o_force_ltr" t-field="company.phone"/></li>-->
+        <!--                    <li t-if="company.email" class="list-inline-item"><i class="fa fa-at" role="img" aria-label="Email" title="Email"/> <span t-field="company.email"/></li>-->
+        <!--                    <li t-if="company.website" class="list-inline-item"><i class="fa fa-globe" role="img" aria-label="Website" title="Website"/> <span t-field="company.website"/></li>-->
+        <!--                    <li t-if="company.vat" class="list-inline-item"><i class="fa fa-building-o" role="img" aria-label="Fiscal number"/><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>-->
+        <!--                </ul>-->
+        <!--                <div t-field="company.report_footer"/>-->
+        <!--                <div t-if="report_type == 'pdf'" class="text-muted">-->
+        <!--                    Page:-->
+        <!--                    <span class="page"/>-->
+        <!--                    of-->
+        <!--                    <span class="topage"/>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <style><![CDATA[
+            @font-face {
+                font-family: 'Frutiger_Roman';
+                font-weight: normal;
+                font-style: italic;
+                src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf);
+            }
+            @font-face {
+                font-family: 'Frutiger_Light';
+                font-weight: normal;
+                font-style: italic;
+                src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-45-light.ttf);
+            }
+        ]]>
+        .header_image {
+                background: url("esco_account_report/static/src/img/header.png")!important;
+                background-size: cover;
+                margin-right: -15px !important;
+                margin-left: -15px !important;
+                height: 50px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        .footer_image {
+                background: url("esco_account_report/static/src/img/footer.png")!important;
+                background-size: cover;
+                margin-right: -15px !important;
+                margin-left: -15px !important;
+                height: 50px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
+        <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer ">
+            <div class="text-center page_margin" style="color: #30358c !important;">
+                <div style="font-size:14px;">
+                    <img t-if="company.footer_image" t-att-src="'data:image/png;base64,%s' % to_text(company.footer_image)"
+                    style="width:100%;"/>
+                </div>
+            </div>
+            <hr style="height:40px;border-width:0;color:#2c348c;background-color:#2c348c; width: 120%; margin-left: -20px; margin-right: -20px;" />
+<!--            <table width="150%" style="margin-left:-20mm;margin-right:-20mm;">-->
+<!--                <tr>-->
+<!--                    <td style="height:35px; background-color: #2c348c;color: #2c348c;font-size: 10px;">-->
+<!--                        .-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+        </div>
+    </template>
+
+    <template id="external_layout_background_b">
+        <t t-foreach="company_ids" t-as="company" t-translation="off">
+            <t t-set="font" t-value="company.font or 'Lato'"/>
+            <t t-set="primary" t-value="company.primary_color or 'black'"/>
+            <t t-set="secondary" t-value="company.secondary_color or 'black'"/>
+            <t t-set="layout" t-value="company.external_report_layout_id.key or 'web.external_layout_standard'"/>
+            <div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">
+                <div class="o_clean_header">
+                    <br/>
+                    <br/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-right" alt="Logo"
+                         style="margin-right:10px;"/>
+
+                </div>
+            </div>
+
+            <!--<div t-if="company.watermark_option == 'backgroundimage'" style="opacity: 1;">-->
+            <!--<img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)" style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>-->
+            <!--</div>-->
+
+            <div t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+                <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)"
+                     style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>
+                <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="top:300px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>-->
+            </div>
+
+            <div t-attf-class="footer o_company_#{company.id}_layout">
+                <div class="text-center">
+                    <div class="text-left" style="margin-left:5mm;margin-right:5mm;font-size:12px;">
+                        <div class="col-4">
+                            Iraq - Baghdad - Al-Saadoun - District No.: 101
+                            <br/>
+                            Al-Mushajjar Street - Office No.(333 A / 1 / 117)
+                            <br/>
+                            E-mail: www.bait-aldawa.com
+                            <br/>
+                            www.bait-aldawa.com
+                        </div>
+
+                        <table width="120%" style="margin-left:-10mm;">
+                            <tr>
+                                <td style="height:42px; background-color: #2c348c;color: #2c348c;font-size: 10px;">
+                                    .
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="customer_statement_report_form_view" model="ir.ui.view">
+        <field name="name">partner.print.wizard.form</field>
+        <field name="model">partner.print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Customer Statement">
+                <group>
+                    <group>
+                        <field name="partner_id" required="1"/>
+                    </group>
+                    <group>
+                        <field name="date_from" string="Start Date" required="1"/>
+                        <field name="date_to" string="End Date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="view_statement" string="View Statement" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_customer_statement_report" model="ir.actions.act_window">
+        <field name="name">Customer Statement</field>
+        <field name="res_model">partner.print.wizard</field>
+        <!--<field name="view_mode">form</field>-->
+        <field name="view_id" ref="customer_statement_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem
+        action="action_customer_statement_report"
+        id="customer_statement_menu"
+        parent="account.menu_finance_reports"
+        sequence="9"
+        name="Customer Statement"/>
+
+
+    <record id="customer_statement_view_form" model="ir.ui.view">
+        <field name="name">account.partner.statement.form</field>
+        <field name="model">account.partner.statement</field>
+        <field name="arch" type="xml">
+            <form string="Customer Statement" create="false" edit="false">
+                <!--<header>-->
+                    <!--<button name="action_print_report" type="object" string="Print Report" class="oe_highlight" />-->
+                <!--</header>-->
+                <div style="width:200%;height:100% #FFFAFA;align:center;margin-left:450px;">
+                    <h4><field name="name" nolabel="1"  readonly="1" style="color:blue"/></h4>
+                </div>
+                <group>
+                    <group>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="inital_total" readonly="1"/>
+                        <field name="so_total" readonly="1"/>
+
+                    </group>
+                    <group>
+                        <field name="date" string="Start Date" required="1"/>
+                        <field name="date_to" string="End Date"/>
+                        <field name="payment_total" readonly="1"/>
+                        <field name="balance" readonly="1"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Sale Details">
+                        <field name="order_lines" nolabel="1">
+                            <tree>
+                                <field name="order_id"/>
+                                <field name="date"/>
+                                <field name="currency_id"/>
+                                <field name="amount_currency"/>
+                                <field name="company_currency_id"/>
+                                <field name="amount"/>
+                                <field name="payment_status"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Payment Details">
+                        <field name="payment_lines" nolabel="1">
+                            <tree>
+                                <field name="acc_payment_id"/>
+                                <field name="order_ref"/>
+                                <field name="invoice_ref"/>
+                                <field name="date"/>
+                                <field name="currency_id"/>
+                                <field name="amount_currency"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+<!--    {'binding_model_id': model.id, 'binding_type': 'report'}-->
+<!--            report_type="xlsx"-->
+<!--    <report-->
+<!--            id="customer_statement_details_qweb"-->
+<!--            model="account.partner.statement"-->
+<!--            string="Customer Statement"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="esco_account_report.report_customer_statement"-->
+<!--            file="esco_account_report.report_customer_statement"-->
+<!--            paperformat="esco_account_report.paperformat_custom"-->
+<!--        />-->
+<!--    <record id="customer_statement_details_xlsx1" model="ir.actions.report">-->
+<!--        <field name="name">Customer Statement</field>-->
+<!--        <field name="report_type">xlsx</field>-->
+<!--        <field name="model">account.partner.statement</field>-->
+<!--        <field name="binding_model_id" ref="esco_account_report.model_account_partner_statement" />-->
+<!--        <field name="report_file">esco_account_report.report_customer_statement_xlsx</field>-->
+<!--        <field name="report_name">esco_account_report.report_customer_statement_xlsx</field>-->
+<!--    </record>-->
+
+
+</odoo>

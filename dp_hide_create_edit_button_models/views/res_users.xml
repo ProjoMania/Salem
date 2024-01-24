@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="view_users_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="page_hide_create_edit" string="Restrict Create/Edit">
+                        <span class='oe_grey'>Either global restrict OR model wise. No meaning to set following, if already global restricted.</span>
+                        <br/>
+                        <br/>
+                        <label for='hide_create_model_ids' string='Model for Create Button'/>
+                        <field name="hide_create_model_ids">
+                            <tree>
+                                <field name="name" string="Model"/>
+                            </tree>
+                        </field>
+
+                        <label for='hide_edit_model_ids' string='Model for Edit button'/>
+                        <field name="hide_edit_model_ids">
+                            <tree>
+                                <field name="name" string="Model"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_viatris_sales_report,viatris.sales.report,model_viatris_sales_report,,1,1,1,1
+access_excel_report,excel.report,model_excel_report,,1,1,1,1
+

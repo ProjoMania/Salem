@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+<!--        <record id="studio_custom_odoo_studio_hr_paysl_25fa919b-d3b0-4206-9881-6effda3902a6" model="ir.ui.view">-->
+<!--            <field name="name">studio.custom.odoo.studio.hr.paysl.25fa919b-d3b0-4206-9881-6effda3902a6</field>-->
+<!--            <field name="model">hr.payslip</field>-->
+<!--            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>-->
+<!--            <field name="arch" type="xml">-->
+
+
+<!--                <xpath expr="//form[1]/sheet//field[@name='name']" position="after">-->
+<!--                    <field name="x_studio_city" string="City"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='journal_id']" position="attributes">-->
+<!--                    <attribute name="attrs">{"readonly": []}</attribute>-->
+<!--                </xpath>-->
+
+
+<!--            </field>-->
+<!--        </record>-->
+        <record id="studio_custom_odoo_studio_purchase_d172b903-17fb-44c9-b86c-c64480dc0fae" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.purchase.d172b903-17fb-44c9-b86c-c64480dc0fae</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='incoterm_id']" position="after">
+                    <field name="x_studio_shipping_to_" string="Shipping to :"/>
+                    <field name="x_studio_payment_type_" string="Payment Type :"/>
+                </xpath>
+
+
+            </field>
+        </record>
+        <record id="studio_custom_odoo_studio_res_comp_e778267c-7030-4aa1-b175-2d86f323cfbf" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.res.comp.e778267c-7030-4aa1-b175-2d86f323cfbf</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="x_studio_background_report" options="{&quot;size&quot;:[0,270]}" widget="image"
+                           string="Background Report"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_custom_odoo_studio_hr_appli_99b1a0ac-b5d0-4dc4-bfe7-b8874b967d90" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.hr.appli.99b1a0ac-b5d0-4dc4-bfe7-b8874b967d90</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='partner_name']" position="before">
+                    <field name="x_studio_years_or_experience"/>
+                </xpath>
+                <xpath expr="//field[@name='email_from']" position="after">
+                    <field name="x_studio_age"/>
+                </xpath>
+                <xpath expr="//filter[@name='stage']" position="after">
+                    <filter name="studio_group_by_R9wmL" string="Field of Study"
+                            context="{'group_by': 'x_studio_field_of_study_1'}"/>
+                   <!-- <filter name="studio_group_by_suSDo" string="City" context="{'group_by': 'city'}"/> -->
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_custom_odoo_studio_jobs_rec_b7456cd3-a029-41ab-8585-5cedbbaf1eb6" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.jobs.rec.b7456cd3-a029-41ab-8585-5cedbbaf1eb6</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='type_id']" position="after">
+                    <field widget="image" options="{&quot;size&quot;: [0, 90]}" name="x_studio_photo" string="Photo"/>
+                    <field name="x_studio_age" string="Age" widget="monetary" digits="1,0"/>
+                    <field name="x_studio_years_or_experience" string="Years or Experience "/>
+                    <field name="x_studio_field_of_study_1" string="Field of Study"/>
+                    <field name="x_studio_city" string="City"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_custom_odoo_studio_applican_cc6adf4a-0a3f-4ae8-8392-4dea810bdadb" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.applican.cc6adf4a-0a3f-4ae8-8392-4dea810bdadb</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="x_studio_field_of_study_1"/>
+                    <field name="x_studio_years_or_experience"/>
+                    <field name="x_studio_age"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <!--        <record id="studio_custom_odoo_studio_applican_cc6adf4a-0a3f-4ae8-8392-4dea810bdadb" model="ir.ui.view">-->
+        <!--            <field name="name">studio.custom.odoo.studio.applican.cc6adf4a-0a3f-4ae8-8392-4dea810bdadb</field>-->
+        <!--            <field name="model">hr.applicant</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <search>-->
+        <!--                    <field string="Applicant" name="partner_name"-->
+        <!--                           filter_domain="['|', '|', ('name', 'ilike', self), ('partner_name', 'ilike', self), ('email_from', 'ilike', self)]"/>-->
+        <!--                    <field string="Email" name="email_from" filter_domain="[('email_from', 'ilike', self)]"/>-->
+        <!--                    <field name="job_id"/>-->
+        <!--                    <field name="department_id" operator="child_of"/>-->
+        <!--                    <field name="user_id"/>-->
+        <!--                    <field name="stage_id" domain="[]"/>-->
+        <!--                    <field name="categ_ids"/>-->
+        <!--                    <field name="attachment_ids" filter_domain="[('attachment_ids.index_content', 'ilike', self)]"-->
+        <!--                           string="Attachments"/>-->
+        <!--                    <filter string="My Applications" name="my_applications" domain="[('user_id', '=', uid)]"/>-->
+        <!--                    <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>-->
+        <!--                    <separator/>-->
+        <!--                    <filter string="Ready for Next Stage" name="done" domain="[('kanban_state', '=', 'done')]"/>-->
+        <!--                    <filter string="Blocked" name="blocked" domain="[('kanban_state', '=', 'blocked')]"/>-->
+        <!--                    <separator/>-->
+        <!--                    <filter string="Unread Messages" name="message_needaction"-->
+        <!--                            domain="[('message_needaction', '=', True)]"/>-->
+        <!--                    <separator/>-->
+        <!--                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>-->
+        <!--                    <separator/>-->
+        <!--                    <filter invisible="1" string="Late Activities" name="activities_overdue"-->
+        <!--                            domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"-->
+        <!--                            help="Show all records which has next action date is before today"/>-->
+        <!--                    <filter invisible="1" string="Today Activities" name="activities_today"-->
+        <!--                            domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+        <!--                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"-->
+        <!--                            domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>-->
+        <!--                    <separator/>-->
+        <!--                    <group expand="0" string="Group By">-->
+        <!--                        <filter string="Responsible" name="responsible" domain="[]" context="{'group_by': 'user_id'}"/>-->
+        <!--                        <filter string="Job" name="job" domain="[]" context="{'group_by': 'job_id'}"/>-->
+        <!--                        <filter string="Age" name="x_studio_age" domain="[]" context="{'group_by': 'x_studio_age'}"/>-->
+        <!--                        <filter string="Yaers Of Experiance" name="x_studio_years_or_experience" domain="[]"-->
+        <!--                                context="{'group_by': 'x_studio_years_or_experience'}"/>-->
+        <!--                        <filter string="Degree" name="degree" domain="[]" context="{'group_by': 'type_id'}"/>-->
+        <!--                        <filter string="Stage" name="stage" domain="[]" context="{'group_by': 'stage_id'}"/>-->
+        <!--                        <filter string="Creation Date" name="creation_date" context="{'group_by': 'create_date'}"/>-->
+        <!--                        <filter string="Last Stage Update" name="last_stage_update"-->
+        <!--                                context="{'group_by': 'date_last_stage_update'}"/>-->
+        <!--                    </group>-->
+        <!--                </search>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <record id="studio_custom_odoo_studio_applican_cc6adf4a-0a3f-4ae8-8392-4dea810bdadb" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.applican.cc6adf4a-0a3f-4ae8-8392-4dea810bdadb</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="replace">
+                    <kanban default_group_by="stage_id" class="o_kanban_applicant"
+                            quick_create_view="hr_recruitment.quick_create_applicant_form">
+                        <field name="stage_id"
+                               options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Requirements&quot;}}"/>
+                        <field name="color"/>
+                        <field name="priority"/>
+                        <field name="user_id"/>
+                        <field name="user_email"/>
+                        <field name="partner_name"/>
+                        <field name="type_id"/>
+                        <field name="partner_id"/>
+                        <field name="job_id"/>
+                        <field name="department_id"/>
+                        <field name="message_needaction_counter"/>
+                        <field name="attachment_number"/>
+                        <field name="active"/>
+                        <field name="activity_ids"/>
+                        <field name="activity_state"/>
+                        <progressbar field="activity_state"
+                                     colors="{&quot;planned&quot;: &quot;success&quot;, &quot;overdue&quot;: &quot;danger&quot;, &quot;today&quot;: &quot;warning&quot;}"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click oe_applicant_kanban oe_semantic_html_override">
+                                    <div class="o_dropdown_kanban dropdown">
+                                        <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                           href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <t t-if="widget.deletable">
+                                                <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                            </t>
+                                            <a role="menuitem" name="action_makeMeeting" type="object"
+                                               class="dropdown-item">Schedule Interview
+                                            </a>
+                                            <div role="separator" class="dropdown-divider"/>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                    </div>
+
+
+                                    <style>
+                                        img {
+                                        width: 100%;
+                                        height: auto;
+                                        border: 2px solid transparent;
+                                        padding: 5px;
+                                        border-image: url(border.png) 5 round;
+                                        }
+                                    </style>
+
+
+                                    <div class="oe_kanban_content">
+                                        <div class="o_kanban_record_top">
+                                            <div class="o_kanban_record_headings">
+                                                <b class="o_kanban_record_title mt8"
+                                                   t-if="record.partner_name.raw_value">
+
+                                                    <div class="oe_kanban_details">
+                                                        <div class="avatar, o_kanban_record_top">
+                                                            <field name="x_studio_photo" widget="image" alt=""
+                                                                   width="100"
+                                                                   height="100"/>
+                                                            <br>
+                                                            </br>
+
+
+                                                            <p>
+                                                                <ul>
+                                                                    <li t-if="record.partner_name.raw_value"
+                                                                        class="o_text_overflow">
+                                                                        <a>Name:</a>
+                                                                        <field name="partner_name"/>
+                                                                    </li>
+                                                                    <br></br>
+                                                                    <li t-if="record.x_studio_field_of_study_1.raw_value"
+                                                                        class="o_force_ltr">
+                                                                        <a>Field of Study:</a>
+                                                                        <field name="x_studio_field_of_study_1"/>
+                                                                    </li>
+                                                                    <li t-if="record.x_studio_city.raw_value"
+                                                                        class="o_text_overflow">
+                                                                        <a>City:</a>
+                                                                        <field name="x_studio_city"/>
+                                                                    </li>
+                                                                    <li t-if="record.x_studio_age.raw_value"
+                                                                        class="o_force_ltr">
+                                                                        <a>Age:</a>
+                                                                        <field name="x_studio_age"/>
+                                                                    </li>
+                                                                    <li t-if="record.partner_phone.raw_value"
+                                                                        class="o_force_ltr">
+                                                                        <a>Phone:</a>
+                                                                        <field name="partner_phone"/>
+                                                                    </li>
+
+                                                                    <li t-if="record.x_studio_years_or_experience.raw_value"
+                                                                        class="o_force_ltr">
+                                                                        <a>Years of Experience:</a>
+                                                                        <field name="x_studio_years_or_experience"/>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </b>
+
+
+                                                <t t-else="1">
+                                                    <i class="o_kanban_record_title">
+                                                        <field name="name"/>
+                                                    </i>
+                                                    <br/>
+                                                </t>
+                                                <div class="o_kanban_record_subtitle"
+                                                     invisible="context.get('search_default_job_id', False)">
+                                                    <field name="job_id"/>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <field name="categ_ids" widget="many2many_tags"
+                                               options="{'color_field': 'color'}"/>
+                                        <t t-if="record.partner_mobile.raw_value">
+                                            <i class="fa fa-mobile mr4" role="img" aria-label="Mobile" title="Mobile"/>
+                                            <field name="partner_mobile" widget="phone"/>
+                                            <br/>
+                                        </t>
+                                        <div class="o_kanban_record_bottom mt4">
+                                            <div class="oe_kanban_bottom_left">
+                                                <div class="float-left mr4" groups="base.group_user">
+                                                    <field name="priority" widget="priority"/>
+                                                </div>
+                                                <div class="o_kanban_inline_block mr8">
+                                                    <field name="activity_ids" widget="kanban_activity"/>
+                                                </div>
+                                                <t t-if="record.message_needaction_counter.raw_value">
+                                                    <span role="alert" class="oe_kanban_mail_new mr4"
+                                                          title="Unread Messages">
+                                                        <i class="fa fa-comments" role="img"
+                                                           aria-label="Unread messages"/>
+                                                        <t t-raw="record.message_needaction_counter.raw_value"/>
+                                                    </span>
+                                                </t>
+                                            </div>
+                                            <div class="oe_kanban_bottom_right">
+                                                <a name="action_get_attachment_tree_view" type="object">
+                                                    <span title="Documents">
+                                                        <i class="fa fa-paperclip" role="img" aria-label="Documents"/>
+                                                        <t t-esc="record.attachment_number.raw_value"/>
+                                                    </span>
+                                                </a>
+                                                <div class="o_kanban_state_with_padding">
+                                                    <field name="kanban_state" widget="kanban_state_selection"/>
+                                                    <field name="legend_normal" invisible="1"/>
+                                                    <field name="legend_blocked" invisible="1"/>
+                                                    <field name="legend_done" invisible="1"/>
+                                                </div>
+                                                <img t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)"
+                                                     t-att-title="record.user_id.value" t-att-alt="record.user_id.value"
+                                                     class="oe_kanban_avatar"/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="oe_clear"/>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </xpath>
+            </field>
+        </record>
+
+      
+        <record id="studio_custom_odoo_studio_account__660f1da4-6de9-4b08-a25f-8e11c787d998" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.account..660f1da4-6de9-4b08-a25f-8e11c787d998</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form[1]/sheet[1]//field[@name='amount']" position="before">
+                    <field name="x_studio_field_Gb6C2"/>
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="x_studio_payment_type_" string="طريقة السداد"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_custom_odoo_studio_stock_mo_dfe949e2-8372-4be2-85a4-273959924ff5" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.stock.mo.dfe949e2-8372-4be2-85a4-273959924ff5</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="x_studio_demand" string="Demand"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom_qty"/>
+                </xpath>
+
+
+            </field>
+        </record>
+        <record id="studio_custom_odoo_studio_hr_contr_d5262272-8b8c-4666-b7f6-e505e1979df0" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.hr.contr.d5262272-8b8c-4666-b7f6-e505e1979df0</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                    <field name="x_studio_field_TqTNl"/>
+                </xpath>
+
+
+            </field>
+        </record>
+        <record id="studio_custom_odoo_studio_hr_emplo_01aa60f8-7f6e-49da-96e4-7776df431667" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.hr.emplo.01aa60f8-7f6e-49da-96e4-7776df431667</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="domain">[]</attribute>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']" position="attributes">
+                    <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+                <xpath expr="//field[@name='visa_no']" position="after">
+                    <xpath expr="//field[@name='visa_expire']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='permit_no']" position="after">
+                    <!--<field name="x_studio_work_permit_expire" string="Work Permit Expire"/> -->
+                    <!--<field name="x_studio_passport_expire" string="Passport Expire"/> -->
+                    <!--<field name="x_studio_recidency_expire" string="Recidency Expire"/>-->
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']" position="attributes">
+                    <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <!--        <record id="studio_custom.proporties_89ca436a-0a6e-46a4-ab48-ec50284817ae" model="ir.actions.act_window">-->
+        <!--           <field name="name">Proporties</field>-->
+        <!--           <field name="type">ir.actions.act_window</field>-->
+        <!--           <field name="res_model">x_proporties</field>-->
+        <!--           <field name="view_mode">tree,form</field>-->
+        <!--           <field name="help" type="html">-->
+        <!--             <p class="o_view_nocontent_smiling_face">-->
+        <!--                        This is your new action ; by default, it contains a list view and a form view.-->
+        <!--                    </p>-->
+        <!--                    <p>-->
+        <!--                        You can start customizing these screens by clicking on the Studio icon on the-->
+        <!--                        top right corner (you can also customize this help message there).-->
+        <!--                    </p>-->
+        <!--                -->
+        <!--           </field>-->
+        <!--        </record>-->
+        <!--    -->
+
+        <!--        <record id="studio_custom.properties_3c775ba6-fc05-421c-b611-482b682bd43b" model="ir.actions.act_window">-->
+        <!--           <field name="name">Properties</field>-->
+        <!--           <field name="type">ir.actions.act_window</field>-->
+        <!--           <field name="res_model">x_properties</field>-->
+        <!--           <field name="view_mode">tree,form</field>-->
+        <!--           <field name="help" type="html">-->
+        <!--             <p class="o_view_nocontent_smiling_face">-->
+        <!--                        This is your new action ; by default, it contains a list view and a form view.-->
+        <!--                    </p>-->
+        <!--                    <p>-->
+        <!--                        You can start customizing these screens by clicking on the Studio icon on the-->
+        <!--                        top right corner (you can also customize this help message there).-->
+        <!--                    </p>-->
+        <!--                -->
+        <!--           </field>-->
+        <!--        </record>-->
+        <!--    -->
+        <!--        <menuitem id="menu_proporties" name="Proporties" sequence="10"-->
+        <!--    action="studio_custom.proporties_89ca436a-0a6e-46a4-ab48-ec50284817ae" parent="studio_custom.proporties_0c923c83-34d2-4d2f-ac72-dbaade8df170"/>-->
+        <!--        <menuitem id="menu_properties" name="Properties" sequence="10"-->
+        <!--    action="studio_custom.properties_3c775ba6-fc05-421c-b611-482b682bd43b" parent="studio_custom.real_estates_3cf3d22a-3ce4-44ae-8b86-9da0e4e11638"/>-->
+
+    </data>
+</odoo>

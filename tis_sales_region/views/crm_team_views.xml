@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="crm_team_sales_teams_view_form_inherited" model="ir.ui.view">
+            <field name="name">crm.team.form</field>
+            <field name="model">crm.team</field>
+            <field name="priority">9</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='name']" position="after">
+                     <div  class="oe_title">
+                      <label for="sales_region_id"></label>
+                         <h4  style="font-color:black !important;" >
+                           <field name="sales_region_id" style="font-color:black !important;"/>
+                         </h4>
+                     </div>
+                </xpath>
+            </field>
+        </record>
+</odoo>

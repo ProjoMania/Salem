@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_production_lot_form_inherit_approval" model="ir.ui.view">
+        <field name="name">stock.production.lot.form.inherit</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/*" position="before">
+                <header>
+                    <button name="in_progress" string="Quarantine" type="object" states="draft"
+                            groups="stock.group_stock_manager" confirm="Are you sure you want to move it to In-Progress?"/>
+                    <button name="approve" string="Approve" type="object" states="progress"
+                            groups="stock.group_stock_manager" confirm="Are you sure you want to approve it?"/>
+                    <button name="reject" string="Reject" type="object" states="draft,progress"
+                            groups="stock.group_stock_manager" confirm="Are you sure you want to reject it?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,progress,approved"/>
+                </header>
+            </xpath>
+            <field name="company_id" position="after">
+                <field name="approved_date" readonly="1" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                <field name="total_duration"/>
+                <field name="last_update_duration"/>
+                <field name="numbering_label"/>
+            </field>
+            <group name="main_group" position="inside">
+                <group>
+                    <field name="attach_request_document" filename="attach_request_document_filename"/>
+                    <field name="attach_request_document_filename" invisible="1"/>
+                    <field name="request_attachment_id" invisible="1"/>
+                
+                    <field name="attach_approval_document" filename="attach_approval_document_filename"/>
+                    <field name="attach_approval_document_filename" invisible="1"/>
+                    <field name="approval_attachment_id" invisible="1"/>
+                <!-- added by abdulrahman-->
+                    <field name="attach_meda_document" filename="attach_meda_document_filename"/>
+                    <field name="attach_meda_document_filename" invisible="1"/>
+                    <field name="meda_attachment_id" invisible="1"/>
+                 <!-- end lines added by abdulrahman-->
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_move_form_expiry_inherit_approval" model="ir.ui.view">
+        <field name="name">stock.production.lot.form.inherit</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="expiration_date" position="replace">
+                <label for="life_date"/>
+                <div class="o_address_format">
+                    <field name="life_date_month" placeholder="Month..." class="o_address_city"/>/
+                    <field name="life_date_year" placeholder="Year..." class="o_address_city"/>
+                </div>
+                <field name="life_date" invisible="1"/>
+            </field>
+            <field name="use_date" position="replace">
+                <label for="use_date"/>
+                <div class="o_address_format">
+                    <field name="use_date_month" placeholder="Month..." class="o_address_city"/>/
+                    <field name="use_date_year" placeholder="Year..." class="o_address_city"/>
+                </div>
+                <field name="use_date" invisible="1"/>
+            </field>
+            <field name="removal_date" position="replace">
+                <label for="removal_date"/>
+                <div class="o_address_format">
+                    <field name="removal_date_month" placeholder="Month..." class="o_address_city"/>/
+                    <field name="removal_date_year" placeholder="Year..." class="o_address_city"/>
+                </div>
+                <field name="removal_date" invisible="1"/>
+            </field>
+            <field name="alert_date" position="replace">
+                <label for="alert_date"/>
+                <div class="o_address_format">
+                    <field name="alert_date_month" placeholder="Month..." class="o_address_city"/>/
+                    <field name="alert_date_year" placeholder="Year..." class="o_address_city"/>
+                </div>
+                <field name="alert_date" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree_status" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree.inherit</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">state == 'rejected'</attribute>
+                <attribute name="decoration-muted">state == 'progress'</attribute>
+                <attribute name="decoration-success">state == 'approved'</attribute>
+            </xpath>
+            <field name="company_id" position="after">
+                <field name="use_date_format"/>
+                <field name="life_date_format"/>
+                <field name="last_update_duration" optional="show"/>
+                <field name="total_duration" optional="show"/>
+                <field name="state" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!--    <record id="view_production_lot_tree_status" model="ir.ui.view">-->
+    <!--        <field name="name">stock.production.lot.tree.status</field>-->
+    <!--        <field name="model">stock.production.lot</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <tree string="Lots/Serial Numbers" multi_edit="1">-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="ref" optional="show"/>-->
+    <!--                <field name="product_id" readonly="1"/>-->
+    <!--                <field name="create_date" optional="show"/>-->
+    <!--                <field name="company_id" groups="base.group_multi_company"/>-->
+    <!--                <field name="last_update_duration" optional="show"/>-->
+    <!--                <field name="total_duration" optional="show"/>-->
+    <!--                <field name="state" optional="show"/>-->
+    <!--            </tree>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record model="ir.ui.view" id="search_product_lot_filter_inherit_approval">
+        <field name="name">Production Lots Filter Inherit</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="state"/>
+            </field>
+            <filter name="group_by_product" position="after">
+                <filter name="group_by_state" string="Status" domain="[]" context="{'group_by': 'state'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="stock.action_production_lot_form" model="ir.actions.act_window">
+        <field name="name">Lots/Serial Numbers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('stock.view_production_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="search_view_id" ref="stock.search_product_lot_filter"/>
+        <field name="context">{'display_complete': True, 'default_company_id': allowed_company_ids[0]}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a lot/serial number
+            </p>
+            <p>
+                This is the list of all the production lots you recorded. When
+                you select a lot, you can get the traceability of the products contained in lot.
+            </p>
+        </field>
+    </record>
+
+    <!--    <record id="action_production_lot_form_status" model="ir.actions.act_window">-->
+    <!--        <field name="name">Lots/Serial Status wise</field>-->
+    <!--        <field name="type">ir.actions.act_window</field>-->
+    <!--        <field name="res_model">stock.production.lot</field>-->
+    <!--        <field name="view_ids"-->
+    <!--               eval="[(5, 0, 0),-->
+    <!--                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_production_lot_tree_status')}),-->
+    <!--                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>-->
+    <!--        <field name="search_view_id" ref="stock.search_product_lot_filter"/>-->
+    <!--        <field name="context">{'display_complete': True, 'default_company_id': allowed_company_ids[0]}</field>-->
+    <!--        <field name="help" type="html">-->
+    <!--            <p class="o_view_nocontent_smiling_face">-->
+    <!--                Add a lot/serial number-->
+    <!--            </p>-->
+    <!--            <p>-->
+    <!--                This is the list of all the production lots you recorded. When-->
+    <!--                you select a lot, you can get the traceability of the products contained in lot.-->
+    <!--            </p>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!--    <menuitem action="action_production_lot_form_status" id="menu_action_production_lot_form_status"-->
+    <!--              parent="stock.menu_stock_inventory_control" groups="stock.group_production_lot"-->
+    <!--              sequence="102"/>-->
+
+</odoo>

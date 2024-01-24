@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="esco_report_purchasequotation_document">
+        <t t-call="esco_account_report.external_layout_bait">
+            <style>
+
+            </style>
+            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
+<!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
+            <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
+                <t t-if="o.dest_address_id">
+                </t>
+                <h3>
+                    <strong class="bold_header">Purchase Request</strong>
+                </h3>
+                <div class="row" style="width: 100%; ">
+                    <table style="width: 48%; margin-right: 4%; margin-left: 2%; border-collapse: collapse; border: none; table-layout: fixed;">
+                        <tr>
+                            <td style="width:30%;">
+                                <span>PO. No.</span>
+                            </td>
+                            <td style="width:70%;" class="text-center top_border left_border right_border ">
+                                <span t-field="o.name" style="margin-left: 15px; margin-right: 15px;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%;">
+                                <span>Date</span>
+                            </td>
+                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border ">
+                                <span t-field="o.order_date" style="margin-left: 15px; margin-right: 15px;"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="width: 5%;">
+                    </div>
+                    <div style="width: 43%; text-align: left; ">
+                        <table style="width: 100%; border-collapse: collapse; border: none; float: right;">
+                            <thead>
+                                <tr>
+                                    <td class="table_header text-left top_border left_border right_border bottom_border">
+                                        <span style="margin-left: 2%; margin-right: 2%;">Vendor</span>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <!--                            <tr>-->
+                            <!--                                <td style="border: none;">-->
+                            <!--                                    <div t-field="o.partner_id.name"/><br/>-->
+                            <!--                                    <div t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></div>-->
+                            <!--                                    <div t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></div>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td style="color: black; background-color: white;border: none; ">-->
+                            <!--                                    <div class="row" style="border: none; ">-->
+                            <!--                                        <span>ID No.</span>-->
+                            <!--                                        <div style="width: 90%;height: 25px; border: 1px solid black;">-->
+                            <!--                                            <span t-field="o.partner_id.id"/>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                        </table>
+<!--                        <div class="text-left" style="border: none;">-->
+<!--                            <div t-field="o.partner_id.name" style="margin-left: 2%"/>-->
+<!--                            <div style="margin-left: 2%;">-->
+<!--                                <t t-if="o.partner_id.city">-->
+<!--                                    <span t-field="o.partner_id.city"/>-->
+<!--                                </t>-->
+<!--                                <span>&#160;</span>-->
+<!--                                <t t-if="o.partner_id.state_id">-->
+<!--                                    <span t-field="o.partner_id.state_id.name"/>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row " style="border: none; margin-left: 2%; margin-right: 2%;">-->
+<!--                            <span>ID No.</span>-->
+<!--                            <div class="text-center" style="width: 80%;height: 25px; border: 1px solid black;">-->
+<!--                                <span t-field="o.partner_id.id"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div style=" direction: ltr;">
+                            <div class="float: left;" style="border: none;">
+                                <div t-field="o.partner_id.name" style=""/>
+                                <div>
+                                    <t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span>&#160;</span>
+                                    <t t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>
+                                </div>
+                            </div>
+                            <div class="row " style="border: none; margin-left: 1%; margin-right: 1%;">
+                                <span>ID No.</span><span>&#160;</span>
+                                <div class="text-center" style="width: 80%;height: 25px; border: 1px solid grey;">
+                                    <span t-field="o.partner_id.id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <t t-set="i" t-value="1"/>
+                <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed;">
+                    <thead style="background-color: #30378c;">
+                        <tr>
+                            <td style="width: 11%;" class="table_header">
+                                <span>Item #</span>
+                            </td>
+                            <td style="width: 54%;" class="table_header text-center">
+                                <span>Description</span>
+                            </td>
+                            <td style="width: 20%;" class="table_header text-center">
+                                <span>Expecting Date</span>
+                            </td>
+                            <td style="width: 15%;" class="table_header text-center">
+                                <span>QTY</span>
+                            </td>
+<!--                            <td class="table_header text-center">-->
+<!--                                <span>UOM</span>-->
+<!--                            </td>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <td class="text-center">
+                                <span t-esc="i"/>
+                                <t t-set="i" t-value="i+1"/>
+                            </td>
+                            <td style="padding-left: 15px;padding-right: 15px;">
+                                <span t-field="line.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="o.delivery_date"/>
+                            </td>
+                            <td class="text-center" style="background-color: white !important;">
+                                <span t-esc='"{:,}".format(int(line.product_qty))'/>
+                            </td>
+<!--                            <td class="text-center" style="background-color: white !important;">-->
+<!--                                <span t-field="line.product_uom"/>-->
+<!--                            </td>-->
+                        </tr>
+                        <tr>
+                            <td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color: white;">1</span></td><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <span style="color: white;">1</span>-->
+<!--                            </td>-->
+<!--                            <td/>-->
+<!--                            <td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td>-->
+<!--                        </tr>-->
+                    </tbody>
+                </table>
+                <br/>
+                <div class="text-center row col-12"
+                     style="margin-top: 400px; margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                        <!--                        Signature-->
+                        <div style="height:140px; min-height:140px;">
+                            <img t-if="o.user_id.signature_image" t-att-src="image_data_uri(o.user_id.signature_image)"
+                                 alt="Signature" style="height:140px;width:260px; margin-top: -30px;"/>
+                        </div>
+                        <hr style="border-color: black; margin-top: -50px;"/>
+                        <span t-field="o.user_id"/>
+                    </div>
+
+                    <!--                    <div class="col-4">-->
+                    <!--                        <div style="height:140px; min-height:140px;">-->
+                    <!--                            <img t-att-src="image_data_uri(o.create_uid.signature_image)"-->
+                    <!--                                     alt="Signature" style="height:140px;width:260px; margin-top: -10px; margin-bottom: -10"/>-->
+                    <!--                        </div>-->
+                    <!--                        <hr style="border-color: black; "/>-->
+                    <!--                        <span t-field="o.create_uid"/>-->
+                    <!--                        <t t-if="o.create_uid.signature_image">-->
+
+                    <!--                        </t>-->
+                    <!--                    </div>-->
+
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="purchase.report_purchasequotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="esco_account_report.esco_report_purchasequotation_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

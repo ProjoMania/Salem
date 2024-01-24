@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_attendance_map,access_employee_attendance_map,model_employee_attendance_map,base.group_user,1,1,1,0
+access_emp_lat_lng_info,access_emp_lat_lng_info,model_emp_lat_lng_info,base.group_user,1,1,1,1
+access_lat_lng_info,access_lat_lng_info,model_lat_lng_info,base.group_user,1,1,1,1
+access_att_approval,access_att_approval,model_att_approval,base.group_user,1,1,1,1

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_cash_collection_teams_form" model="ir.ui.view">
+        <field name="name">cash.collection.teams.form</field>
+        <field name="model">cash.collection.teams</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="main">
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="company_id"/>
+                        <field name="currency_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Members" name="members">
+                            <group>
+                                <field name="member_ids" mode="kanban"
+                                       class="w-100" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_cash_collection_teams_tree" model="ir.ui.view">
+        <field name="name">cash.collection.teams.tree</field>
+        <field name="model">cash.collection.teams</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="company_id"/>
+                <field name="currency_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_cash_collection_teams" model="ir.actions.act_window">
+        <field name="name">Cash Collection Teams Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.collection.teams</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_cash_collection_teams"
+              name="Cash Collection Teams"
+              parent="account.menu_finance_configuration"
+              action="action_cash_collection_teams"/>
+    <menuitem name="Invoicing"
+              id="account.menu_finance"
+              groups="account.group_account_readonly,account.group_account_invoice,cash_collection_user_access"
+              sequence="55"/>
+    <menuitem name="Accounting"
+              id="account_accountant.menu_accounting"
+              groups="account.group_account_readonly,account.group_account_invoice,cash_collection_user_access"
+              sequence="60"/>
+</odoo>

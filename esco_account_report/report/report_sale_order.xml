@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="esco_report_saleorder_document">
+        <t t-call="esco_account_report.external_layout_bait">
+            <style>
+
+            </style>
+            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)" />
+<!--            <t t-set="o" t-value="o.with_context(lang=o.env.user.lang)" />-->
+<!--            <t t-set="o" t-value="doc.with_context(lang=doc.env.lang or doc.partner_id.lang)" />-->
+<!--            <t t-set="o" t-value="doc.with_context(lang=doc.partner_id.lang)" />-->
+            <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
+                <br/>
+                <h3><b><strong class="bold_header">Sale Order</strong></b></h3>
+                <div class="row" style="width: 100%; margin-right: 20px;">
+                    <table style="width: 50%; border-collapse: collapse; margin-left: 2%;border: none; table-layout: fixed;">
+                        <tr>
+                            <td style="width:40%">
+                                <span>Order No.</span>
+                            </td>
+                            <td style="width:60%" class="text-center top_border left_border right_border">
+                                <span t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <span>Customer Name</span>
+                            </td>
+                            <td style="width:60%" class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <span>Customer ID</span>
+                            </td>
+                            <td style="width:60%" class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.partner_id.id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <span>Address</span>
+                            </td>
+                            <td style="width:60%" class="text-center top_border left_border right_border bottom_border">
+                                <t style="text-align: center !important;" t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span>&#160;</span>
+                                <t style="text-align: center !important;" t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:40%">
+                                <span>Date</span>
+                            </td>
+                            <td style="width:60%" class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.order_date"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="width: 50%;">
+                        <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
+                        </div>
+                        <div t-if="o.validity_date and o.state in ['draft', 'sent']" class="col-auto mw-100 mb-2" name="expiration_date">
+                        </div>
+<!--                        <table style="width: 80%; border-collapse: collapse; margin-left: 20%;border: none !important; ">-->
+<!--                            <tr>-->
+<!--                                <td style="background-color: white !important; color: black !important">-->
+<!--                                    <span>Ref.</span>-->
+<!--                                </td>-->
+<!--                                <td class="text-center top_border left_border right_border bottom_border"-->
+<!--                                    style="width: 50%; background-color: white !important; color: black !important">-->
+<!--                                    <span t-field="o.origin"/>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+                    </div>
+                </div>
+                <br/>
+                <t t-set="i" t-value="1" />
+                <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed; border-color: grey;">
+                    <thead style="background-color: #30378c;">
+                        <tr>
+                            <td style="width: 11%;" class="table_header text-center"><span>Item #</span></td>
+                            <td style="width: 47%;" class="table_header text-center"><span>Description</span></td>
+                            <td style="width: 10%;" class="table_header text-center"><span>QTY</span></td>
+<!--                            <td class="table_header text-center"><span>UOM</span></td>-->
+                            <td style="width: 13%;" class="table_header text-center"><span>Unit Price</span></td>
+                            <td style="width: 19%;" class="table_header text-center"><span>Total</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
+                            <td class="text-left"><span t-field="line.product_id.name"/></td>
+                            <td class="text-center"><span t-esc='"{:,}".format(int(line.product_uom_qty))'/></td>
+<!--                            <td class="text-center"><span t-field="line.product_uom"/></td>-->
+                            <td class="text-center" style="background-color: white !important;"><span t-field="line.price_unit"/></td>
+                            <td class="text-center" style="background-color: white !important;"><span t-field="line.price_total"/></td>
+                        </tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
+                            <td class="text-center" style="background-color: white !important;"></td></tr>
+<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/><td/>-->
+<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
+                    </tbody>
+                </table>
+                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">
+                    <table style="width: 36%; margin-left: 2%;border: none; ">
+                        <tr>
+                            <td class="right_border_light">
+                                <span>Subtotal</span>
+                            </td>
+                            <td class="text-center left_border_light right_border_light bottom_border"
+                                style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
+                                <span t-field="o.amount_total"
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right_border_light">
+                                <span>Discount</span>
+                            </td>
+                            <td class="text-center top_border_light left_border_light right_border_light bottom_border_light">
+                                <span>-</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold_text">
+                                <br/>
+                                <span class="bold_text">Total</span>
+                            </td>
+                            <td class="bold_text text-center top_border_light"
+                                style="border-bottom-style: hidden !important ; border-right-style: hidden !important ;
+                                border-left-style: hidden !important;">
+                                <br/>
+                                <span t-field="o.amount_total"
+                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                <hr style="margin-top: 6px; color: grey; background-color: grey;"/>
+                                <hr style="margin-top: -14px; color: grey; background-color: grey; "/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+<!--                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">-->
+<!--                    <br/>-->
+<!--                    <table style="width: 34%; margin-left: 2%;border: none; ">-->
+<!--                        <tr>-->
+<!--                            <td class="bold_text">-->
+<!--                                <br/>-->
+<!--                                <span class="bold_text no_border">Total</span>-->
+<!--                            </td>-->
+<!--                            <td class="no_border bold_text text-center top_border_light">-->
+<!--                                <div style="margin-left: 60px !important;">-->
+<!--                                    <br/>-->
+<!--                                    <span t-field="o.amount_total"-->
+<!--                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
+<!--                                    <hr style="margin-top: 6px; color: grey; background-color: grey;"/>-->
+<!--                                    <hr style="margin-top: -14px; color: grey; background-color: grey; "/>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+                <hr style="width: 70%; border-top: 1px solid black;"/>
+                <table class="table table-sm" style="border-collapse: collapse; width: 70%; font-size: 18px; border: none !important;">
+                    <tr>
+                        <td class="text-center no_border"><span>Product</span></td>
+                        <td class="text-center no_border"><span>QTY</span></td>
+                        <td class="text-center no_border"><span>Batch Number</span></td>
+                    </tr>
+                    <tbody>
+                        <t t-foreach="o.picking_ids" t-as="picking">
+                            <tr t-foreach="picking.move_line_ids" t-as="line">
+                                <td class="text-center no_border"><span t-field="line.product_id.name"/></td>
+                                <td class="text-center no_border" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.qty_done))'/></td>
+                                <td class="text-center no_border">
+                                    <span t-if="line.lot_id.name" t-field="line.lot_id.name"/>
+                                    <span t-if="not line.lot_id.name" t-field="line.lot_name"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <hr style="width: 70%; border-top: 1px solid black;"/>
+
+                <div class="text-center row col-12"
+                     style="margin-top: 400px; margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+<!--                        Signature-->
+                        <div style="height:140px; min-height:140px;">
+                            <img t-if="o.user_id.signature_image"  t-att-src="image_data_uri(o.user_id.signature_image)"
+                                 alt="Signature" style="height:140px;width:260px; margin-top: -10px;"/>
+                        </div>
+                        <hr style="border-color: black; margin-top: -50px;"/>
+                            <span t-field="o.user_id"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="sale.report_saleorder">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="esco_account_report.esco_report_saleorder_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

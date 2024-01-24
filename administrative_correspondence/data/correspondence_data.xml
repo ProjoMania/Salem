@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <function model="res.company" name="create_missing_inbound_correspondence_sequence"/>
+        <function model="res.company" name="create_missing_outbound_correspondence_sequence"/>
+        <function model="res.company" name="create_missing_internal_correspondence_sequence"/>
+    </data>
+</odoo>

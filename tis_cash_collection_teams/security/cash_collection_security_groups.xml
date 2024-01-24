@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="inv_cash_collection">
+            <field name="name">Cash Collector</field>
+            <field name="description">User access levels for Cash Collection</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="cash_collection_user_access" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="inv_cash_collection"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="cash_collection_admin_access" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="inv_cash_collection"/>
+            <field name="implied_ids" eval="[(4, ref('cash_collection_user_access'))]"/>
+        </record>
+        <record id="collection_user_access_rule" model="ir.rule">
+            <field name="name">Collection User Can Only See His Related Invoices</field>
+            <field ref="account.model_account_move" name="model_id"/>
+            <field name="domain_force">[('partner_id.cash_collection_team_id.member_ids','in',user.ids)]</field>
+            <field name="groups" eval="[(4, ref('cash_collection_user_access'))]"/>
+            <field eval="0" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="perm_create"/>
+        </record>
+        <record id="collection_admin_access_rule" model="ir.rule">
+            <field name="name">Admin Can See All Invoices</field>
+            <field ref="account.model_account_move" name="model_id"/>
+            <field name="groups" eval="[(4, ref('cash_collection_admin_access'))]"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="1" name="perm_create"/>
+        </record>
+    </data>
+</odoo>

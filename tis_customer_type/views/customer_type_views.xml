@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_customer_type_form" model="ir.ui.view">
+        <field name="name">customer.type.form</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="2">
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_partner_category_list" model="ir.ui.view">
+        <field name="name">Contact Tags</field>
+        <field name="model">res.partner.category</field>
+        <field eval="6" name="priority"/>
+        <field name="arch" type="xml">
+            <tree string="Customer Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_customer_type" model="ir.actions.act_window">
+        <field name="name">Customer Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customer.type</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Customer Type
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_customer_type"
+              action="tis_customer_type.action_customer_type"
+              name="Customer Type"
+              sequence="1" parent="contacts.res_partner_menu_config"/>
+</odoo>

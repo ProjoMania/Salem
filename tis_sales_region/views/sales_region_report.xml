@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_viatris_sales_report" model="ir.actions.act_window">
+        <field name="name">Viatris Sales Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">viatris.sales.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+    <menuitem id="menu_report_viatris_sales_report"
+            name="Viatris Sales Report"
+            action="action_viatris_sales_report"
+            parent="sale.menu_sale_report"
+            sequence="2"/>
+</odoo>

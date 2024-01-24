@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_form_account_restrictions" model="ir.ui.view">
+            <field name="name">account.account.form.restrictions</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Allowed Users">
+                        <field name="user_ids" />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_account_analytic_account_form_restrictions" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.restrictions</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Allowed Users">
+                            <field name="user_ids" />
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="restrict_analytic_accounts_group" model="res.groups">
+            <field name="name">Restrict Analytic Accounts</field>
+        </record>
+
+        <record id="restrict_accounts_group" model="res.groups">
+            <field name="name">Restrict Accounts</field>
+        </record>
+
+        <record model="ir.rule" id="restrict_accounts_with_allowed">
+            <field name="name">Restrict Accounts Rule</field>
+            <field name="model_id" ref="account.model_account_account"/>
+            <field name="domain_force">[('user_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('ivs_accounts_and_analytic_restrictions.restrict_accounts_group'))]"/>
+        </record>
+        <record model="ir.rule" id="restrict_analytic_account_with_allowed">
+            <field name="name">Restrict Analytic Accounts Rule</field>
+            <field name="model_id" ref="analytic.model_account_analytic_account"/>
+            <field name="domain_force">[('user_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('ivs_accounts_and_analytic_restrictions.restrict_analytic_accounts_group'))]"/>
+        </record>
+    </data>
+</odoo>

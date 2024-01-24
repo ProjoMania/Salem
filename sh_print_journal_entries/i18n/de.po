@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_print_journal_entries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-26 05:01+0000\n"
+"PO-Revision-Date: 2020-10-26 05:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong><span>Internal Note : </span></strong>"
+msgstr "<strong><span>Interner Hinweis:</span></strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong>Date : </strong>"
+msgstr "<strong>Datum :</strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong>Journal : </strong>"
+msgstr "<strong>Tagebuch :</strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong>Journal Entry # : </strong>"
+msgstr "<strong>Tagebucheintrag # :</strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong>Reference : </strong>"
+msgstr "<strong>Referenz :</strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "<strong>Total</strong>"
+msgstr "<strong>Gesamt</strong>"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Account"
+msgstr "Konto"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Analytic Account"
+msgstr "Analytisches Konto"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Credit"
+msgstr "Anerkennung"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Debit"
+msgstr "Lastschrift"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Due Date"
+msgstr "Geburtstermin"
+
+#. module: sh_print_journal_entries
+#: model:ir.actions.report,name:sh_print_journal_entries.report_print_account_journal_entries
+#: model:ir.actions.report,print_report_name:sh_print_journal_entries.report_print_account_journal_entries
+msgid "Journal Entries"
+msgstr "Journaleinträge"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Journal Entry"
+msgstr "Tagebucheintrag"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Label"
+msgstr "Etikette"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Partner"
+msgstr "Partner"
+
+#. module: sh_print_journal_entries
+#: model_terms:ir.ui.view,arch_db:sh_print_journal_entries.template_print_account_journal_entries_document
+msgid "Sr"
+msgstr "Sr."

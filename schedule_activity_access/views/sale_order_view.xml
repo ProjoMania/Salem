@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherited to added 'REJECT BY CUSTOMER' button -->
+    <record id="view_order_form_inherit_reject" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.reject</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,reject_by_customer"/>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="after">
+                <button name="action_rejected" states="draft,sent"
+                        type="object" string="REJECT BY CUSTOMER"/>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="attributes">
+                <attribute name="states">cancel,reject_by_customer</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherited to added 'REJECT BY CUSTOMER' filter and groupby of State -->
+    <record id="view_sales_order_filter_inherit_reject" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.reject</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_upcoming_all']" position="after">
+                <filter string="Rejected Quotations" domain="[('state', '=', 'reject_by_customer')]" name="rejected_quotations_filter"/>
+            </xpath>
+            <xpath expr="//filter[@name='order_month']" position="after">
+                <filter string="State" name="state_groupby" domain="[]" context="{'group_by': 'state'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

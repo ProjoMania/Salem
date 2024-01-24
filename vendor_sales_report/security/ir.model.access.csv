@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+action_vendor_sales_report_create,access.vendor.sales.report.create,model_vendor_sales_report,,1,1,1,1
+access_excel_report,access.excel.report,model_excel_report,,1,1,1,1

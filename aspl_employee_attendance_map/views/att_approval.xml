@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="att_approvals_form_view" model="ir.ui.view">
+        <field name="name">att.approvals.form</field>
+        <field name="model">att.approval</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Approvals" class="oe_form_configuration" create="0" edit="0">
+                <header>
+                    <button string="Approve" type="object" name="att_approve" class="oe_highlight" attrs="{'invisible':[('state','=','approved')]}"/>
+<!--                    <button special="cancel" string="Cancel" name="cancel" class="oe_link"/>-->
+                    <field name="state" widget="statusbar"></field>
+                </header>
+                <sheet>
+                    <group>
+                       <group col='2'>
+                            <field name="employee_name" style="width:200px;"/>
+                            <field name="employee_location" style="width:200px;"/>
+                        </group>
+                        <group col='2'>
+                            <field name="date" style="width:200px;"/>
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="Map">-->
+<!--                            <div id="map" style="width: 800px;height: 500px;"/>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="att_approval_tree" model="ir.ui.view">
+        <field name="name">att.approval.tree</field>
+        <field name="model">att.approval</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="employee_name"/>
+                <field name="date"/>
+                <field name="employee_location"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_attendance_approvals" model="ir.actions.act_window">
+        <field name="name">Attendance Approvals</field>
+        <field name="res_model">att.approval</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="attendance_approvals_menu" name="Approvals" parent="hr_attendance.menu_hr_attendance_root"
+              sequence="50" groups="hr_attendance.group_hr_attendance_manager"/>
+    <menuitem id="attendance_approvals_submenu" name="Attendance Approval" parent="attendance_approvals_menu"
+              sequence="1"
+              action="action_attendance_approvals"/>
+</odoo>
