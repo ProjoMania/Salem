@@ -14,7 +14,7 @@ from odoo.tools.misc import formatLang, format_date
 
 
 class ReportAccountAgedPartner(models.AbstractModel):
-    _inherit = "account.aged.partner"
+    _inherit = "account.aged.partner.balance.report.handler"
 
     def set_currency_option(self):
         currency_id = self.env.context.get('currency_id')
@@ -194,7 +194,7 @@ class ResCurrencyData(models.Model):
 class ReportAccountAgedReceivableNew(models.Model):
     _name = "account.aged.receivable.extend"
     _description = "Aged Receivable Extend"
-    _inherit = "account.aged.partner"
+    _inherit = "account.aged.partner.balance.report.handler"
     _auto = False
 
 

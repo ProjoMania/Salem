@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Swetha Anand (odoo@cybrosys.com)
+#    Author: Vishnu KP (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -23,8 +23,7 @@ from odoo import fields, models
 
 
 class ResUsers(models.Model):
-    """Inherits res.users. to add new fields to set restriction on size of the
-    attachment to be uploaded and to set maximum size of attachment."""
+    """Inherits res.user."""
     _inherit = 'res.users'
 
     set_restriction = fields.Boolean(string="Set Restriction",
@@ -32,5 +31,5 @@ class ResUsers(models.Model):
                                           "will have restriction on "
                                           "size of the attachment to "
                                           "be uploaded.")
-    max_size = fields.Float(string="Maximum size(MB)", default=5.0,
+    max_size = fields.Float(string="Maximum Size(MB)", default=0.0,
                             help="Maximum size of attachment in MB.")

@@ -223,17 +223,19 @@ class AuditlogRule(models.Model):
         if updated:
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Update the registry when a new rule is created."""
-        if "model_id" not in vals or not vals["model_id"]:
-            raise UserError(_("No model defined to create line."))
-        model = self.env["ir.model"].sudo().browse(vals["model_id"])
-        vals.update({"model_name": model.name, "model_model": model.model})
-        new_record = super().create(vals)
-        if new_record._register_hook():
+        for vals in vals_list:
+            if "model_id" not in vals or not vals["model_id"]:
+                raise UserError(_("No model defined to create line."))
+            model = self.env["ir.model"].sudo().browse(vals["model_id"])
+            vals.update({"model_name": model.name, "model_model": model.model})
+        new_records = super().create(vals_list)
+        updated = [record._register_hook() for record in new_records]
+        if any(updated):
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
-        return new_record
+        return new_records
 
     def write(self, vals):
         """Update the registry when existing rules are updated."""
@@ -309,6 +311,7 @@ class AuditlogRule(models.Model):
         def create_fast(self, vals_list, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env["auditlog.rule"]
+            vals_list = rule_model._update_vals_list(vals_list)
             vals_list2 = copy.deepcopy(vals_list)
             new_records = create_fast.origin(self, vals_list, **kwargs)
             new_values = {}
@@ -713,3 +716,15 @@ class AuditlogRule(models.Model):
             if act_window:
                 act_window.unlink()
         return self.write({"state": "draft"})
+
+    @api.model
+    def _update_vals_list(self, vals_list):
+        # Odoo supports empty recordset assignment (while it doesn't handle
+        # non-empty recordset ¯\_(ツ)_/¯ ), it could be an Odoo issue, but in
+        # the meanwhile we have to handle this case to avoid errors when using
+        # ``deepcopy`` to log data.
+        for vals in vals_list:
+            for fieldname, fieldvalue in vals.items():
+                if isinstance(fieldvalue, models.BaseModel) and not fieldvalue:
+                    vals[fieldname] = False
+        return vals_list

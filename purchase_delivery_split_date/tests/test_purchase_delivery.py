@@ -1,17 +1,20 @@
 # Copyright 2014-2016 Numérigraphe SARL
 # Copyright 2017 ForgeFlow, S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from freezegun import freeze_time
 
-from odoo.tests.common import TransactionCase
+from odoo.fields import Datetime
+from odoo.tests.common import Form, TransactionCase
 
 
 class TestDeliverySingle(TransactionCase):
-    def setUp(self):
-        super(TestDeliverySingle, self).setUp()
-        self.product_model = self.env["product.product"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_model = cls.env["product.product"]
 
         # Create products:
-        p1 = self.product1 = self.product_model.create(
+        cls.p1 = cls.product1 = cls.product_model.create(
             {
                 "name": "Test Product 1",
                 "type": "product",
@@ -19,7 +22,7 @@ class TestDeliverySingle(TransactionCase):
                 "standard_price": 10,
             }
         )
-        p2 = self.product2 = self.product_model.create(
+        cls.p2 = cls.product2 = cls.product_model.create(
             {
                 "name": "Test Product 2",
                 "type": "product",
@@ -27,7 +30,7 @@ class TestDeliverySingle(TransactionCase):
                 "standard_price": 10,
             }
         )
-        self.p3 = self.product2 = self.product_model.create(
+        cls.p3 = cls.product2 = cls.product_model.create(
             {
                 "name": "Test Product 3",
                 "type": "product",
@@ -37,23 +40,23 @@ class TestDeliverySingle(TransactionCase):
         )
 
         # Two dates which we can use to test the features:
-        self.date_sooner = "2015-01-01"
-        self.date_later = "2015-12-13"
-        self.date_3rd = "2015-12-31"
+        cls.date_sooner = "2015-01-01"
+        cls.date_later = "2015-12-13"
+        cls.date_3rd = "2015-12-31"
 
-        self.po = self.env["purchase.order"].create(
+        cls.po = cls.env["purchase.order"].create(
             {
-                "partner_id": self.ref("base.res_partner_3"),
+                "partner_id": cls.env.ref("base.res_partner_3").id,
                 "order_line": [
                     (
                         0,
                         0,
                         {
-                            "product_id": p1.id,
-                            "product_uom": p1.uom_id.id,
-                            "name": p1.name,
-                            "price_unit": p1.standard_price,
-                            "date_planned": self.date_sooner,
+                            "product_id": cls.p1.id,
+                            "product_uom": cls.p1.uom_id.id,
+                            "name": cls.p1.name,
+                            "price_unit": cls.p1.standard_price,
+                            "date_planned": cls.date_sooner,
                             "product_qty": 42.0,
                         },
                     ),
@@ -61,11 +64,11 @@ class TestDeliverySingle(TransactionCase):
                         0,
                         0,
                         {
-                            "product_id": p2.id,
-                            "product_uom": p2.uom_id.id,
-                            "name": p2.name,
-                            "price_unit": p2.standard_price,
-                            "date_planned": self.date_sooner,
+                            "product_id": cls.p2.id,
+                            "product_uom": cls.p2.uom_id.id,
+                            "name": cls.p2.name,
+                            "price_unit": cls.p2.standard_price,
+                            "date_planned": cls.date_sooner,
                             "product_qty": 12.0,
                         },
                     ),
@@ -73,11 +76,11 @@ class TestDeliverySingle(TransactionCase):
                         0,
                         0,
                         {
-                            "product_id": p1.id,
-                            "product_uom": p1.uom_id.id,
-                            "name": p1.name,
-                            "price_unit": p1.standard_price,
-                            "date_planned": self.date_sooner,
+                            "product_id": cls.p1.id,
+                            "product_uom": cls.p1.uom_id.id,
+                            "name": cls.p1.name,
+                            "price_unit": cls.p1.standard_price,
+                            "date_planned": cls.date_sooner,
                             "product_qty": 1.0,
                         },
                     ),
@@ -102,6 +105,33 @@ class TestDeliverySingle(TransactionCase):
             str(self.po.picking_ids[0].scheduled_date)[:10],
             self.date_sooner,
             "The picking must be planned at the expected date",
+        )
+
+    def test_adding_line(self):
+        # A modification on line product quantity will recompute the
+        # date_planned field with the seller (supplierinfo) lead time
+        # Check if the original date planned is kept if new date_planned is before
+
+        # We first add a seller to the product
+        self.env["product.supplierinfo"].create(
+            {
+                "partner_id": self.env.ref("base.res_partner_3").id,
+                "product_tmpl_id": self.p1.product_tmpl_id.id,
+            }
+        )
+        # Set today earlier as planned date
+        today = "2015-12-01"
+        self.po.date_order = today
+
+        self.po.order_line[0].date_planned = self.date_later
+
+        # Then change the line quantity
+        with freeze_time(today):
+            self.po.order_line[0].product_qty = 43.0
+
+        # We check the later planned date is kept
+        self.assertEqual(
+            Datetime.to_datetime("2015-12-13"), self.po.order_line[0].date_planned
         )
 
     def test_check_multiple_dates(self):
@@ -242,3 +272,11 @@ class TestDeliverySingle(TransactionCase):
         # No time difference so will be another day (2 pickings)
         line2.write({"date_planned": "2021-05-04 23:00:00"})
         self.assertEqual(len(self.po.picking_ids), 2)
+
+    def test_create_from_form(self):
+        partner_purchase = self.env["res.partner"].create(
+            {"name": "Partner 1 of purchase on create from form"}
+        )
+        with Form(self.env["purchase.order"]) as purchase_form:
+            purchase_form.partner_id = partner_purchase
+        self.assertEqual(purchase_form.partner_id, partner_purchase)

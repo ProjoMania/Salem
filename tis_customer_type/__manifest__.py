@@ -5,7 +5,7 @@
 {
     'name': 'Customer Type',
     'category': 'Accounting',
-    'version': '15.0.0.2',
+    'version': '15.0.0',
     'summary': 'Customer type in Account aged receivable, aged payable, partner ledger',
     'author': 'Technaureus Info Solutions Pvt. Ltd.',
     'sequence': 1,
@@ -21,11 +21,11 @@
         'views/customer_type_views.xml',
 
     ],
-    'assets': {
-        'web.assets_backend': [
-            'tis_customer_type/static/src/js/account_report.js',
-        ],
-    },
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'tis_customer_type/static/src/js/account_report.js',
+    #     ],
+    # },
     'images': ['images/main_screenshot.png'],
     'installable': True,
     'application': True,

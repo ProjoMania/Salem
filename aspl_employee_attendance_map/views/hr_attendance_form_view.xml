@@ -8,7 +8,7 @@
             <form string="Search Map" class="oe_form_configuration">
                 <header>
 <!--                    <button string="Search" type="object" name="show_map" class="oe_highlight"/>-->
-                    <button string="Search" id="test_button" class="oe_highlight" attrs="{'invisible': [('attendance_date','=',False)]}"/>
+                    <button string="Search" id="test_button" class="oe_highlight" invisible="not attendance_date"/>
                     <button special="cancel" string="Cancel" name="cancel" class="oe_link"/>
                 </header>
                 <sheet>

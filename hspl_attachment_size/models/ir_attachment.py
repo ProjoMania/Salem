@@ -1,7 +1,6 @@
 # Copyright 2018, 2021 Heliconia Solutions Pvt Ltd (https://heliconia.io)
 
 import math
-
 from odoo import api, fields, models
 
 
@@ -11,6 +10,7 @@ class IrAttachment(models.Model):
     size = fields.Char("File Size", compute="_compute_convert_size", store=True)
 
     @api.depends("file_size")
+    @api.depends_context('file_size')
     def _compute_convert_size(self):
         """Compute for convert file size"""
         for rec in self:

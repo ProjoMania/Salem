@@ -17,7 +17,7 @@ month_selection = [
 
 
 class ProductionLot(models.Model):
-    _inherit = 'stock.production.lot'
+    _inherit = 'stock.lot'
     _order = 'life_date asc, state asc, id asc'
 
     def _get_total_duration(self):
@@ -47,7 +47,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_request_document or '',
                 'store_fname': self.attach_request_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -75,7 +75,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_approval_document or '',
                 'store_fname': self.attach_approval_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -105,7 +105,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_meda_document or '',
                 'store_fname': self.attach_meda_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -289,9 +289,9 @@ class ProductionLot(models.Model):
         self.last_update_date = datetime.now()
 
     @api.model
-    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+    def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
         context = self._context or {}
         if context.get('only_approved', False):
-            args += [('state', '=', 'approved')]
-        return super(ProductionLot, self)._search(args, offset, limit, order, count=count,
+            domain += [('state', '=', 'approved')]
+        return super(ProductionLot, self)._search(domain, offset, limit, order,
                                                access_rights_uid=access_rights_uid)

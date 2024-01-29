@@ -4,7 +4,7 @@
 
 {
     'name': 'Viatris Sales Report',
-    'version': '15.0.0.7',
+    'version': '15.0.0',
     'category': 'Sales',
     'sequence': 1,
     'author': 'Technaureus Info Solutions Pvt. Ltd.',

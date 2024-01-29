@@ -10,12 +10,12 @@ from odoo.tools.misc import format_date
 
 
 class report_account_aged_partner(models.AbstractModel):
-    _name = "account.aged.partner"
-    _inherit = "account.aged.partner"
+    _name = "account.aged.partner.balance.report.handler"
+    _inherit = "account.aged.partner.balance.report.handler"
 
-    period5 = fields.Monetary(string='121 - 150')
-    period6 = fields.Monetary(string='151 - 180')
-    period7 = fields.Monetary(string='Older')
+    # period5 = fields.Monetary(string='121 - 150')
+    # period6 = fields.Monetary(string='151 - 180')
+    # period7 = fields.Monetary(string='Older')
 
     @api.model
     def _get_query_period_table(self, options):

@@ -4,7 +4,7 @@
 
 {
     'name': 'Tis Auto Shipping Invoice',
-    'version': '15.0.0.0.6',
+    'version': '15.0.0',
     'author': 'Technaureus Info Solutions Pvt. Ltd.',
     'website': 'http://www.technaureus.com/',
     'currency': 'EUR',

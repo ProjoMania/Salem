@@ -15,11 +15,11 @@
                             <group></group>
 
                             <group>
-                                        <field name="from_date" attrs="{'required':True}"/>
+                                        <field name="from_date" required="1"/>
                             </group>
 
                             <group>
-                                        <field name="to_date" attrs="{'required':True}"/>
+                                        <field name="to_date" required="1"/>
 
                             </group>
                         </group>

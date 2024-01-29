@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Journal Sequence',
-    'version': '14.0.1.3',
+    'version': '14.0.1',
     'author': 'Grupo Nahuiik',
     'website': 'http://gruponahuiik.com',
     'description': """

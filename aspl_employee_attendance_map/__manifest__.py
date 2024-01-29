@@ -4,7 +4,7 @@
 {
     'name': 'Odoo Employee Attandance Map',
     'summary': 'Get location of employee and load map using employee attendance location',
-    'version': '15.0.0.8',
+    'version': '15.0.0',
     'description': """Get location of employee and load map using employee attendance location""",
     'author': 'Acespritech Solutions Pvt. Ltd.',
     'category': 'General',
@@ -22,13 +22,13 @@
     'qweb': [
         'static/src/xml/template.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'aspl_employee_attendance_map/static/src/js/main.js',
-            'aspl_employee_attendance_map/static/src/js/view.js',
-            'aspl_employee_attendance_map/static/src/js/customer_map.js'
-        ],
-    },
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'aspl_employee_attendance_map/static/src/js/main.js',
+    #         'aspl_employee_attendance_map/static/src/js/view.js',
+    #         'aspl_employee_attendance_map/static/src/js/customer_map.js'
+    #     ],
+    # },
     'images': ['static/description/odoo12_5_select_department_and_employee.png'],
     'installable': True,
     'auto_install': False,

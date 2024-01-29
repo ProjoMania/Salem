@@ -19,10 +19,9 @@
                         <div class="col-lg-6 col-12 o_setting_box">
                             <div class="o_setting_left_pane">
                             </div>
-                            <div class="o_setting_right_pane" attrs="{'invisible': [('stock_restriction', '=', False)]}">
+                            <div class="o_setting_right_pane" invisible="not stock_restriction">
                                 <label for="stock_check_type"/>
-                                <field name="stock_check_type" attrs="{
-                                'required': [('stock_restriction', '=', True)]}"/>
+                                <field name="stock_check_type" required="stock_restriction"/>
                             </div>
                         </div>
                     </div>

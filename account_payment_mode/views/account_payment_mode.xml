@@ -10,10 +10,15 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="not active"
                     />
                     <group name="main">
                         <field name="name" />
+                        <field
+                            name="company_id"
+                            groups="!base.group_multi_company"
+                            invisible="1"
+                        />
                         <field name="company_id" groups="base.group_multi_company" />
                         <field name="active" invisible="1" />
                         <field name="payment_method_id" />
@@ -21,16 +26,18 @@
                         <field name="bank_account_link" />
                         <field
                             name="fixed_journal_id"
-                            attrs="{'invisible': [('bank_account_link', '!=', 'fixed')], 'required': [('bank_account_link', '=', 'fixed')]}"
+                            invisible="bank_account_link != 'fixed'"
+                            required="bank_account_link == 'fixed'"
                         />
                         <field
                             name="variable_journal_ids"
-                            attrs="{'invisible': [('bank_account_link', '!=', 'variable')], 'required': [('bank_account_link', '=', 'variable')]}"
+                            invisible="bank_account_link != 'variable'"
+                            required="bank_account_link == 'variable'"
                             widget="many2many_tags"
                         />
                     </group>
                     <group string="Note" name="note">
-                        <field name="note" nolabel="1" />
+                        <field name="note" nolabel="1" colspan="2" />
                     </group>
                 </sheet>
             </form>
@@ -41,10 +48,16 @@
         <field name="model">account.payment.mode</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="payment_method_id" />
                 <field name="payment_type" />
                 <field name="bank_account_link" />
+                <field
+                    name="company_id"
+                    groups="!base.group_multi_company"
+                    invisible="1"
+                />
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>

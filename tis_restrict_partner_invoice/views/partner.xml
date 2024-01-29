@@ -11,10 +11,10 @@
 
                         </group>
                         <group>
-
+                            <field name="is_due_date_block" invisible="1"/>
                             <group><field name="is_due_date_block" groups="tis_restrict_partner_invoice.group_restrict_partner_invoice"/></group><br/>
-                            <group><field name="due_date_period" attrs="{'invisible':[('is_due_date_block', '=', False)]}" /></group>
-                            <group><span attrs="{'invisible':[('is_due_date_block', '=', False)]}">Days</span></group>
+                            <group><field name="due_date_period" invisible="not is_due_date_block"/></group>
+                            <group><span invisible="not is_due_date_block">Days</span></group>
 
                         </group>
 

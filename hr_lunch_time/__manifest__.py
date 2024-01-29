@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Hr Attendance Lunch Time',
-    'version': '14.0.3.1',
+    'version': '14.0.3',
     'category': 'Human Resources/Attendances',
     'author': 'Dev JS',
     'sequence': 99,
@@ -25,15 +25,15 @@
     # 'qweb': [
     #     'static/src/xml/attendance.xml',
     # ],
-    'assets': {
-        'web.assets_backend': [
-            'hr_lunch_time/static/src/js/kiosk_face_recognition.js',
-            'hr_lunch_time/static/src/js/kiosk_mode.js',
-        ],
-        'web.assets_qweb': [
-            'hr_lunch_time/static/src/xml/attendance.xml',
-        ]
-    },
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'hr_lunch_time/static/src/js/kiosk_face_recognition.js',
+    #         'hr_lunch_time/static/src/js/kiosk_mode.js',
+    #     ],
+    #     'web.assets_qweb': [
+    #         'hr_lunch_time/static/src/xml/attendance.xml',
+    #     ]
+    # },
     'application': True,
     'price': 15,
     'currency': 'EUR',

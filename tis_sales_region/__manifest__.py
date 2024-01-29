@@ -4,7 +4,7 @@
 
 {
     'name': 'Sales Region',
-    'version': '15.0.0.0',
+    'version': '15.0.0',
     'category': 'Sales',
     'sequence': 1,
     'author': 'Technaureus Info Solutions Pvt. Ltd.',

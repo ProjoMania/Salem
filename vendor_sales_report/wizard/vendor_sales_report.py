@@ -31,7 +31,7 @@ class VendorSalesReport(models.TransientModel):
             stock_lines = self.env['stock.move.line'].sudo().search([("product_id", "in", products_list)])
 
             if stock_lines:
-                lots_obj = self.env["stock.production.lot"].search([])
+                lots_obj = self.env["stock.lot"].search([])
                 # sale_orders = self.env["sale.order"].search([("date_order", ">=", from_dt), ("date_order", "<=", to_dt),
                 #                                              ("name", "=", 'BDI-SO-2022-0424')])
                                                              # ("name", "in", ('BDI-SO-2022-1302','BDI-SO-2022-0134','BDI-SO-2022-0007'))])

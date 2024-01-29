@@ -4,7 +4,7 @@
 
 {
     'name': 'Vendor Sales Report',
-    'version': '15.0.0.7',
+    'version': '15.0.0',
     'sequence': 1,
     'category': 'Sales',
     'summary': 'Vendor based xlsx sales report',

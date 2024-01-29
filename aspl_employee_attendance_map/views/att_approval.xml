@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form string="Attendance Approvals" class="oe_form_configuration" create="0" edit="0">
                 <header>
-                    <button string="Approve" type="object" name="att_approve" class="oe_highlight" attrs="{'invisible':[('state','=','approved')]}"/>
+                    <button string="Approve" type="object" name="att_approve" class="oe_highlight" invisible="state == 'approved'"/>
 <!--                    <button special="cancel" string="Cancel" name="cancel" class="oe_link"/>-->
                     <field name="state" widget="statusbar"></field>
                 </header>

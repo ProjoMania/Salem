@@ -14,7 +14,7 @@
     'website': "http://www.aktivsoftware.com",
     'license': 'AGPL-3',
     'category': 'Extra Tools',
-    'version': '14.0.1.0.0',
+    'version': '14.0.1',
     'depends': ['web', 'sale_management'],
     'data': [
         'views/res_company_views.xml',
