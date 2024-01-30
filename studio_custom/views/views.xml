@@ -41,7 +41,7 @@
 
 
                 <xpath expr="//field[@name='website']" position="after">
-                    <field name="x_studio_background_report" options="{&quot;size&quot;:[0,270]}" widget="image"
+                    <field name="x_studio_background_report" options="{'size':[0,270]}" widget="image"
                            string="Background Report"/>
                 </xpath>
 
@@ -82,7 +82,7 @@
 
 
                 <xpath expr="//field[@name='type_id']" position="after">
-                    <field widget="image" options="{&quot;size&quot;: [0, 90]}" name="x_studio_photo" string="Photo"/>
+                    <field widget="image" options="{'size': [0, 90]}" name="x_studio_photo" string="Photo"/>
                     <field name="x_studio_age" string="Age" widget="monetary" digits="1,0"/>
                     <field name="x_studio_years_or_experience" string="Years or Experience "/>
                     <field name="x_studio_field_of_study_1" string="Field of Study"/>
@@ -94,8 +94,8 @@
         </record>
 
 
-        <record id="studio_custom_odoo_studio_applican_cc6adf4a-0a3f-4ae8-8392-4dea810bdadb" model="ir.ui.view">
-            <field name="name">studio.custom.odoo.studio.applican.cc6adf4a-0a3f-4ae8-8392-4dea810bdadb</field>
+        <record id="studio_custom_odoo_studio_applican_cc6adf4a-0a3f-4ae8-8392-4dea810bd133adb" model="ir.ui.view">
+            <field name="name">studio.custom.odoo.studio.applican.cc6adf4a-0a3f-4ae8-8392-4sdsadea810bdadb</field>
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
             <field name="arch" type="xml">
@@ -172,7 +172,8 @@
                     <kanban default_group_by="stage_id" class="o_kanban_applicant"
                             quick_create_view="hr_recruitment.quick_create_applicant_form">
                         <field name="stage_id"
-                               options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Requirements&quot;}}"/>
+                               options='{"group_by_tooltip": {"requirements": "Requirements"}}'/>
+                        <field name="date_closed"/>
                         <field name="color"/>
                         <field name="priority"/>
                         <field name="user_id"/>
@@ -182,14 +183,30 @@
                         <field name="partner_id"/>
                         <field name="job_id"/>
                         <field name="department_id"/>
-                        <field name="message_needaction_counter"/>
                         <field name="attachment_number"/>
                         <field name="active"/>
                         <field name="activity_ids"/>
                         <field name="activity_state"/>
+                        <field name="refuse_reason_id"/>
+                        <field name="application_status"/>
                         <progressbar field="activity_state"
-                                     colors="{&quot;planned&quot;: &quot;success&quot;, &quot;overdue&quot;: &quot;danger&quot;, &quot;today&quot;: &quot;warning&quot;}"/>
+                                     colors="{'planned': 'success', 'overdue': 'danger', 'today': 'warning'}"/>
                         <templates>
+                            <t t-name="kanban-menu">
+                                <a role="menuitem" name="action_makeMeeting" type="object" class="dropdown-item">
+                                    Schedule Interview
+                                </a>
+                                <a role="menuitem" name="archive_applicant" type="object" class="dropdown-item">Refuse
+                                </a>
+                                <a role="menuitem" name="archive_applicant" type="object" class="dropdown-item">
+                                    Archive
+                                </a>
+                                <t t-if="widget.deletable">
+                                    <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                </t>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <ul class="oe_kanban_colorpicker text-center" data-field="color"/>
+                            </t>
                             <t t-name="kanban-box">
                                 <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click oe_applicant_kanban oe_semantic_html_override">
                                     <div class="o_dropdown_kanban dropdown">
@@ -374,8 +391,8 @@
 
                 <xpath expr="//field[@name='location_dest_id']" position="after">
                     <field name="x_studio_demand" string="Demand"/>
-                    <field name="product_qty"/>
-                    <field name="product_uom_qty"/>
+                    <field name="quantity"/>
+                    <field name="quantity_product_uom"/>
                 </xpath>
 
 
