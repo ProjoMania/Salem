@@ -38,20 +38,21 @@ class ShAccountJournalRestrict(models.Model):
 
     # To apply domain to action_________ 2
     @api.model
-    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+    def _name_search(self, name, domain=None, operator='ilike', limit=100, order=None):
         super(ShAccountJournalRestrict, self)._name_search(
-            name, args=None, operator='ilike', limit=100, name_get_uid=None)
+            name, domain=domain, operator='ilike', limit=100, order=order)
 
         if(
             self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not
             (self.env.user.has_group("base.group_erp_manager"))
         ):
-            domain = [
+            domain += [
                 ("user_ids", "in", self.env.user.id),('name','ilike',name)
             ]
         else:
-            domain = [('name','ilike',name)]
-        return self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
+            domain += [('name','ilike',name)]
+        # return self._search(expression.AND([domains, domain]), limit=limit)
+        return self._search(domain, limit=limit, order=order)
 
     # To apply domain to load menu_________ 1
     @api.model
@@ -69,5 +70,4 @@ class ShAccountJournalRestrict(models.Model):
             offset=offset,
             limit=limit,
             order=order,
-            count=count,
         )
