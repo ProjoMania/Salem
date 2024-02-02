@@ -77,7 +77,7 @@
                                 <field name="parent_id" domain="[('company_id', '=', company_id)]"/>
                                 <field name="sent_from_id" readonly="state in ['cancelled', 'submitted']" required="1"/>
                                 <field name="sent_to_id" readonly="state in ['cancelled', 'submitted']" invisible="type == 'inbound'" required="type in ['internal', 'outbound']"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" />
                             </group>
                             <group>
                                 <field name="created_on"/>
