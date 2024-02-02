@@ -7,7 +7,11 @@ import json
 import tempfile
 
 from odoo import models, fields, api, tools, _
-from odoo.exceptions import Warning, AccessDenied
+from odoo.exceptions import AccessDenied
+from warnings import warn  as Warning
+
+
+# from odoo.exceptions import Warning, AccessDenied
 import odoo
 
 import logging
