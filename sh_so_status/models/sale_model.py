@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
         string="Delivered", default=False, copy=False, compute="_compute_check_delivery", store=True, compute_sudo=True)
     sh_partially_delivered = fields.Boolean(
         string="Partially Delivered", default=False, copy=False, compute="_compute_check_delivery", store=True, compute_sudo=True)
-    sh_fully_paid = fields.Boolean(string="Paid", default=False, copy=False,
+    sh_fully_paid = fields.Boolean(string="Paid", store=False, default=False, copy=False,
                                    compute="_compute_check_delivery", search="_search_fully_paid", compute_sudo=True)
     sh_partially_paid = fields.Boolean(string="Partially Paid",  default=False, copy=False,
                                        compute="_compute_check_delivery", search="_search_partial_paid", compute_sudo=True)
