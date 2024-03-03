@@ -51,12 +51,11 @@ class AuditlogRule(models.Model):
     _name = "auditlog.rule"
     _description = "Auditlog - Rule"
 
-    name = fields.Char(required=True, states={"subscribed": [("readonly", True)]})
+    name = fields.Char(required=True)
     model_id = fields.Many2one(
         "ir.model",
         "Model",
         help="Select model for which you want to generate log.",
-        states={"subscribed": [("readonly", True)]},
         ondelete="set null",
         index=True,
     )
@@ -69,7 +68,6 @@ class AuditlogRule(models.Model):
         "rule_id",
         string="Users",
         help="if  User is not added then it will applicable for all users",
-        states={"subscribed": [("readonly", True)]},
     )
     log_read = fields.Boolean(
         "Log Reads",
@@ -77,7 +75,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of read/open on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_write = fields.Boolean(
         "Log Writes",
@@ -86,7 +83,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of modification on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_unlink = fields.Boolean(
         "Log Deletes",
@@ -95,7 +91,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of deletion on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_create = fields.Boolean(
         "Log Creates",
@@ -104,7 +99,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of creation on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_type = fields.Selection(
         [("full", "Full log"), ("fast", "Fast log")],
@@ -118,7 +112,6 @@ class AuditlogRule(models.Model):
             "Fast log: only log the changes made through the create and "
             "write operations (less information, but it is faster)"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
 
     state = fields.Selection(
@@ -129,7 +122,6 @@ class AuditlogRule(models.Model):
     action_id = fields.Many2one(
         "ir.actions.act_window",
         string="Action",
-        states={"subscribed": [("readonly", True)]},
     )
     capture_record = fields.Boolean(
         help="Select this if you want to keep track of Unlink Record",
@@ -138,14 +130,12 @@ class AuditlogRule(models.Model):
         "res.users",
         string="Users to Exclude",
         context={"active_test": False},
-        states={"subscribed": [("readonly", True)]},
     )
 
     fields_to_exclude_ids = fields.Many2many(
         "ir.model.fields",
         domain="[('model_id', '=', model_id)]",
         string="Fields to Exclude",
-        states={"subscribed": [("readonly", True)]},
     )
 
     _sql_constraints = [
