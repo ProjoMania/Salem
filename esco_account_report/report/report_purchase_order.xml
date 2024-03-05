@@ -9,7 +9,7 @@
             <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
 <!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
             <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
-                <t t-if="o.dest_address_id">
+                <t t-if="o.sudo().dest_address_id">
                 </t>
                 <span class="bold_header">Purchase Order</span>
                 <div class="row" style="width: 100%; ">
@@ -62,7 +62,7 @@
                         </table>
                         <div style=" direction: ltr;">
                             <div class="float: left;" style="border: none;">
-                                <div t-field="o.partner_id.name" style=""/>
+                                <div t-field="o.sudo().partner_id.name" style=""/>
                                 <div>
                                     <t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span>&#160;</span>
                                     <t t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>
@@ -110,7 +110,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="o.order_line" t-as="line">
+                        <tr t-foreach="o.sudo().order_line" t-as="line">
                             <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
                             <td style="padding-left: 15px;padding-right: 15px;"><span t-field="line.name"/></td>
                             <td class="text-center"><span t-esc='"{:,}".format(int(line.product_qty))'/></td>

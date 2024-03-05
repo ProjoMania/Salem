@@ -135,7 +135,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">
+                        <tr t-foreach="o.sudo().invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">
                             <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
                             <td style="padding-left: 15px;padding-right: 15px;" class="text-center"><span t-field="line.name"/></td>
                             <td class="text-center"><span t-esc='"{:,}".format(int(line.quantity))'/></td>
@@ -219,7 +219,7 @@
                         <td class="text-center no_border bold_text_only"><span>Batch Number</span></td>
                     </tr>
                     <tbody>
-                        <t t-foreach="o.get_pickings()" t-as="picking">
+                        <t t-foreach="o.sudo().get_pickings()" t-as="picking">
                             <tr t-foreach="picking.move_line_ids" t-as="line">
                                 <td class="text-center no_border"><span t-field="line.product_id.name"/></td>
                                 <td class="text-center no_border" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.qty_done))'/></td>
@@ -282,7 +282,7 @@
     <template id="account.report_invoice_with_payments">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
+                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.sudo().lang"/>
                 <t t-call="esco_account_report.esco_report_invoice_document" />
             </t>
         </t>

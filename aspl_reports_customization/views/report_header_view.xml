@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard" >
+        <xpath expr="//div/div[hasclass('row')]" postion="inside">
+            <div class="col-auto text-right">
+                <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
+                <t t-if="doc"><t t-if="doc.id"><t t-set="id" t-value="doc.id"/></t></t>
+                <t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t>
+                <img t-att-src="'data:image/*;base64,%s' % company.create_qr_code(name, id).decode('utf-8')"
+                     width="100px" height="100px" class="pull-right"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="external_layout_background_bait" inherit_id="esco_account_report.external_layout_background_bait" >
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" postion="inside">
+            <div class="col-auto text-right top-right-div" t-att-style="report_header_style">
+                <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
+                <t t-if="o"><t t-if="o.id"><t t-set="id" t-value="o.id"/></t></t>
+                <t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t>
+                <img t-att-src="'data:image/*;base64,%s' % o.company_id.create_qr_code(name, id).decode('utf-8')"
+                     width="100px" height="100px" class="pull-right" style="right:20px; position:relative;"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

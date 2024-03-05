@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="aspl_sale_analytic_account.Many2oneColourTag">
+        <t t-log="color"/>
+        <div t-attf-class="badge badge-pill dropdown custom_tag_#{color}" t-attf-data-color="#{color}" data-index="0" t-attf-data-id="#{color}">
+            <a role="button" href="#" class="dropdown-toggle o-no-caret" data-toggle="dropdown" aria-expanded="false">
+                <span class="o_badge_text" title="Training">
+                    <span role="img" aria-label="Tag color: Salmon pink"></span>
+                    <span class="o_tag_badge_text" style="color:black; font-size: 12px;"><t t-esc="line"/></span>
+                </span>
+            </a>
+        </div>
+    </t>
+</templates>

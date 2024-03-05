@@ -20,12 +20,7 @@ import io
 import base64
 from odoo.http import content_disposition, request
 from odoo.tools import html_escape
-from odoo.http import (
-    content_disposition,
-    request,
-    route,
-    serialize_exception as _serialize_exception,
-)
+from odoo.addons.web.controllers.main import _serialize_exception
 
 
 class XLSXReportController(http.Controller):

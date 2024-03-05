@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="view_sale_order_line_wizard_form" model="ir.ui.view">
+            <field name="name">sale.order.line.wizard.form</field>
+            <field name="model">sale.order.line.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="order_line_ids" widget='many2many_default' nolabel='1'>
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_uom"/>
+                                <field name="price_unit"/>
+                                <field name="price_subtotal" widget="monetary"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" name="price">
+                            <field name="total" readonly="1" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Approve" class="btn btn-success" name='approve_so_order' id="approve_so_order"
+                                data-hotkey="v" type="object"
+                                groups="aspl_sale_order_quick_preview.group_quick_view_manager"/>
+                        <button name="confirm_so_order" id="confirm_so_order" data-hotkey="v"
+                                string="Confirm" class="btn-primary" type="object"
+                                groups="aspl_sale_order_quick_preview.group_quick_view_manager"/>
+                        <button name="create_active_so_order" id="create_active_so_order" data-hotkey="v"
+                                string="Create Active" class="btn-primary" type="object"
+                                groups="aspl_sale_order_quick_preview.group_quick_view_manager"/>
+                        <button name="action_cancel" type="object" string="Cancel" data-hotkey="z"
+                                class="btn btn-danger"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+</odoo>

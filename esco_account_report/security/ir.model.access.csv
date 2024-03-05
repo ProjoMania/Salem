@@ -7,3 +7,4 @@ access_condition_terms_all,condition_terms all,model_condition_terms,,1,0,0,0
 access_condition_terms_manager,condition_terms manager,model_condition_terms,base.group_erp_manager,1,1,1,1
 access_shipping_data_all,shipping_data all,model_shipping_data,,1,0,0,0
 access_shipping_data_manager,shipping_data manager,model_shipping_data,base.group_erp_manager,1,1,1,1
+esco_account_report.access_partner_print_wizard,access_partner_print_wizard,esco_account_report.model_partner_print_wizard,base.group_user,1,0,0,0

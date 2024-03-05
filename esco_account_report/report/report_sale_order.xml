@@ -19,7 +19,7 @@
                                 <span>Order No.</span>
                             </td>
                             <td style="width:60%" class="text-center top_border left_border right_border">
-                                <span t-field="o.name"/>
+                                <span t-field="o.sudo().name"/>
                             </td>
                         </tr>
                         <tr>
@@ -27,7 +27,7 @@
                                 <span>Customer Name</span>
                             </td>
                             <td style="width:60%" class="text-center top_border left_border right_border bottom_border">
-                                <span t-field="o.partner_id.name"/>
+                                <span t-field="o.partner_id.sudo().name"/>
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +58,7 @@
                         </tr>
                     </table>
                     <div style="width: 50%;">
-                        <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
+                        <div t-if="o.sudo().signature" class="mt32 ml64 mr4" name="signature">
                         </div>
                         <div t-if="o.validity_date and o.state in ['draft', 'sent']" class="col-auto mw-100 mb-2" name="expiration_date">
                         </div>
@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="o.order_line" t-as="line">
+                        <tr t-foreach="o.sudo().order_line" t-as="line">
                             <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
                             <td class="text-left"><span t-field="line.product_id.name"/></td>
                             <td class="text-center"><span t-esc='"{:,}".format(int(line.product_uom_qty))'/></td>
@@ -173,7 +173,7 @@
                         <td class="text-center no_border"><span>Batch Number</span></td>
                     </tr>
                     <tbody>
-                        <t t-foreach="o.picking_ids" t-as="picking">
+                        <t t-foreach="o.sudo().picking_ids" t-as="picking">
                             <tr t-foreach="picking.move_line_ids" t-as="line">
                                 <td class="text-center no_border"><span t-field="line.product_id.name"/></td>
                                 <td class="text-center no_border" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.qty_done))'/></td>
