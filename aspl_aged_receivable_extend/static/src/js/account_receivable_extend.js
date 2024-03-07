@@ -327,7 +327,7 @@ var accountReportsWidget = AbstractAction.extend({
             this.odoo_context.currency_id = selectedCurrency;
 
             this._rpc({
-                model: 'account.aged.partner',
+                model: 'account.aged.partner.balance.report.handler',
                 method: 'set_currency_option',
                 args: [[]],
                 context: { currency_id: selectedCurrency, report_options: this.report_options }
