@@ -8,23 +8,28 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='group3']" position="replace">
                 <group name="group3"
-                       attrs="{'invisible': ['|', ('payment_difference', '=', 0.0), '|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}">
+                       invisible="payment_difference == 0.0 or not can_edit_wizard or (can_group_payments and not group_payment)">
                     <label for="payment_difference"/>
                     <div>
                         <field name="payment_difference"/>
                         <field name="payment_difference_handling" widget="radio" nolabel="1"/>
-                        <div attrs="{'invisible': [('payment_difference_handling','=','open')]}">
+                        <div invisible="payment_difference == 'open'">
                             <label for="discount_amount" class="oe_edit_only" string="Discount Amount"
-                                   attrs="{'invisible': [('payment_difference_handling', '!=', 'discount'), ('payment_difference', '!=', 0.0)]}"/>
+                                    invisible="payment_difference_handling != 'discount' and payment_difference != 0.0"
+                            />
                             <field name="discount_amount"
-                                   attrs="{'required': [('payment_difference_handling', '=', 'discount'), ('payment_difference', '!=', 0.0)], 'invisible': [('payment_difference_handling', '!=', 'discount'), ('payment_difference', '!=', 0.0)]}"/>
+                                   required="payment_difference_handling == 'discount' and payment_difference != 0.0"
+                                   invisible="payment_difference_handling != 'discount' and payment_difference != 0.0"
+
+                            />
                             <label for="writeoff_account_id" string="Post Difference In" class="oe_edit_only"/>
                             <field name="writeoff_account_id"
                                    string="Post Difference In"
                                    options="{'no_create': True}"
-                                   attrs="{'required': [('payment_difference_handling', '=', 'reconcile')]}"/>
+                                   required="payment_difference_handling == 'reconcile'"
+                            />
                             <label for="writeoff_label" class="oe_edit_only" string="Label"/>
-                            <field name="writeoff_label" attrs="{'required': [('payment_difference_handling', '=', 'reconcile')]}"/>
+                            <field name="writeoff_label" required="payment_difference_handling == 'reconcile'"/>
                         </div>
                     </div>
                 </group>

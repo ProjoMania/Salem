@@ -30,7 +30,7 @@
                         <button name="confirm_so_order" id="confirm_so_order" data-hotkey="v"
                                 string="Confirm" class="btn-primary" type="object"
                                 groups="aspl_sale_order_quick_preview.group_quick_view_manager"
-                                attrs="{'invisible':[('is_hide_confirm_button','=',True)]}"/>
+                                invisible="is_hide_confirm_button"/>
                         <button name="create_active_so_order" id="create_active_so_order" data-hotkey="v"
                                 string="Create Active" class="btn-primary" type="object"
                                 groups="aspl_sale_order_quick_preview.group_quick_view_manager"/>
