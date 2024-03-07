@@ -19,16 +19,17 @@
         'views/hr_attendance_form_view.xml',
         'views/att_approval.xml',
     ],
-    'qweb': [
-        'static/src/xml/template.xml',
-    ],
-    # 'assets': {
-    #     'web.assets_backend': [
+    # 'qweb': [
+    #     'static/src/xml/template.xml',
+    # ],
+    'assets': {
+        'hr_attendance.assets_public_attendance': [
+            'aspl_employee_attendance_map/static/src/xml/template.xml',
     #         'aspl_employee_attendance_map/static/src/js/main.js',
     #         'aspl_employee_attendance_map/static/src/js/view.js',
     #         'aspl_employee_attendance_map/static/src/js/customer_map.js'
-    #     ],
-    # },
+        ],
+    },
     'images': ['static/description/odoo12_5_select_department_and_employee.png'],
     'installable': True,
     'auto_install': False,

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template id='template_id'>    
-    <t t-extend="HrAttendanceGreetingMessage">
-        <t t-jquery=".o_hr_attendance_button_dismiss" t-operation="before">
+<templates xml:space="preserve">
+    <t t-name="aspl_employee_attendance_map.public_kiosk_greetings" t-inherit="hr_attendance.public_kiosk_greetings" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_hr_attendance_button_dismiss')]" position="before">
             <t t-if='widget.attendance.location_name != false'>
-               <b>Location : </b> <t t-esc="widget.attendance.location_name"/><br/>
+               <b>Location : </b><t t-esc="this.attendance.location_name"/><br/>
             </t>
             <t t-if="widget.attendance.os_name != false">
-                <b>Operating System : </b> <t t-esc="widget.attendance.os_name"/><br/>
+                <b>Operating System : </b><t t-esc="this.attendance.os_name"/><br/>
             </t>
             <t t-if='widget.attendance.browser_name != false'>
-                <b>Browser : </b> <t t-esc="widget.attendance.browser_name"/><br/>
+                <b>Browser : </b><t t-esc="this.attendance.browser_name"/><br/>
             </t>
-        </t>
+        </xpath>
     </t>
-</template>
+</templates>
 
