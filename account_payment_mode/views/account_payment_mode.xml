@@ -10,7 +10,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        invisible="not active"
+                        invisible="active"
                     />
                     <group name="main">
                         <field name="name" />
