@@ -4,7 +4,7 @@
 
 {
     'name': 'Reports Customization',
-    'version': '15.0.1.0.0',
+    'version': '17.0.1.0.0',
     'category': 'Account/Sales/Website',
     'summary': 'Reports Customization',
     'description': 'QR code is added in header in pdf reports.',

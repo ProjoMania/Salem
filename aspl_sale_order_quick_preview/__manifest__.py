@@ -2,7 +2,7 @@
 
 {
     'name': 'ASPL: Sales Order Quick Preview',
-    'version': '15.0.1.0.0',
+    'version': '17.0.1.0.0',
     'description': """
         ASPL: Sales Order Quick Preview""",
     'currency': 'EUR',
