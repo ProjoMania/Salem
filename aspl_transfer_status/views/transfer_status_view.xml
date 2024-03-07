@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="transfer_status_tree_view" model="ir.ui.view">
+            <field name="name">transfer.status.tree.view</field>
+            <field name="model">transfer.status</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="attachment_file"/>
+                    <field name="picking_type_ids"/>
+                    <field name="status_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="transfer_status_form_view" model="ir.ui.view">
+            <field name="name">transfer.status.form.view</field>
+            <field name="model">transfer.status</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="picking_type_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="status_id"/>
+                                <field name="attachment_file"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_transfer_status" model="ir.actions.act_window">
+            <field name="name">Transfer Status</field>
+            <field name="res_model">transfer.status</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_transfer_status" name="Transfer Status"
+                  parent="stock.menu_stock_config_settings"
+                  action="action_transfer_status"
+                  groups="aspl_transfer_status.group_warehouse_keeper"/>
+    </data>
+</odoo>

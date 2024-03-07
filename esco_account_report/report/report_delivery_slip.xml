@@ -47,7 +47,7 @@
                                 </t>
                             </td>
                             <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
-                                <span t-field="o.partner_id.name"/>
+                                <span t-field="o.sudo().partner_id.name"/>
                             </td>
                         </tr>
                     </table>
@@ -93,7 +93,7 @@
                                 </td>
                                 <td class="text-center top_border left_border right_border bottom_border"
                                     style="width: 61%; background-color: white !important; color: black !important">
-                                    <span t-field="o.invoice_number"/>
+                                    <span t-field="o.sudo().invoice_number"/>
                                 </td>
 <!--                                <td t-if="not o.invoice_number"-->
 <!--                                    style="background-color: white !important; color: black !important; border: none !important; border-style : hidden !important;"></td>-->
@@ -114,7 +114,7 @@
                 <br/>
                 <t t-set="i" t-value="1" />
                 <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed;">
-                    <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" />
+                    <t t-set="has_serial_number" t-value="o.sudo().move_line_ids.mapped('lot_id')" />
                     <thead style="background-color: #30378c;">
                         <tr>
                             <td style="width: 11%;" class="table_header text-center"><span>Item #</span></td>
@@ -127,7 +127,7 @@
                     <tbody>
                         <tr t-foreach="o.move_line_ids" t-as="line">
                             <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
-                            <td style="padding-left: 15px;padding-right: 15px;"><span t-field="line.product_id.name"/></td>
+                            <td style="padding-left: 15px;padding-right: 15px;"><span t-field="line.sudo().product_id.name"/></td>
 <!--                            <td class="text-center"><span t-field="line.product_uom_id"/></td>-->
                             <td class="text-center">
                                 <span t-if="line.lot_id.name" t-field="line.lot_id.name"/>

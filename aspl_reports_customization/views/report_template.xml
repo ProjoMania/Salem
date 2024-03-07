@@ -1,0 +1,110 @@
+<odoo>
+
+    <template id="website_valid_doc_template">
+        <t t-call="website.layout">
+            <!--            <div style="color: green; padding-top:50px; padding-bottom:50px;" class="text-center">-->
+            <!--                <h1><b>This is a valid document.</b></h1>-->
+            <!--            </div>-->
+            <form class="text-center mt-20" role="form" method="post" action="/print_document">
+                <br/>
+                <label for="model_name">Document:</label>
+                <strong><t t-esc="id.name"/></strong>
+                <br/>
+                <input type="hidden" id="model_name" name="model_name" t-att-value="model"/>
+                <input type="hidden" id="doc_id" name="doc_id" t-att-value="id.id"/>
+                <input type="hidden" id="record_id" name="record_id" t-att-value="record"/>
+                <button type="submit">
+                    <i class="fa fa-download download-icon"/>Download
+                </button>
+                <br/>
+                <br/>
+                <t t-if="model == 'sale.order'">
+                    <t t-set="invoices"
+                       t-value="[i for i in record.sudo().invoice_ids if i.state not in ['draft', 'cancel']]"/>
+                    <div t-if="invoices" class="row">
+                        <div class="col">
+                            <strong class="d-block mb-1">Invoices</strong>
+                            <ul class="list-group mb-4">
+                                <t t-foreach="invoices" t-as="i">
+                                    <t t-set="report_url" t-value="i.sudo().get_portal_url(report_type='pdf', download=True)"/>
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                        <div>
+                                            <a t-att-href="report_url">
+                                                <span t-esc="i.name"/>
+                                            </a>
+                                            <div class="small d-lg-inline-block">Date:
+                                                <span class="text-muted" t-field="i.invoice_date"/>
+                                            </div>
+                                        </div>
+                                        <span t-if="i.sudo().payment_state in ('paid', 'in_payment')"
+                                              class="small badge badge-success orders_label_text_align">
+                                            <i class="fa fa-fw fa-check"/>
+                                            <b>Paid</b>
+                                        </span>
+                                        <span t-else="" class="small badge badge-info orders_label_text_align">
+                                            <i class="fa fa-fw fa-clock-o"/>
+                                            <b>Waiting Payment</b>
+                                        </span>
+                                    </div>
+                                </t>
+                            </ul>
+                        </div>
+                    </div>
+                    <t t-set="delivery_orders"
+                       t-value="record.sudo().picking_ids.filtered(lambda picking: picking.picking_type_id.code == 'outgoing')"/>
+                    <t t-if="delivery_orders">
+                        <div>
+                            <strong>Delivery Orders</strong>
+                        </div>
+                        <div>
+                            <t t-foreach="delivery_orders" t-as="i">
+                                <t t-set="delivery_report_url"
+                                   t-value="'/picking/pdf/%s' % (i.id)"/>
+                                <div class="d-flex flex-wrap align-items-center justify-content-between o_sale_stock_picking">
+                                    <div>
+                                        <a t-att-href="delivery_report_url">
+                                            <span t-esc="i.name"/>
+                                        </a>
+                                        <div class="small d-lg-inline-block ml-3">Date:
+                                            <span class="text-muted" t-field="i.date_done"
+                                                  t-options="{'date_only': True}"/>
+                                            <span t-if="i.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                                  class="text-muted" t-field="i.scheduled_date"
+                                                  t-options="{'date_only': True}"/>
+                                        </div>
+                                    </div>
+                                    <span t-if="i.state == 'done'"
+                                          class="small badge badge-success orders_label_text_align">
+                                        <i class="fa fa-fw fa-truck"/>
+                                        <b>Shipped</b>
+                                    </span>
+                                    <span t-if="i.state == 'cancel'"
+                                          class="small badge badge-danger orders_label_text_align">
+                                        <i class="fa fa-fw fa-times"/>
+                                        <b>Cancelled</b>
+                                    </span>
+                                    <span t-if="i.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                          class="small badge badge-info orders_label_text_align">
+                                        <i class="fa fa-fw fa-clock-o"/>
+                                        <b>Preparation</b>
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </form>
+        </t>
+    </template>
+
+    <template id="website_invalid_doc_template">
+        <t t-call="website.layout">
+            <div style="color: red; padding-top:50px; padding-bottom:50px;" class="text-center">
+                <h2>
+                    <b>This is not a valid document.</b>
+                </h2>
+            </div>
+        </t>
+    </template>
+
+</odoo>

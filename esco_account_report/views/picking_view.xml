@@ -11,7 +11,7 @@
                 <div>
                     <field name="invoice_id"/>
                     <button name="print_invoice" string="Print Invoice" type="object" class="oe_link"
-                            invisible="not invoice_id"/>
+                            attrs="{'invisible': [('invoice_id', '=', False)]}"/>
                 </div>
             </field>
         </field>

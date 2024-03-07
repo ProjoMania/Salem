@@ -8,7 +8,7 @@
             <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
 <!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
             <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
-                <t t-if="o.dest_address_id">
+                <t t-if="o.sudo().dest_address_id">
                 </t>
                 <h3>
                     <strong class="bold_header">Purchase Request</strong>
@@ -81,7 +81,7 @@
 <!--                        </div>-->
                         <div style=" direction: ltr;">
                             <div class="float: left;" style="border: none;">
-                                <div t-field="o.partner_id.name" style=""/>
+                                <div t-field="o.sudo().partner_id.name" style=""/>
                                 <div>
                                     <t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span>&#160;</span>
                                     <t t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>

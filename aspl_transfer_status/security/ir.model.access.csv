@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+aspl_transfer_status.access_transfer_status,access_transfer_status,aspl_transfer_status.model_transfer_status,base.group_user,1,1,1,1
+aspl_transfer_status.access_stock_picking_attachment,access_stock_picking_attachment,aspl_transfer_status.model_stock_picking_attachment,base.group_user,1,1,1,1
+aspl_transfer_status.access_transfer_status_state,access_transfer_status_state,aspl_transfer_status.model_transfer_status_state,base.group_user,1,1,1,1

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="transfer_status_state_tree_view" model="ir.ui.view">
+            <field name="name">transfer.status.state.tree.view</field>
+            <field name="model">transfer.status.state</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="is_close"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="transfer_status_state_form_view" model="ir.ui.view">
+            <field name="name">transfer.status.state.form.view</field>
+            <field name="model">transfer.status.state</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="is_close"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_transfer_status_state" model="ir.actions.act_window">
+            <field name="name">Transfer Status State</field>
+            <field name="res_model">transfer.status.state</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_transfer_status_state" name="Transfer Status State"
+                  parent="stock.menu_stock_config_settings"
+                  action="action_transfer_status_state"
+                  groups="aspl_transfer_status.group_warehouse_keeper"/>
+    </data>
+</odoo>
