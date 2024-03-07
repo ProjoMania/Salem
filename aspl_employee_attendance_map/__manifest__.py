@@ -25,9 +25,9 @@
     'assets': {
         'hr_attendance.assets_public_attendance': [
             'aspl_employee_attendance_map/static/src/xml/template.xml',
-    #         'aspl_employee_attendance_map/static/src/js/main.js',
-    #         'aspl_employee_attendance_map/static/src/js/view.js',
-    #         'aspl_employee_attendance_map/static/src/js/customer_map.js'
+            'aspl_employee_attendance_map/static/src/js/main.js',
+            'aspl_employee_attendance_map/static/src/js/view.js',
+            'aspl_employee_attendance_map/static/src/js/customer_map.js'
         ],
     },
     'images': ['static/description/odoo12_5_select_department_and_employee.png'],
