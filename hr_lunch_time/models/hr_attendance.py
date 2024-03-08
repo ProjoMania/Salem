@@ -1,4 +1,6 @@
 from odoo import fields, models, api, exceptions, _
+from pytz import timezone
+from odoo.addons.resource.models.utils import Intervals
 
 
 class HrAttendance(models.Model):
@@ -10,19 +12,30 @@ class HrAttendance(models.Model):
     @api.depends('check_in', 'check_out', 'lunch_start', 'lunch_end')
     def _compute_worked_hours(self):
         for attendance in self:
-            if attendance.check_out and attendance.check_in:
-                delta = attendance.check_out - attendance.check_in
+            if attendance.check_out and attendance.check_in and attendance.employee_id:
+                calendar = attendance._get_employee_calendar()
+                resource = attendance.employee_id.resource_id
+                tz = timezone(calendar.tz)
+                check_in_tz = attendance.check_in.astimezone(tz)
+                check_out_tz = attendance.check_out.astimezone(tz)
+                lunch_intervals = calendar._attendance_intervals_batch(
+                    check_in_tz, check_out_tz, resource, lunch=True)
+                attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)]) - lunch_intervals[resource.id]
+                delta = sum((i[1] - i[0]).total_seconds() for i in attendance_intervals)
                 if attendance.lunch_end and attendance.lunch_start:
-                    lunch_delta = attendance.lunch_end - attendance.lunch_start
-                    attendance.worked_hours = ((delta.total_seconds() - lunch_delta.total_seconds()) / 3600.0)
+                    lunch_start_tz = attendance.lunch_start.astimezone(tz)
+                    lunch_end_tz = attendance.lunch_end.astimezone(tz)
+                    lunch_inters = Intervals([(lunch_start_tz, lunch_end_tz, attendance)])
+                    lunch_delta = sum((i[1] - i[0]).total_seconds() for i in lunch_inters)
+                    attendance.worked_hours = (delta - lunch_delta) / 3600.0
                 else:
-                    attendance.worked_hours = delta.total_seconds() / 3600.0
+                    attendance.worked_hours = delta / 3600.0
             else:
                 attendance.worked_hours = False
 
 
-class HrEmployeeBase(models.AbstractModel):
-    _inherit = "hr.employee"
+class HrEmployee(models.Model):
+    _inherit = 'hr.employee'
 
     attendance_state = fields.Selection(selection_add=[('lunch_start', 'Lunch Start'),
                                                        ('lunch_end', 'Lunch End')])
@@ -40,32 +53,48 @@ class HrEmployeeBase(models.AbstractModel):
             else:
                 employee.attendance_state = 'checked_out'
 
-    # def _attendance_action_change(self):
-    #     """ Check In/Check Out action
-    #         Check In: create a new attendance record
-    #         Check Out: modify check_out field of appropriate attendance record
-    #     """
-    #     self.ensure_one()
-    #     action_date = fields.Datetime.now()
-    #     if self.attendance_state == 'checked_out':
-    #         vals = {
-    #             'employee_id': self.id,
-    #             'check_in': action_date,
-    #         }
-    #         return self.env['hr.attendance'].create(vals)
-    #
-    #     attendance = self.env['hr.attendance'].search([('employee_id', '=', self.id), ('check_out', '=', False)], limit=1)
-    #     state = self._context.get('state')
-    #     if attendance and state:
-    #         if state == 'lunch_start':
-    #             attendance.lunch_start = action_date
-    #         elif state == 'lunch_end':
-    #             attendance.lunch_end = action_date
-    #         elif state == 'check_out':
-    #             attendance.check_out = action_date
-    #     elif attendance and not state:
-    #         attendance.check_out = action_date
-    #     else:
-    #         raise exceptions.UserError(_('Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
-    #             'Your attendances have probably been modified manually by human resources.') % {'empl_name': self.sudo().name, })
-    #     return attendance
+    # Override
+    def _attendance_action_change(self, geo_information=None, **post):
+        self.ensure_one()
+        action_date = fields.Datetime.now()
+        state = post.get('state', None)
+
+        if self.attendance_state == 'checked_out':
+            if geo_information:
+                vals = {
+                    'employee_id': self.id,
+                    'check_in': action_date,
+                    **{'in_%s' % key: geo_information[key] for key in geo_information}
+                }
+            else:
+                vals = {
+                    'employee_id': self.id,
+                    'check_in': action_date,
+                }
+            return self.env['hr.attendance'].create(vals)
+        attendance = self.env['hr.attendance'].search([('employee_id', '=', self.id), ('check_out', '=', False)],
+                                                      limit=1)
+        if attendance:
+            data = {}
+            if state == 'lunch_start':
+                data['lunch_start'] = action_date
+                attendance.lunch_start = action_date
+            elif state == 'lunch_end':
+                data['lunch_end'] = action_date
+            elif state == 'check_out':
+                data['check_out'] = action_date
+
+            print(data,'.data')
+            if geo_information:
+                data.update({
+                    **{'out_%s' % key: geo_information[key] for key in geo_information}
+                })
+                attendance.write(data)
+            else:
+                attendance.write(data)
+        else:
+            raise exceptions.UserError(_(
+                'Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
+                'Your attendances have probably been modified manually by human resources.',
+                empl_name=self.sudo().name))
+        return attendance
