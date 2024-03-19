@@ -17,9 +17,6 @@
         'views/data_logger_form_view.xml',
     ],
 
-    'web.assets_backend': [
-        'aspl_sale_order_quick_preview/static/src/js/activity_controller_wizard.js'
-    ],
     'installable': True,
     'auto_install': False,
 }
