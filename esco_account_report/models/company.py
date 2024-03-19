@@ -25,11 +25,9 @@ class ResCompany(models.Model):
 
     def english_amoount_in_words(self, amount, currency, lang):
         amount_decimal = int(amount * 100 % 100)
-        print('amount_decimal....', amount_decimal)
         # try:
         if True:
             lang = self.env['res.lang'].search([('iso_code', '=', lang)], limit=1)
-            print("Lang = ", lang.code)
             unit = self.env['ir.translation'].search([('lang', '=', lang.code),
                                                       ('src', '=', currency.currency_unit_label)],
                                                      limit=1)
@@ -57,11 +55,7 @@ class ResCompany(models.Model):
                 if not subunit:
                     subunit = self.env['ir.translation'].search([('src', '=', src)], limit=1)
 
-            print("Units = ", currency.currency_unit_label,
-                  currency.currency_subunit_label)
-            print("Units 2 = ", subunit.value, subunit.src)
             if unit and subunit and unit.value and subunit.value:
-                print('if...amount, amount_decimal.', amount, amount_decimal)
                 if amount and amount_decimal:
                     return num2words(Decimal(str(int(amount))), lang=lang) + ' ' + \
                                                 (unit.value or unit.src) + ', ' + num2words(
@@ -76,14 +70,7 @@ class ResCompany(models.Model):
                                                             subunit.value or subunit.src)
 
             elif currency.currency_unit_label and currency.currency_subunit_label:
-                print('elif....amount, amount_decimal.', amount, amount_decimal, type(amount_decimal))
                 if amount and amount_decimal:
-                    print('if....Decimal(str(amount_decimal).', Decimal(str(amount_decimal)),
-                          num2words(Decimal(str(amount_decimal))))
-                    print(num2words(Decimal(str(int(amount)))))
-                    print(currency.currency_unit_label)
-                    print(num2words(Decimal(str(amount_decimal))))
-                    print(currency.currency_subunit_label)
                     return num2words(Decimal(str(int(amount)))) + ' ' + (currency.currency_unit_label) + ', ' + \
                            num2words(Decimal(str(amount_decimal))) + ' ' + (currency.currency_subunit_label)
                 elif amount or not amount:
@@ -95,7 +82,6 @@ class ResCompany(models.Model):
 
 
             else:
-                print('else....')
                 return num2words(Decimal(str(amount)),
                                                       lang=lang) + ' ' + str(
                     currency.symbol)

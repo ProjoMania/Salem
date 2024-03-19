@@ -28,7 +28,6 @@ class StockQuant(models.Model):
 
     @api.model
     def _get_removal_strategy_order(self, removal_strategy):
-        print(removal_strategy)
         if removal_strategy == 'fifo':
             return 'in_date ASC, id'
         elif removal_strategy == 'lifo':

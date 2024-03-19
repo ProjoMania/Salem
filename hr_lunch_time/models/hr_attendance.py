@@ -84,7 +84,6 @@ class HrEmployee(models.Model):
             elif state == 'check_out':
                 data['check_out'] = action_date
 
-            print(data,'.data')
             if geo_information:
                 data.update({
                     **{'out_%s' % key: geo_information[key] for key in geo_information}

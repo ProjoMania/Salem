@@ -40,13 +40,11 @@ class ViatrisSalesReport(models.TransientModel):
                 [('categ_id', 'in', product_categories.ids)])
         else:
             products = self.env['product.product'].search([])
-        print("products", products)
         warehouse_ids = self.env['stock.warehouse'].search(
             [('hide_in_viatris_report', '!=', True)])
         warehouse_count = len(warehouse_ids)
         sale_region_ids = self.env['sales.region'].search([])
         sale_region_count = len(sale_region_ids)
-        print("sale_region_ids", sale_region_ids, sale_region_count)
         locations_ids = self.env['stock.location'].search([])
 
         filename = 'Viatris Sales Report' + '.xls'
@@ -727,7 +725,6 @@ class ViatrisSalesReport(models.TransientModel):
                             format_2)
             product_row = product_row + 1
 
-        print("product_row", product_row)
         if self.product_category_id:
             scrap_row = product_row + 4
             scrap_head_style = easyxf(
@@ -742,7 +739,6 @@ class ViatrisSalesReport(models.TransientModel):
                 [('product_id', 'in', products.ids),
                  ('date_done', '>=', self.from_date),
                  ('date_done', '<=', self.to_date)])
-            print("scrap_ids", scrap_ids)
             scrap_pdt_row = scrap_row + 3
             if scrap_ids:
                 worksheet.write_merge(scrap_row, scrap_row + 2, 1, 4, 'SCRAP',

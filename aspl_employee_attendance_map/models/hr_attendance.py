@@ -49,9 +49,7 @@ class HrEmployee(models.Model):
     is_inside = fields.Boolean()
 
     def inside_poly(self, val):
-        print(val)
         self.sudo().is_inside = val
-        print(1, "a")
 
     def search_lat_lng(self):
         emp_ids = self.env['emp.lat.lng.info'].search([('employee_id', '=', self.id)])
@@ -82,7 +80,6 @@ class HrEmployee(models.Model):
             return True
 
     def attendance_manual(self, next_action, entered_pin=None, latitude=None, longitude=None):
-        print(2)
         if self.is_inside == False:
             geolocator = Nominatim(user_agent="aspl_employee_attendance_map")
             agent = request.httprequest.environ.get('HTTP_USER_AGENT')
@@ -164,10 +161,8 @@ class HrEmployee(models.Model):
         bit_type = platform.architecture()
         geolocator = Nominatim(user_agent="aspl_employee_attendance_map")
         state = self._context.get('state')
-        print(state, self.attendance_state, "state")
 
         if self.attendance_state == 'checked_out' and state != 'lunch_end':
-            print("jjj")
             vals = {
                 'employee_id': self.id,
                 'check_in': action_date
@@ -233,7 +228,6 @@ class EmployeeAttendanceMap(models.Model):
             id_one.employee_ids = emp_id
 
     def show_map(self):
-        print(self.employee_ids.name, self.department_id.name, self.attendance_date, self.job_position, "hh")
         try:
             response = requests.get("http://www.google.com")
             check_connection = True

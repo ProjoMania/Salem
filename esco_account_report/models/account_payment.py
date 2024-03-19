@@ -26,9 +26,6 @@ class AccountPayment(models.Model):
             if discount_line:
                 amount = discount_line.debit or discount_line.credit
                 move_currency = discount_line.currency_id
-                print('amount...', amount)
-                print('move_currency...currency..company.currency_id.', move_currency, currency, company.currency_id)
-                # if currency != company.currency_id:
                 #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
                 # else:
                 #     discount_amount = amount
@@ -36,22 +33,18 @@ class AccountPayment(models.Model):
                     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
                 else:
                     discount_amount = amount
-                print('discount_amount......', discount_amount)
                 if move_currency == currency and move_currency != company.currency_id:
                     discount_amount = amount
                 else:
                     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                print('discount_amount.2.....', discount_amount)
                 if inv and move_currency:
                     invoice_currency = inv.currency_id
-                    print('invoice_currency...', invoice_currency)
                     if move_currency == invoice_currency:
                         discount_amount = discount_line.amount_currency
                     elif invoice_currency == company.currency_id:
                         discount_amount = amount
                     else:
                         discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
-                print('discount_amount.3.....', discount_amount)
                 return discount_amount
         return discount
 
@@ -63,7 +56,6 @@ class AccountPayment(models.Model):
             for data in inv._get_reconciled_info_JSON_values()
             if data['account_payment_id'] == self.id
         ])
-        print('cash_amount.....', cash_amount)
         return cash_amount - discount
 
     def _get_report_base_filename(self):
@@ -100,8 +92,6 @@ class AccountPaymentRegister(models.TransientModel):
             if discount_line:
                 amount = discount_line.debit or discount_line.credit
                 move_currency = discount_line.currency_id
-                print('amount...', amount)
-                print('move_currency...currency..company.currency_id.', move_currency, currency, company.currency_id)
                 # if currency != company.currency_id:
                 #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
                 # else:
@@ -110,22 +100,18 @@ class AccountPaymentRegister(models.TransientModel):
                     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
                 else:
                     discount_amount = amount
-                print('discount_amount......', discount_amount)
                 if move_currency == currency and move_currency != company.currency_id:
                     discount_amount = amount
                 else:
                     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                print('discount_amount.2.....', discount_amount)
                 if inv and move_currency:
                     invoice_currency = inv.currency_id
-                    print('invoice_currency...', invoice_currency)
                     if move_currency == invoice_currency:
                         discount_amount = discount_line.amount_currency
                     elif invoice_currency == company.currency_id:
                         discount_amount = amount
                     else:
                         discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
-                print('discount_amount.3.....', discount_amount)
                 return discount_amount
         return discount
 
@@ -196,7 +182,6 @@ class AccountPaymentRegister(models.TransientModel):
                 write_off_amount = -payment.payment_difference or 0.0
             elif payment.payment_difference_handling == 'discount':
                 write_off_amount = -payment.discount_amount or 0.0
-            print('write_off_amount....', write_off_amount)
             if payment.payment_type in ('outbound', 'transfer'):
                 counterpart_amount = payment.amount
                 liquidity_line_account = payment.journal_id.default_debit_account_id
