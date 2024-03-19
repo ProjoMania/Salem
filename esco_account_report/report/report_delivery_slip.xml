@@ -133,7 +133,7 @@
                                 <span t-if="line.lot_id.name" t-field="line.lot_id.name"/>
                                 <span t-if="not line.lot_id.name" t-field="line.lot_name"/>
                             </td>
-                            <td class="text-center" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.qty_done))'/></td>
+                            <td class="text-center" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.quantity))'/></td>
                         </tr>
                         <tr><td><span style="color: white;">1</span></td><td/><td/>
                             <td class="text-center" style="background-color: white !important;"></td></tr>

@@ -158,7 +158,7 @@ class ViatrisSalesReport(models.TransientModel):
                 for location in locations_ids:
                     if location.warehouse_id == warehouse and location.usage == 'internal':
                         if self.customer_id:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                                                 inner join stock_picking as picking on line.picking_id = picking.id
                                                                                                 inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                                                 where type_1.code='incoming'
@@ -186,10 +186,10 @@ class ViatrisSalesReport(models.TransientModel):
                                  ["date", "<=", self.to_date],
                                  ['product_id', '=', product.id],
                                  ['location_dest_id', '=', location.id]])
-                            list_qty = pro_move.mapped('qty_done')
+                            list_qty = pro_move.mapped('quantity')
 
                         else:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='incoming'
@@ -214,7 +214,7 @@ class ViatrisSalesReport(models.TransientModel):
                                  ["date", "<=", self.to_date],
                                  ['product_id', '=', product.id],
                                  ['location_dest_id', '=', location.id]])
-                            list_qty = pro_move.mapped('qty_done')
+                            list_qty = pro_move.mapped('quantity')
                     if list_qty:
                         total_receive_qty = total_receive_qty + sum(list_qty)
                 worksheet.write(product_row, product_col, total_receive_qty,
@@ -225,7 +225,7 @@ class ViatrisSalesReport(models.TransientModel):
                 for location in locations_ids:
                     if location.warehouse_id == warehouse and location.usage == 'internal':
                         if self.customer_id:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='internal'
@@ -241,9 +241,8 @@ class ViatrisSalesReport(models.TransientModel):
                             if len(res) == 0:
                                 pass
                             else:
-                                print("ffffffffffff",product.name,res[0][1])
                                 total_internal_qty = - (total_internal_qty +res[0][1])
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                                                 inner join stock_picking as picking on line.picking_id = picking.id
                                                                                                 inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                                                 where type_1.code='internal'
@@ -261,9 +260,8 @@ class ViatrisSalesReport(models.TransientModel):
                             else:
                                 total_internal_qty = total_internal_qty + \
                                                      res[0][1]
-                                print("ffffffffffff", product.name, res[0][1])
                         else:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                         inner join stock_picking as picking on line.picking_id = picking.id
                                         inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                         where type_1.code='internal'
@@ -281,7 +279,7 @@ class ViatrisSalesReport(models.TransientModel):
                             else:
                                 total_internal_qty = total_internal_qty + \
                                                      res[0][1]
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='internal'

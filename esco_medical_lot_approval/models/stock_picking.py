@@ -15,8 +15,8 @@ class StockPicking(models.Model):
             if picking.picking_type_code == 'outgoing':
                 if picking.move_line_ids_without_package:
                     for line in picking.move_line_ids_without_package:
-                        if line.lot_id.product_qty < line.qty_done:
+                        if line.lot_id.product_qty < line.quantity:
                             raise ValidationError(_('Lot "%s" (Available Qty: %s) has less qty than you are transferring %s !'
-                                              %(line.lot_id.name, line.lot_id.product_qty, line.qty_done)))
+                                              %(line.lot_id.name, line.lot_id.product_qty, line.quantity)))
         res = super(StockPicking, self).button_validate()
         return res

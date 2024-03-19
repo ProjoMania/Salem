@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
     sh_partially_paid = fields.Boolean(string="Partially Paid",  default=False, copy=False,
                                        compute="_compute_check_delivery", search="_search_partial_paid", compute_sudo=True, store=True)
     sh_hidden_compute_field = fields.Boolean(
-        string="Hidden Compute", readonly=True, compute="_compute_check_delivery", compute_sudo=True)
+        string="Hidden Compute", readonly=True, compute="_compute_check_delivery", compute_sudo=True, store=True)
 
     def _search_partial_paid(self, operator, value):
         paid_ids = []

@@ -40,7 +40,7 @@ class StockPicking(models.Model):
 
                     if move.state == "done" and move.product_id.type == "product":
                         for move_line in move.move_line_ids:
-                            quantity = move_line.product_uom_id._compute_quantity(move_line.qty_done, move_line.product_id.uom_id)
+                            quantity = move_line.product_uom_id._compute_quantity(move_line.quantity, move_line.product_id.uom_id)
                             quant_obj._update_available_quantity(move_line.product_id, move_line.location_id, quantity, move_line.lot_id)
                             quant_obj._update_available_quantity(move_line.product_id, move_line.location_dest_id, quantity * -1, move_line.lot_id)
                     if move.procure_method == 'make_to_order' and not move.move_orig_ids:
@@ -78,7 +78,7 @@ class StockPicking(models.Model):
                 res.move_lines.write({'state':'draft'})
                 if res.move_lines.move_line_ids:
                     for mvl in res.move_lines.move_line_ids:
-                        mvl.write({'qty_done':0.00})
+                        mvl.write({'quantity':0.00})
                 res.is_locked = False
 
         return True

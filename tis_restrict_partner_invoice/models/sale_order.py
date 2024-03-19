@@ -13,6 +13,13 @@ class SaleOrder(models.Model):
 
     is_approved = fields.Boolean(string="Approved", default=False, readonly=True)
 
+    def _get_forbidden_state_confirm(self):
+        """
+        Returns a set of states that cannot be confirmed
+        It is written for the upgrading purposes, since a method with the same name and function was in v13.0
+        """
+        return set(['cancel', 'done'])
+
     def action_direct_confirm(self):
         if self._get_forbidden_state_confirm() & set(self.mapped('state')):
             raise UserError(_(

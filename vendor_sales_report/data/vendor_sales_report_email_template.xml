@@ -10,7 +10,7 @@
            <p>This mail is to send you the Vendor Sales Report from the last week.</p><br/>
            ]]>
             </field>
-<!--            <field name="name">Vendor Sales Report Report</field>-->
+            <field name="name">Vendor Sales Report Report</field>
         </record>
     </data>
 </odoo>

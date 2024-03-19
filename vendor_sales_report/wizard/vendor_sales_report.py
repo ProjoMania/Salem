@@ -44,7 +44,7 @@ class VendorSalesReport(models.TransientModel):
                     total_qty = 0
                     # this code for select the lot from Delivery according to the same quantity
                     for line in invoice.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(lambda o: o.picking_id.backorder_id.id == False and o.picking_id.picking_type_code == 'outgoing' and o.picking_id.state == 'done'):
-                        if line.qty_done == invoice.quantity and line.product_id == invoice.product_id:
+                        if line.quantity == invoice.quantity and line.product_id == invoice.product_id:
                             lot_str = line.lot_id.name
                             break
                         else:
@@ -105,7 +105,7 @@ class VendorSalesReport(models.TransientModel):
                     lot_str = False
                     # this code for select the lot from Delivery according to the same quantity
                     for line in invoice.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
-                        if line.qty_done == invoice.quantity and line.product_id == invoice.product_id:
+                        if line.quantity == invoice.quantity and line.product_id == invoice.product_id:
                             lot_str = line.lot_id.name
                             break
                         else:
