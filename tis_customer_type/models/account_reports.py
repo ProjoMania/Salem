@@ -4,6 +4,15 @@ from odoo import models, api, fields
 class AccountReport(models.AbstractModel):
     _inherit = 'account.report'
 
+    def _init_options_partner(self, options, previous_options=None):
+        options['partner_categories'] = previous_options and previous_options.get('partner_categories') or []
+        options['customer_type'] = previous_options and previous_options.get('customer_type') or []
+        selected_partner_customer_type_ids = [int(cust_type) for cust_type in options['customer_type']]
+        selected_partner_customer_type = selected_partner_customer_type_ids and self.env['customer.type'].browse(
+            selected_partner_customer_type_ids) or self.env['res.partner.category']
+        options['selected_customer_type'] = selected_partner_customer_type.mapped('name')
+        return super()._init_options_partner(options, previous_options)
+
     def _init_filter_partner(self, options, previous_options=None):
         res = super()._init_filter_partner(options, previous_options)
         options['customer_type'] = previous_options and previous_options.get('customer_type') or []
@@ -26,18 +35,24 @@ class AccountReport(models.AbstractModel):
         return a dictionary of informations that will be needed by the js widget, manager_id, footnotes, html of report and searchview, ...
         '''
         options = self._get_options(options)
-        self = self.with_context(self._set_context(options)) # For multicompany, when allowed companies are changed by options (such as aggregare_tax_unit)
+        self = self.with_context(self._set_context(
+            options))  # For multicompany, when allowed companies are changed by options (such as aggregare_tax_unit)
 
         searchview_dict = {'options': options, 'context': self.env.context}
         # Check if report needs analytic
         if options.get('analytic_accounts') is not None:
-            options['selected_analytic_account_names'] = [self.env['account.analytic.account'].browse(int(account)).name for account in options['analytic_accounts']]
+            options['selected_analytic_account_names'] = [self.env['account.analytic.account'].browse(int(account)).name
+                                                          for account in options['analytic_accounts']]
         if options.get('analytic_tags') is not None:
-            options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in options['analytic_tags']]
+            options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in
+                                                      options['analytic_tags']]
         if options.get('partner'):
-            options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in options['partner_ids']]
-            options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for category in (options.get('partner_categories') or [])]
-            options['selected_customer_type'] = [self.env['customer.type'].browse(int(cust_type)).name for cust_type in (options.get('customer_type') or [])]
+            options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in
+                                               options['partner_ids']]
+            options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for
+                                                      category in (options.get('partner_categories') or [])]
+            options['selected_customer_type'] = [self.env['customer.type'].browse(int(cust_type)).name for cust_type in
+                                                 (options.get('customer_type') or [])]
 
         # Check whether there are unposted entries for the selected period or not (if the report allows it)
         if options.get('date') and options.get('all_entries') is not None:
@@ -52,8 +67,8 @@ class AccountReport(models.AbstractModel):
                 'footnotes': [{'id': f.id, 'line': f.line, 'text': f.text} for f in report_manager.footnotes_ids],
                 'buttons': self._get_reports_buttons_in_sequence(options),
                 'main_html': self.get_html(options),
-                'searchview_html': self.env['ir.ui.view']._render_template(self._get_templates().get('search_template', 'account_report.search_template'), values=searchview_dict),
+                'searchview_html': self.env['ir.ui.view']._render_template(
+                    self._get_templates().get('search_template', 'account_report.search_template'),
+                    values=searchview_dict),
                 }
         return info
-
-

@@ -5,7 +5,7 @@
 {
     'name': 'Customer Type',
     'category': 'Accounting',
-    'version': '15.0.0',
+    'version': '0.1',
     'summary': 'Customer type in Account aged receivable, aged payable, partner ledger',
     'author': 'Technaureus Info Solutions Pvt. Ltd.',
     'sequence': 1,
@@ -14,18 +14,19 @@
     # 'price': 79.99,
     'currency': 'EUR',
     'license': 'Other proprietary',
-    'depends': ['account_reports','contacts'],
+    'depends': ['account_reports', 'contacts'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_partner_views.xml',
         'views/customer_type_views.xml',
 
     ],
-    # 'assets': {
-    #     'web.assets_backend': [
-    #         'tis_customer_type/static/src/js/account_report.js',
-    #     ],
-    # },
+    'assets': {
+        'web.assets_backend': [
+            'tis_customer_type/static/src/xml/partner_filter.xml',
+            # 'tis_customer_type/static/src/js/account_report.js',
+        ],
+    },
     'images': ['images/main_screenshot.png'],
     'installable': True,
     'application': True,
