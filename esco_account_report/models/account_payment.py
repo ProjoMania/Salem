@@ -115,7 +115,7 @@ class AccountPaymentRegister(models.TransientModel):
                 return discount_amount
         return discount
 
-    def _create_payment_vals_from_wizard(self):
+    def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = {
             'date': self.payment_date,
             'amount': self.amount,

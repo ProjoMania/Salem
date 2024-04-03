@@ -9,8 +9,8 @@ class MyAccountPaymentRegister(models.TransientModel):
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Analytic Tags')
     
-    def _create_payment_vals_from_wizard(self):
-        result = super(MyAccountPaymentRegister, self)._create_payment_vals_from_wizard()
+    def _create_payment_vals_from_wizard(self, batch_result):
+        result = super(MyAccountPaymentRegister, self)._create_payment_vals_from_wizard(batch_result=batch_result)
         if self.analytic_account_id:
             result.update({
                 'analytic_account_id': self.analytic_account_id.id
