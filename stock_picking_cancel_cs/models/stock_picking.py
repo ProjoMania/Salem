@@ -24,7 +24,7 @@ class StockPicking(models.Model):
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         for picking in self:
             if self.env.context.get('Flag',False) and picking.state =='done':
-                account_moves = picking.move_lines
+                account_moves = picking.move_ids
                 for move in account_moves:
                     if move.state=='cancel':
                         continue
@@ -75,9 +75,9 @@ class StockPicking(models.Model):
         for res in self:
             if res.state =='cancel':
                 res.state ='draft'
-                res.move_lines.write({'state':'draft'})
-                if res.move_lines.move_line_ids:
-                    for mvl in res.move_lines.move_line_ids:
+                res.move_ids.write({'state':'draft'})
+                if res.move_ids.move_line_ids:
+                    for mvl in res.move_ids.move_line_ids:
                         mvl.write({'quantity':0.00})
                 res.is_locked = False
 
