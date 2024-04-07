@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='communication']" position="after">
                 <field name="analytic_account_id" groups="pw_payment_analytic.pw_group_analytic_account"/>
-                <field name="analytic_tag_ids" widget="many2many_tags" groups="pw_payment_analytic.pw_group_analytic_tags"/>
+<!--                <field name="analytic_tag_ids" widget="many2many_tags" groups="pw_payment_analytic.pw_group_analytic_tags"/>-->
             </xpath>
         </field>
     </record>
