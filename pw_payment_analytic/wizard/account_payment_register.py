@@ -7,7 +7,7 @@ class MyAccountPaymentRegister(models.TransientModel):
     _inherit = 'account.payment.register'
 
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
-    analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Analytic Tags')
+    analytic_tag_ids = fields.Many2many('account.account.tag', string='Analytic Tags')
     
     def _create_payment_vals_from_wizard(self, batch_result):
         result = super(MyAccountPaymentRegister, self)._create_payment_vals_from_wizard(batch_result=batch_result)

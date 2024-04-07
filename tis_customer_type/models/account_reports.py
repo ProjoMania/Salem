@@ -44,7 +44,7 @@ class AccountReport(models.AbstractModel):
             options['selected_analytic_account_names'] = [self.env['account.analytic.account'].browse(int(account)).name
                                                           for account in options['analytic_accounts']]
         if options.get('analytic_tags') is not None:
-            options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in
+            options['selected_analytic_tag_names'] = [self.env['account.account.tag'].browse(int(tag)).name for tag in
                                                       options['analytic_tags']]
         if options.get('partner'):
             options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in

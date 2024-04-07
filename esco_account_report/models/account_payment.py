@@ -66,7 +66,7 @@ class AccountPayment(models.Model):
 class AccountPaymentRegister(models.TransientModel):
     _inherit = "account.payment.register"
 
-    payment_difference_handling = fields.Selection([('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid'),
+    payment_difference_handling = fields.Selection(selection_add=[('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid'),
                                                     ('discount', 'Pay with discount')],
                                                    default='open', string="Payment Difference Handling", copy=False)
     discount_amount = fields.Monetary(string='Discount Amount', required=False, tracking=True)
