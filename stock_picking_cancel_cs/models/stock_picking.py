@@ -24,7 +24,7 @@ class StockPicking(models.Model):
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         for picking in self:
             if self.env.context.get('Flag',False) and picking.state =='done':
-                account_moves = picking.move_ids
+                account_moves = picking.move_ids_without_package
                 for move in account_moves:
                     if move.state=='cancel':
                         continue
@@ -41,8 +41,8 @@ class StockPicking(models.Model):
                     if move.state == "done" and move.product_id.type == "product":
                         for move_line in move.move_line_ids:
                             quantity = move_line.product_uom_id._compute_quantity(move_line.quantity, move_line.product_id.uom_id)
-                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_id, quantity, move_line.lot_id)
-                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_dest_id, quantity * -1, move_line.lot_id)
+                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_id, quantity=quantity, lot_id=move_line.lot_id)
+                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_dest_id, quantity=quantity * -1, lot_id=move_line.lot_id)
                     if move.procure_method == 'make_to_order' and not move.move_orig_ids:
                         move.state = 'waiting'
                     elif move.move_orig_ids and not all(orig.state in ('done', 'cancel') for orig in move.move_orig_ids):
