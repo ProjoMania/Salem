@@ -18,10 +18,7 @@ class StockPicking(models.Model):
 
     def action_cancel(self):
         quant_obj= self.env['stock.quant']
-        moves = self.env['account.move']
-        return_picking_obj = self.env['stock.return.picking']
         account_move_obj=self.env['account.move']
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         for picking in self:
             if self.env.context.get('Flag',False) and picking.state =='done':
                 account_moves = picking.move_ids_without_package
