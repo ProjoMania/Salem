@@ -202,4 +202,4 @@ class StudioApprovalRule(models.Model):
         records = self.search([])
         for rec in records:
             rec._update_registry()
-            
+        return True
