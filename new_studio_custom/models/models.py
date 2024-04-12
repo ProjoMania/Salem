@@ -193,3 +193,13 @@ class Stockvaluationlayer(models.Model):
     x_studio_journal_entry_status_1 = fields.Selection(string="Journal Entry Status",
                                                        selection="[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')]",
                                                        related="account_move_id.state")
+
+
+class StudioApprovalRule(models.Model):
+    _inherit = "studio.approval.rule"
+
+    def update_reg(self):
+        records = self.search([])
+        for rec in records:
+            rec._update_registry()
+            
