@@ -29,10 +29,10 @@ class Accountmoveline(models.Model):
     _inherit = "account.move.line"
 
     x_studio_journal_entry_status = fields.Selection(string="Journal Entry Status",
-                                                     selection="[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')]",
+                                                     selection=[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')],
                                                      related="move_id.state")
     x_studio_journal_type = fields.Selection(string="journal type",
-                                             selection="[('Journal Entry', 'entry'), ('Customer Invoice', 'out_invoice'), ('Customer Credit Note', 'out_refund'), ('Vendor Bill', 'in_invoice'), ('Vendor Credit Note', 'in_refund'), ('Sales Receipt', 'out_receipt'), ('Purchase Receipt', 'in_receipt')]",
+                                             selection=[('Journal Entry', 'entry'), ('Customer Invoice', 'out_invoice'), ('Customer Credit Note', 'out_refund'), ('Vendor Bill', 'in_invoice'), ('Vendor Credit Note', 'in_refund'), ('Sales Receipt', 'out_receipt'), ('Purchase Receipt', 'in_receipt')],
                                              related="move_id.move_type")
     x_studio_sales_team = fields.Many2one(string="Sales Team", related="move_id.team_id", comodel_name="crm.team")
     x_studio_related_field_TduGl = fields.Many2one(string="New Related Field", related="product_id.categ_id",
@@ -75,12 +75,11 @@ class Hrcontract(models.Model):
 class Hremployee(models.Model):
     _inherit = "hr.employee"
 
-    x_studio_insurance_status = fields.Selection(string="Insurance Status",
-                                                 selection="[('To Request', 'To Request'), ('Requested', 'Requested'), ('Active', 'Active'), ('Expired', 'Expired')]")
+    x_studio_insurance_status = fields.Selection(string="Insurance Status", selection=[('To Request', 'To Request'), ('Requested', 'Requested'), ('Active', 'Active'), ('Expired', 'Expired')])
     x_studio_start_date = fields.Date(string="Start Date")
     x_studio_end_date = fields.Date(string="End Date")
     x_studio_insurance_type = fields.Selection(string="Insurance Type",
-                                               selection="[('Normal', 'Normal'), ('VIP', 'VIP')]")
+                                               selection=[('Normal', 'Normal'), ('VIP', 'VIP')])
     x_studio_member_no = fields.Char(string="Member No")
 
 
@@ -185,13 +184,13 @@ class Stockvaluationlayer(models.Model):
     _inherit = "stock.valuation.layer"
 
     x_studio_type_of_opreation = fields.Selection(string="type of opreation",
-                                                  selection="[('Receipt', 'incoming'), ('Delivery', 'outgoing'), ('Internal Transfer', 'internal'), ('Manufacturing', 'mrp_operation')]",
+                                                  selection=[('Receipt', 'incoming'), ('Delivery', 'outgoing'), ('Internal Transfer', 'internal'), ('Manufacturing', 'mrp_operation')],
                                                   related="stock_move_id.picking_code")
     x_studio_journal_entry_status = fields.Selection(string="Journal Entry Status",
-                                                     selection="[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')]",
+                                                     selection=[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')],
                                                      related="account_move_id.state")
     x_studio_journal_entry_status_1 = fields.Selection(string="Journal Entry Status",
-                                                       selection="[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')]",
+                                                       selection=[('Draft', 'draft'), ('Posted', 'posted'), ('Cancelled', 'cancel')],
                                                        related="account_move_id.state")
 
 
