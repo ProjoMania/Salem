@@ -18,13 +18,13 @@ class AccountPayment(models.Model):
         if not write_off_line_vals:
             return super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for line_vals in write_off_line_vals:
-            line_vals.update({'amount_currency': line_vals.pop('amount', 0.0)})
+            line_vals.update({'amount_currency': line_vals.pop('amount', 0.0),
+                              'balance': write_off_line_vals.pop('balance', 0.0)})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for move_line in result:
             if self.analytic_account_id:
                 move_line.update({
                     'analytic_account_id': self.analytic_account_id.id,
-                    'balance': write_off_line_vals.pop('balance', 0.0)
                 })
         return result
 
