@@ -33,8 +33,8 @@ class Hrcontract(models.Model):
     x_studio_field_TqTNl = fields.Char(name="New Related Field", )
 
 
-class Hremployee(models.Model):
-    _inherit = "hr.employee"
+# class Hremployee(models.Model):
+#     _inherit = "hr.employee"
 
    # x_studio_work_permit_expire = fields.Date(name="Work Permit Expire", )
    # x_studio_passport_expire = fields.Date(name="Passport Expire", )

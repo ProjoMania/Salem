@@ -19,6 +19,7 @@
                 />
                 <button
                     name="action_view_valuation_layers"
+                    string="Valuation Layers"
                     type="object"
                     icon="fa-info-circle"
                     invisible="valuation != 'real_time'"
@@ -36,7 +37,7 @@
                 />
                 <button
                     name="action_view_amls"
-                    type="object"
+                    type="object" string="AMLs"
                     icon="fa-info-circle"
                     invisible="valuation != 'real_time'"
                 />

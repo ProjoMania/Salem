@@ -20,14 +20,17 @@
 #
 ###############################################################################
 from odoo.exceptions import AccessError
-from odoo.http import request
+from odoo.http import request, route
 from odoo import _
 from odoo.addons.mail.controllers.attachment import AttachmentController
 from werkzeug.exceptions import NotFound
+from odoo.addons.mail.models.discuss.mail_guest import add_guest_to_context
 
 
 class DiscussController(AttachmentController):
 
+    @route()
+    @add_guest_to_context
     def mail_attachment_upload(self, ufile, thread_id, thread_model,
                                is_pending=False, **kwargs):
         thread = request.env[thread_model].search([("id", "=", thread_id)])

@@ -3,11 +3,11 @@
     <template id="report_sale_order_inherit_res_company" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@t-attf-class='article o_report_layout_standard o_company_#{company.id}_layout']" position="inside">
                 <div t-if ="company.watermark_option == 'backgroundimage'" style="opacity: 0.50;">
-                    <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)" style="top:400px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>
+                    <img t-if="company.upload_image" t-att-src="image_data_uri(company.upload_image)" style="top:400px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>
                 </div>
 
                 <div t-if ="company.watermark_option == 'logo'" style="opacity: 0.50;">
-                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="top:400px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="top:400px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>
                 </div>
 
                 <div t-if = "company.watermark_option == 'name'">
