@@ -16,10 +16,7 @@ class AccountPayment(models.Model):
         write_off_line_vals.update({'balance': write_off_line_vals.pop('balance', 0.0)})
         write_off_line_vals = isinstance(write_off_line_vals, dict ) and [write_off_line_vals]
         for line_vals in write_off_line_vals:
-            if line_vals.get('amount'):
-                line_vals.update({
-                    'amount_currency': line_vals['amount']
-                })
+            line_vals.update({'amount_currency': line_vals.pop('amount', 0.0)})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for move_line in result:
             if self.analytic_account_id:
