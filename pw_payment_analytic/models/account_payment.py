@@ -5,6 +5,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
@@ -13,20 +14,16 @@ class AccountPayment(models.Model):
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         _logger.info('write_off_line_vals: %s', write_off_line_vals)
-        write_off_line_vals.update({'balance': write_off_line_vals.pop('balance', 0.0)})
-        write_off_line_vals = isinstance(write_off_line_vals, dict ) and [write_off_line_vals]
+        write_off_line_vals = isinstance(write_off_line_vals, dict) and [write_off_line_vals]
         for line_vals in write_off_line_vals:
             line_vals.update({'amount_currency': line_vals.pop('amount', 0.0)})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for move_line in result:
             if self.analytic_account_id:
                 move_line.update({
-                    'analytic_account_id': self.analytic_account_id.id
+                    'analytic_account_id': self.analytic_account_id.id,
+                    'balance': write_off_line_vals.pop('balance', 0.0)
                 })
-            # if self.analytic_tag_ids:
-            #     move_line.update({
-            #         'analytic_tag_ids':[(6, 0, self.analytic_tag_ids.ids)]
-            #     })
         return result
 
     def action_post(self):
@@ -36,8 +33,4 @@ class AccountPayment(models.Model):
                 invoice_line.update({
                     'analytic_account_id': self.analytic_account_id.id
                 })
-            # if self.analytic_tag_ids:
-            #     invoice_line.update({
-            #         'analytic_tag_ids':[(6, 0, self.analytic_tag_ids.ids)]
-            #     })
         return result
