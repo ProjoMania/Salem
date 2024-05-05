@@ -9,6 +9,12 @@ class AccountPayment(models.Model):
     # analytic_tag_ids = fields.Many2many('account.analytic.tag', string="Analytic Tags")
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
+        write_off_line_vals = isinstance(write_off_line_vals, dict ) and [write_off_line_vals]
+        for line_vals in write_off_line_vals:
+            if line_vals.get('amount'):
+                line_vals.update({
+                    'amount_curreney': line_vals['amount']
+                })
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for move_line in result:
             if self.analytic_account_id:
