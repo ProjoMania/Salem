@@ -13,7 +13,7 @@ class AccountPayment(models.Model):
         for line_vals in write_off_line_vals:
             if line_vals.get('amount'):
                 line_vals.update({
-                    'amount_curreney': line_vals['amount']
+                    'amount_currency': line_vals['amount']
                 })
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for move_line in result:
