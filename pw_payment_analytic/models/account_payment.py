@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
@@ -9,6 +12,8 @@ class AccountPayment(models.Model):
     # analytic_tag_ids = fields.Many2many('account.analytic.tag', string="Analytic Tags")
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
+        _logger.info('write_off_line_vals: %s', write_off_line_vals)
+        write_off_line_vals.update({'balance': write_off_line_vals.pop('balance', 0.0)})
         write_off_line_vals = isinstance(write_off_line_vals, dict ) and [write_off_line_vals]
         for line_vals in write_off_line_vals:
             if line_vals.get('amount'):
