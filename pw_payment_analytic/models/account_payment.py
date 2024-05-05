@@ -15,6 +15,8 @@ class AccountPayment(models.Model):
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         _logger.info('write_off_line_vals: %s', write_off_line_vals)
         write_off_line_vals = isinstance(write_off_line_vals, dict) and [write_off_line_vals]
+        if not write_off_line_vals:
+            return super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         for line_vals in write_off_line_vals:
             line_vals.update({'amount_currency': line_vals.pop('amount', 0.0)})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
