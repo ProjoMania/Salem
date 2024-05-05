@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['studio_custom'],
+    'depends': ['studio_custom', 'hr_expense'],
 
     # always loaded
     'data': [
