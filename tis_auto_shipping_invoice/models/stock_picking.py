@@ -20,7 +20,8 @@ class StockPicking(models.Model):
         self.ensure_one()
         return (
             self.picking_type_code == "outgoing"
-            and self.company_id.invoicing_mode == "at_shipping" and self.location_id.warehouse_id.invoicing_mode == "at_shipping"
+            and self.company_id.invoicing_mode == "at_shipping"
+            and self.mapped("move_ids.sale_line_id.order_id").warehouse_id.invoicing_mode == "at_shipping"
         )
 
     def _invoicing_at_shipping(self):
