@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="external_layout_standard" inherit_id="web.external_layout_standard" >
-        <xpath expr="//div/div[hasclass('row')]" postion="inside">
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" postion="inside">
             <div class="col-auto text-right">
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="doc"><t t-if="doc.id"><t t-set="id" t-value="doc.id"/></t></t>
