@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="external_layout_standard" inherit_id="web.external_layout_standard" >
-        <xpath expr="//div[contains(@t-attf-class, 'header')]" postion="inside">
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="inside">
             <div class="col-auto text-right">
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="doc"><t t-if="doc.id"><t t-set="id" t-value="doc.id"/></t></t>
@@ -14,7 +14,7 @@
     </template>
 
     <template id="external_layout_background_bait" inherit_id="esco_account_report.external_layout_background_bait" >
-        <xpath expr="//div[contains(@t-attf-class, 'header')]" postion="inside">
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="inside">
             <div class="col-auto text-right top-right-div" t-att-style="report_header_style">
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="o"><t t-if="o.id"><t t-set="id" t-value="o.id"/></t></t>
