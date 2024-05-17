@@ -3,29 +3,29 @@
     <data noupdate="0">
 
 
-        <record id="studio_customization_odoo_studio_account__d634b9a6-551b-4a9e-8b19-e267af32f7a0" model="ir.ui.view">
-            <field name="name">studio.customization.odoo.studio.account..d634b9a6-551b-4a9e-8b19-e267af32f7a0</field>
-            <field name="model">account.payment</field>
-            <field name="inherit_id" ref="account.view_account_payment_form"/>
-            <field name="arch" type="xml">
+<!--        <record id="studio_customization_odoo_studio_account__d634b9a6-551b-4a9e-8b19-e267af32f7a0" model="ir.ui.view">-->
+<!--            <field name="name">studio.customization.odoo.studio.account..d634b9a6-551b-4a9e-8b19-e267af32f7a0</field>-->
+<!--            <field name="model">account.payment</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_payment_form"/>-->
+<!--            <field name="arch" type="xml">-->
 
 
-                <xpath expr="//field[@name='x_studio_field_Gb6C2']" position="replace"/>
-                <xpath expr="//button[@name='action_draft']" position="attributes">
-                    <attribute name="studio_approval">True</attribute>
-                </xpath>
-                <xpath expr="//button[@name='button_open_journal_entry']" position="attributes">
-                    <attribute name="groups">account.group_account_manager,new_studio_custom.res_groups_150_2d1d024e
-                    </attribute>
-                </xpath>
-                <xpath expr="//field[@name='journal_id']" position="before">
-                    <field name="x_studio_cash_collector" widget="many2many_tags"
-                           options="{&quot;no_create&quot;:true}"/>
-                </xpath>
+<!--                <xpath expr="//field[@name='x_studio_field_Gb6C2']" position="replace"/>-->
+<!--                <xpath expr="//button[@name='action_draft']" position="attributes">-->
+<!--                    <attribute name="studio_approval">True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='button_open_journal_entry']" position="attributes">-->
+<!--                    <attribute name="groups">account.group_account_manager,new_studio_custom.res_groups_150_2d1d024e-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='journal_id']" position="before">-->
+<!--                    <field name="x_studio_cash_collector" widget="many2many_tags"-->
+<!--                           options="{&quot;no_create&quot;:true}"/>-->
+<!--                </xpath>-->
 
 
-            </field>
-        </record>
+<!--            </field>-->
+<!--        </record>-->
 
 
         <record id="studio_customization_odoo_studio_account__1a4c040e-71e5-4299-989f-032477a16ef0" model="ir.ui.view">
