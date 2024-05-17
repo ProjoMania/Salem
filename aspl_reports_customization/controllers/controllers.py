@@ -10,6 +10,7 @@ class WebsiteProductDetails(http.Controller):
     def products_details(self, model=None):
         name = model.split('?')
         name1 = request.env[name[0]].sudo().search([('id', '=', name[1])])
+        print(name1)
         if name1:
             return http.request.render("aspl_reports_customization.website_valid_doc_template",
                                        {'id': name1, 'model': name[0], 'record': name1})
@@ -36,9 +37,8 @@ class WebsiteProductDetails(http.Controller):
             report_name = 'stock.report_deliveryslip'
             # else:
             #     report_name = 'stock.report_picking'
-
         pdf, _ = request.env['ir.actions.report']._get_report_from_name(
-            report_name).with_user(SUPERUSER_ID).sudo()._render_qweb_pdf([int(doc_id.sudo().id)])
+            report_name).with_user(SUPERUSER_ID).sudo()._render_qweb_pdf(report_name, res_ids=[int(doc_id.sudo().id)])
         pdfhttpheaders = [
             ('Content-Type', 'application/pdf'),
             ('Content-Length', len(pdf)),

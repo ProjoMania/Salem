@@ -36,8 +36,8 @@ class SaleOrder(models.Model):
         context.pop('default_name', None)
 
         self.with_context(context)._action_confirm()
-        if self.env.user.has_group('sale.group_auto_done_setting'):
-            self.action_done()
+        # if self.env.user.has_group('sale.group_auto_done_setting'):
+        #     self.action_done()
         return True
 
     def action_approve(self):
