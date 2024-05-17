@@ -6,7 +6,7 @@
             <div class="col-auto text-right">
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="doc"><t t-if="doc.id"><t t-set="id" t-value="doc.id"/></t></t>
-                <t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t>
+                <t t-if="o"><t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t></t>
                 <img t-att-src="'data:image/*;base64,%s' % company.create_qr_code(name, id).decode('utf-8')"
                      width="100px" height="100px" class="pull-right"/>
             </div>
@@ -18,7 +18,7 @@
             <div class="col-auto text-right top-right-div" t-att-style="report_header_style">
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="o"><t t-if="o.id"><t t-set="id" t-value="o.id"/></t></t>
-                <t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t>
+                <t t-if="o"><t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t></t>
                 <img t-att-src="'data:image/*;base64,%s' % o.company_id.create_qr_code(name, id).decode('utf-8')"
                      width="100px" height="100px" class="pull-right" style="right:-30px; position:relative;top:-110px;"/>
             </div>
