@@ -53,7 +53,7 @@ class AccountPayment(models.Model):
         discount = self.get_discount_amount(inv)
         cash_amount = sum([
             data['amount']
-            for data in inv._get_reconciled_info_JSON_values()
+            for data in inv._compute_payments_widget_reconciled_info()
             if data['account_payment_id'] == self.id
         ])
         return cash_amount - discount
