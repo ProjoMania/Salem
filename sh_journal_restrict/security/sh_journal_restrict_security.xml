@@ -19,5 +19,16 @@
         <field name="perm_read" eval="1"/>
         <field name="perm_unlink" eval="1"/>
     </record>
+    <record model="ir.rule" id="sh_journal_dashboard_restrict">
+        <field name="name">Journal Restrict</field>
+        <field name="model_id" ref="account.model_account_journal"/>
+        <field name="global" eval="False"/>
+        <field name="groups" eval="[(4, ref('group_journal_restrict_feature'))]"/>
+        <field name="domain_force">[('id', 'in', user.journal_ids.ids)]</field>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
 
 </odoo>
