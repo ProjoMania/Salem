@@ -341,7 +341,7 @@
                     <page string="Health Insurance" name="studio_page_asNPb">
                         <group name="studio_group_asNPb">
                             <group name="studio_group_asNPb_left" string="Insurance">
-                                <field name="x_studio_insurance_type" string="Insurance Type"  required="1"/>
+                                <field name="x_studio_insurance_type" string="Insurance Type"  required="True"/>
                                 <field name="x_studio_insurance_status" string="Insurance Status"/>
                                 <field name="x_studio_member_no" string="Member No"
                                        invisible="x_studio_insurance_status in ['To Request', 'Requested', False]"/>
@@ -365,7 +365,7 @@
             <field name="inherit_id" ref="product.product_pricelist_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="x_studio_start_date" string="Start Date"  required="1"/>
+                    <field name="x_studio_start_date" string="Start Date"  required="True"/>
                     <field name="x_studio_end_date" string="End Date" />
                 </xpath>
             </field>

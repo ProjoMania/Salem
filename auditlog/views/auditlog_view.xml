@@ -32,7 +32,7 @@
                 <sheet>
                     <group string="Rule">
                         <group colspan="1">
-                            <field name="name" required="1" readonly="state == 'subscribed'" />
+                            <field name="name" required="True" readonly="state == 'subscribed'" />
                             <field name="model_id" readonly="state == 'subscribed'"/>
                             <field name="log_type" readonly="state == 'subscribed'"/>
                             <field
