@@ -39,7 +39,7 @@ class VendorSalesReport(models.TransientModel):
                 ############################################################################################################
                 # move type = out_invoice
                 ############################################################################################################
-                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.product_id.id in products_list and o.move_id.move_type == 'out_invoice' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
+                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.move_id.state != 'cancel' and o.product_id.id in products_list and o.move_id.move_type == 'out_invoice' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
                     lot_str = False
                     total_qty = 0
                     # this code for select the lot from Delivery according to the same quantity
@@ -101,7 +101,7 @@ class VendorSalesReport(models.TransientModel):
                 ############################################################################################################
                 # move type = credit notes(out_refund)
                 ############################################################################################################
-                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.product_id.id in products_list and o.move_id.move_type == 'out_refund' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
+                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.move_id.state != 'cancel' and o.product_id.id in products_list and o.move_id.move_type == 'out_refund' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date):
                     lot_str = False
                     # this code for select the lot from Delivery according to the same quantity
                     for line in invoice.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
