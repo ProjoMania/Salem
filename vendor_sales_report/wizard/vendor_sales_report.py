@@ -18,7 +18,7 @@ class VendorSalesReport(models.TransientModel):
         filename = 'Vendor Sales Report' + '.xls'
         res_company = self.env.company
         vendor_data_list = []
-        suppliers_for_mail = self.env['product.supplierinfo'].sudo().search([("name", "=", partner.id)])
+        suppliers_for_mail = self.env['product.supplierinfo'].sudo().search([("partner_id", "=", partner.id)])
 
         if suppliers_for_mail:
             product_list = []
