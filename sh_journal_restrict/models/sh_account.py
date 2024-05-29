@@ -20,6 +20,7 @@ class ShResUsers(models.Model):
     journal_ids = fields.Many2many(
         'account.journal', string="Journals", copy=False)
 
+
 class ShAccountJournalRestrict(models.Model):
     _inherit = 'account.journal'
 
@@ -35,6 +36,7 @@ class ShAccountJournalRestrict(models.Model):
 
     user_ids = fields.Many2many(
         'res.users', string="Users", copy=False)
+    bypass_journal = fields.Boolean('Bypass Restriction', default=False)
 
     # To apply domain to action_________ 2
     @api.model
