@@ -179,8 +179,7 @@
                                 <span class="bold_text">Total</span>
                             </td>
                             <td class="bold_text text-center top_border_light"
-                                style="border-bottom-style: hidden !important ; border-right-style: hidden !important ;
-                                border-left-style: hidden !important;">
+                                style="border-bottom-style: hidden !important ; border-right-style: hidden !important;border-left-style: hidden !important;">
                                 <br/>
                                 <span t-field="o.amount_total"
                                       t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
