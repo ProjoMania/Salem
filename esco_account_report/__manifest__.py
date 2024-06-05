@@ -12,7 +12,7 @@
                 'esco_num2word_arabic','account_reports'],
     'data': [
         'security/ir.model.access.csv',
-        # 'views/assets.xml',
+        'views/assets.xml',
         'wizard/report_partner_wiz.xml',
         'report/report_layout_view.xml',
         'report/report_payment_receipt.xml',
