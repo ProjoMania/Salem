@@ -33,4 +33,5 @@
     'images': ['static/description/odoo12_5_select_department_and_employee.png'],
     'installable': True,
     'auto_install': False,
+    'license': 'LGPL-3',
 }
