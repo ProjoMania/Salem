@@ -154,12 +154,12 @@
                     </tbody>
                 </table>
                 <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">
-                    <table style="width: 36%; margin-left: 2%;border: none; ">
+                    <table style="width: 36%; margin-left: 2%;border:">
                         <tr>
                             <td class="right_border_light">
                                 <span>Subtotal</span>
                             </td>
-                            <td class="text-center left_border_light right_border_light bottom_border"
+                            <td class="text-center"
                                 style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
                                 <span t-field="o.amount_total"
                                         t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
@@ -169,7 +169,7 @@
                             <td class="right_border_light">
                                 <span>Discount</span>
                             </td>
-                            <td class="text-center top_border_light left_border_light right_border_light bottom_border_light">
+                            <td class="text-center">
                                 <span>-</span>
                             </td>
                         </tr>
