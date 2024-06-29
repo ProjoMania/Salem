@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_payment_type_tree" model="ir.ui.view">
+            <field name="name">payment.type.tree</field>
+            <field name="model">payment.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_payment_type_form" model="ir.ui.view">
+            <field name="name">view.payment.type.form</field>
+            <field name="model">payment.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_payment_type_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Payment Type</field>
+            <field name="res_model">payment.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new payment type.
+                </p>
+            </field>
+        </record>
+
+<!--         <menuitem id="menu_payment_type" action="action_payment_type_act_window"
+                  sequence="3" parent="purchase.menu_purchase_config"/> -->
+
+<!--         <record id="view_condition_terms_tree" model="ir.ui.view">
+            <field name="name">condition.terms.tree</field>
+            <field name="model">condition.terms</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+ -->
+<!--         <record id="view_condition_terms_form" model="ir.ui.view">
+            <field name="name">view.condition.terms.form</field>
+            <field name="model">condition.terms</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record> -->
+
+<!--         <record id="action_condition_terms_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Conditions Terms</field>
+            <field name="res_model">condition.terms</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Delivery Term.
+                </p>
+            </field>
+        </record> -->
+
+<!--         <menuitem id="menu_condition_terms" action="action_condition_terms_act_window"
+                  sequence="3" parent="purchase.menu_purchase_config"/>
+
+        <record id="view_shipping_data_tree" model="ir.ui.view">
+            <field name="name">shipping.data.tree</field>
+            <field name="model">shipping.data</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipping_data_form" model="ir.ui.view">
+            <field name="name">view.shipping.data.form</field>
+            <field name="model">shipping.data</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_shipping_data_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Shipping To</field>
+            <field name="res_model">shipping.data</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Shipping To.
+                </p>
+            </field>
+        </record> -->
+
+<!--         <menuitem id="menu_shipping_data" action="action_shipping_data_act_window"
+                  sequence="3" parent="purchase.menu_purchase_config"/> -->
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='Others']" position="inside">
+                <group string="Discount">
+<!--                    <field name="max_disc"/>-->
+                    <field name="disc_type" widget="radio"/>
+                    <field name="max_disc_amt" invisible="disc_type != 'fix_amount'"/>
+                    <field name="max_disc_pt" invisible="disc_type != 'percentage'"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

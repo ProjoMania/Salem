@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="sale_order_view_extended">
+        <field name="name">sale.order.view.form.extended</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_approve_discount" type="object" string="Approval for Discount"
+                 groups="pharma_sales_rep.group_supervisor, pharma_sales_rep.group_manager, base.group_erp_manager"
+                invisible="is_discount"/>
+                <field name="is_discount" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

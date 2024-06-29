@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invoice_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <!-- <h4 t-esc="o"/>
+                    <h4 t-esc="o.invoice_line_ids.product_id"/>
+                    <h4 t-esc="o.invoice_line_ids.sale_line_ids"/> -->
+                    <!-- <h4 t-esc="o.invoice_line_ids.discount"/> -->
+                    <!-- <h4 t-esc="o.invoice_line_ids.product_id.product_tmpl_id"/> -->
+                    <style>
+                        .address-section {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-top: 10px;
+                        }
+                        .company-info {
+                        text-align: right;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                        }
+                        .company-info img {
+                        max-width: 100%;
+                        height: 100px;
+                        }
+                        .invoice-header {
+                        text-align: left;
+                        font-weight: bold;
+                        font-size: 24px;
+                        margin-top: 20px;
+                        }
+                        .invoice-details {
+                        width: 65%;
+                        float: left;
+                        }
+                        .invoice-details table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        }
+                        .invoice-details table td,
+                        .invoice-details table th {
+                        border: 1px solid black;
+                        padding: 5px 10px;
+                        vertical-align: top;
+                        }
+                        .invoice-details table td:first-child,
+                        .invoice-details table th:first-child {
+                        border: 0px solid transparent;
+                        }
+                        .invoice-details table td:last-child,
+                        .invoice-details table th:last-child {
+                        border-right: 1px solid black;
+                        }
+                        .table_with_header th,
+                        .table_with_header td {
+                        border: 1px solid black;
+                        padding: 5px;
+                        }
+                        .total-table {
+                        width: 36%;
+                        margin-left: auto;
+                        border: none;
+                        }
+                        .total-table td {
+                        padding: 5px;
+                        }
+                        .terms-and-conditions {
+                        margin-top: 20px;
+                        <!-- margin-bottom: 20px; -->
+                        }
+                        .signature {
+                        text-align: right;
+                        }
+
+                        <!-- style="position: absolute; bottom: 5px; left: 5px; margin-bottom: 0;"> -->
+                        .company-address {
+                        margin-bottom: 0px;
+                        left: 0;
+                        text-align: left;
+                        bottom: 5px;
+                        }
+                        <!-- .company-address p {
+                            margin: 0;
+                        } -->
+                        .right_border_light {
+                        border-right: 1px solid #ddd;
+                        }
+                        .left_border_light {
+                        border-left: 1px solid #ddd;
+                        }
+                        .top_border_light {
+                        border-top: 1px solid #ddd;
+                        }
+                        .bottom_border {
+                        border-bottom: 1px solid black;
+                        }
+                        .bottom_border_light {
+                        border-bottom: 1px solid #ddd;
+                        }
+                    </style>
+                    <!-- Customer Name and Company Info -->
+                    <div class="address-section">
+                        <div class="company-info">
+                            <strong>
+                                <t t-esc="o.partner_id.name"/>
+                            </strong>
+                            <img t-att-src="image_data_uri(o.partner_id.image_1920)" alt="company"/>
+                        </div>
+                    </div>
+                    <!-- Invoice Header -->
+                    <div class="invoice-header">INVOICE</div>
+                    <div class="invoice-details">
+                        <table class="table" border="1">
+                            <tbody>
+                                <tr>
+                                    <td>INV No.</td>
+                                    <td>
+                                        <t t-esc="o.payment_reference"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer Name</td>
+                                    <td>
+                                        <t t-esc="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer ID</td>
+                                    <td>
+                                        <t t-esc="o.partner_id.customer_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>
+                                        <t t-esc="o.partner_id.city"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>
+                                        <t t-esc="o.invoice_date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Invoice Items Table -->
+                    <table class="table table-sm table_with_header" style="table-layout: fixed; margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">Item #</th>
+                                <th style="width: 47%;">Description</th>
+                                <th style="width: 8%;">QTY</th>
+                                <th style="width: 11%;">Unit Price</th>
+                                <th style="width: 12%;">Batch Number</th>
+                                <th style="width: 19%;">Expiry Date</th>
+                                <th style="width: 15%;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="sr_number" t-value="1"/>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <t t-if="line.product_id.name == 'Discount'">
+
+                                    <!-- Add your discount product ID here -->
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="sr_number"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.quantity"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_unit"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="line.sale_line_ids">
+                                                <t t-set="lot_numbers"
+                                                   t-value="','.join(line.sale_line_ids.mapped('move_ids').mapped('move_line_ids').mapped('lot_id').mapped('name'))"/>
+                                                <t t-esc="lot_numbers"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="line.sale_line_ids">
+                                                <t t-set="expiry_dates"
+                                                   t-value="','.join(map(lambda x: x.strftime('%Y-%m-%d') if x else '', line.sale_line_ids.mapped('move_ids').mapped('move_line_ids').mapped('lot_id').mapped('expiration_date')))"/>
+                                                <t t-esc="expiry_dates"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_total"/>
+                                            <t t-esc="o.partner_id.currency_id.name"/>
+                                        </td>
+                                        <t t-set="sr_number" t-value="sr_number + 1"/>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <!-- Total Table -->
+                    <table class="total-table">
+                        <tr>
+                            <td class="bold_text" style="width: 67.3%">Subtotal</td>
+                            <td class="bold_text text-center">
+                                <t t-esc="o.amount_untaxed"/>
+                                <t t-esc="o.partner_id.currency_id.name"/>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td class="bold_text" style="width: 67.3%">Discount</td>
+                            <td class="bold_text text-center">
+
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <t t-if="line.product_id.name == 'Discount'">
+                                    <t t-esc="line.price_subtotal"/>
+                                    <t t-esc="o.partner_id.currency_id.name" />
+                                </t>
+                                <t  t-elif="o.discount">
+                                    <t t-esc="line.discount"/>
+                                    <t t-esc="o.partner_id.currency_id.name" />
+                                </t>
+                            </t>
+                            </td>
+                        </tr> -->
+
+
+                        <tr>
+                            <td class="bold_text" style="width: 67.3%">Discount</td>
+                            <td class="bold_text text-center">
+                                <t t-set="discount_value" t-value="0"/>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <t t-if="line.product_id.name == 'Discount'">
+                                        <t t-set="discount_value" t-value="line.price_subtotal"/>
+                                        <t t-esc="discount_value"/>
+                                        <t t-esc="o.partner_id.currency_id.name"/>
+                                    </t>
+                                    <t t-elif="line.discount > 0 and discount_value == 0">
+                                        <t t-set="discount_value" t-value="line.discount"/>
+                                    </t>
+                                </t>
+                                <t t-if="discount_value > 0">
+                                    <t t-esc="discount_value"/>
+                                    <t t-esc="o.partner_id.currency_id.name"/>
+                                </t>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="bold_text" style="width: 67.3%">
+                                <br/>
+                                <span>Total</span>
+                            </td>
+                            <td class="bold_text text-center">
+                                <br/>
+                                <t t-esc="o.amount_total"/>
+                                <t t-esc="o.partner_id.currency_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Terms and Conditions -->
+                    <div class="terms-and-conditions">
+                        <span t-field="o.narration"/>
+                    </div>
+                    <!-- Signature -->
+                    <div class="signature" style="margin-top:50px;">
+                        <hr style="width: 30%; border-top: 1px solid black; margin-left: 70%;"/>
+                        <span t-field="o.invoice_user_id.name"/>
+                    </div>
+                    <!-- Company Address -->
+                    <div class="company-address" style="margin-bottom: 20px;">
+                        <t t-set="company" t-value="o.company_id"/>
+                        <p>
+                            <strong>
+                                <t t-esc="company.name"/>
+                            </strong>
+                            <br/>
+                            <t t-esc="company.street"/>,<t t-esc="company.city"/>,
+                            <t t-esc="company.state_id.name"/>
+                            <br/>
+                            <t t-esc="company.zip"/>,
+                            <t t-esc="company.country_id.name"/>
+                            <br/>
+                            <t t-esc="company.email"/>
+                            <br/>
+                            <t t-esc="company.website"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="invoice_report_paperformat" model="report.paperformat">
+        <field name="name">Custom Invoice Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="header_line" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="invoice_report_record_id" model="ir.actions.report">
+        <field name="name">Custom Invoice Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pharma_invoice_report.invoice_report</field>
+        <field name="report_file">pharma_invoice_report.invoice_report</field>
+        <field name="paperformat_id" ref="pharma_invoice_report.invoice_report_paperformat"/>
+        <field name="print_report_name">'Invoice Report'</field>
+        <field name="attachment"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
+
+
+
