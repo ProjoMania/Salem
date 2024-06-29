@@ -141,14 +141,14 @@
                                         t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="right_border_light">
-                                <span>Discount</span>
-                            </td>
-                            <td class="text-center top_border_light left_border_light right_border_light bottom_border">
-                                <span>-</span>
-                            </td>
-                        </tr>
+<!--                        <tr>-->
+<!--                            <td class="right_border_light">-->
+<!--                                <span>Discount</span>-->
+<!--                            </td>-->
+<!--                            <td class="text-center top_border_light left_border_light right_border_light bottom_border">-->
+<!--                                <span>-</span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
                         <tr>
                             <td class="right_border_light">
                                 <span>Other</span>
