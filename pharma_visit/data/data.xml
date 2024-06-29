@@ -1,0 +1,19 @@
+<odoo>
+
+    <record id="visit_seq" model="ir.sequence">
+        <field name="name">Visit Order Sequence</field>
+        <field name="code">visit_order_seq</field>
+        <field name="prefix">V</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="type_doctor" model="customer.type">
+        <field name="name">Doctor</field>
+    </record>
+
+    <record id="type_pharma" model="customer.type">
+        <field name="name">Pharma</field>
+    </record>
+
+</odoo>

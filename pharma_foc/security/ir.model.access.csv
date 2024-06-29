@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pharma_foc.access_foc_product,access_foc_product,pharma_foc.model_foc_product,base.group_user,1,1,1,1

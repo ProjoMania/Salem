@@ -1,0 +1,38 @@
+
+{
+    'name': 'Pharma Visit',
+    'category': 'CRM, Sales',
+    'version': '0.1',
+    'summary': '',
+    'author': 'Acespritech Solutions Pvt. Ltd.',
+    'sequence': 1,
+    'website': '',
+    'description': """ """,
+    # 'price': 0.0,
+    'currency': 'EUR',
+    'license': 'LGPL-3',
+    'depends': ['base', 'pharma_sales_rep', 'tis_customer_type', 'survey', 'timer', 'stock', 'pharma_foc', 'pharma_crm_competitors'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/data.xml',
+        'views/pharma_visit_view.xml',
+        'views/weekly_plan_views.xml',
+        'views/classification_view.xml',
+        'views/res_partner_view.xml',
+        'views/promotion_view.xml',
+        'views/res_users_view.xml',
+        'views/sale_order_views.xml',
+        'views/visit_order_view.xml',
+        'views/res_partner_config_view.xml',
+        'views/visit_configuration_view.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'pharma_visit/static/src/js/visit.js',
+            'pharma_visit/static/src/xml/visit.xml',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}
