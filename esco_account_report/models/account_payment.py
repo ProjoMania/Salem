@@ -7,56 +7,57 @@ from datetime import datetime
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
+    # ('discount', 'Pay with discount')],
 
-    payment_difference_handling = fields.Selection([('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid'),
-                                                    ('discount', 'Pay with discount')],
+    payment_difference_handling = fields.Selection([('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid')],
                                                    default='open', string="Payment Difference Handling", copy=False)
-    discount_amount = fields.Monetary(string='Discount Amount', required=False, tracking=True)
+    # discount_amount = fields.Monetary(string='Discount Amount', required=False, tracking=True)
     writeoff_label = fields.Char(
         string='Journal Item Label',
         help='Change label of the counterpart that will hold the payment difference',
         default=_('Write-Off'))
 
-    def get_discount_amount(self, inv):
-        discount = 0.0
-        company = self.journal_id.company_id
-        currency = self.currency_id or self.journal_id.currency_id or company.currency_id
-        if self.outstanding_account_id:
-            discount_line = self.env['account.move.line'].search([('account_id', '=', self.outstanding_account_id.id), ('move_id', '=', self.move_id.id)])
-            if discount_line:
-                amount = discount_line.debit or discount_line.credit
-                move_currency = discount_line.currency_id
-                #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                # else:
-                #     discount_amount = amount
-                if move_currency == currency and move_currency != company.currency_id:
-                    discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                else:
-                    discount_amount = amount
-                if move_currency == currency and move_currency != company.currency_id:
-                    discount_amount = amount
-                else:
-                    discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                if inv and move_currency:
-                    invoice_currency = inv.currency_id
-                    if move_currency == invoice_currency:
-                        discount_amount = discount_line.amount_currency
-                    elif invoice_currency == company.currency_id:
-                        discount_amount = amount
-                    else:
-                        discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
-                return discount_amount
-        return discount
+    # def get_discount_amount(self, inv):
+    #     discount = 0.0
+    #     company = self.journal_id.company_id
+    #     currency = self.currency_id or self.journal_id.currency_id or company.currency_id
+    #     if self.outstanding_account_id:
+    #         discount_line = self.env['account.move.line'].search([('account_id', '=', self.outstanding_account_id.id), ('move_id', '=', self.move_id.id)])
+    #         if discount_line:
+    #             amount = discount_line.debit or discount_line.credit
+    #             move_currency = discount_line.currency_id
+    #             #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             # else:
+    #             #     discount_amount = amount
+    #             if move_currency == currency and move_currency != company.currency_id:
+    #                 discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             else:
+    #                 discount_amount = amount
+    #             if move_currency == currency and move_currency != company.currency_id:
+    #                 discount_amount = amount
+    #             else:
+    #                 discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             if inv and move_currency:
+    #                 invoice_currency = inv.currency_id
+    #                 if move_currency == invoice_currency:
+    #                     discount_amount = discount_line.amount_currency
+    #                 elif invoice_currency == company.currency_id:
+    #                     discount_amount = amount
+    #                 else:
+    #                     discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
+    #             return discount_amount
+    #     return discount
 
     def get_cash_amount(self, inv):
         ''' Function to get final received amount'''
-        discount = self.get_discount_amount(inv)
+        # discount = self.get_discount_amount(inv)
         cash_amount = sum([
             data['amount']
             for data in inv.invoice_payments_widget['content']
             if data['account_payment_id'] == self.id
         ])
-        return cash_amount - discount
+        # return cash_amount - discount
+        return cash_amount
 
     def _get_report_base_filename(self):
         self.ensure_one()
@@ -66,54 +67,53 @@ class AccountPayment(models.Model):
 class AccountPaymentRegister(models.TransientModel):
     _inherit = "account.payment.register"
 
-    payment_difference_handling = fields.Selection(selection_add=[('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid'),
-                                                    ('discount', 'Pay with discount')],
+    payment_difference_handling = fields.Selection(selection_add=[('open', 'Keep open'), ('reconcile', 'Mark invoice as fully paid')],
                                                    default='open', string="Payment Difference Handling", copy=False)
-    discount_amount = fields.Monetary(string='Discount Amount', required=False, tracking=True)
+    # discount_amount = fields.Monetary(string='Discount Amount', required=False, tracking=True)
     writeoff_label = fields.Char(
         string='Journal Item Label',
         help='Change label of the counterpart that will hold the payment difference',
         default=_('Write-Off'))
 
-    @api.onchange('payment_difference_handling')
-    def _onchange_payment_difference_handling(self):
-        if self.payment_difference_handling == 'discount':
-            discount_account = self.env['account.account'].search([('code', '=', '400001'),
-                                                                   ('company_id', '=', self.company_id.id)], limit=1)
-            if discount_account:
-                self.writeoff_account_id = discount_account.id
+    # @api.onchange('payment_difference_handling')
+    # def _onchange_payment_difference_handling(self):
+    #     if self.payment_difference_handling == 'discount':
+    #         discount_account = self.env['account.account'].search([('code', '=', '400001'),
+    #                                                                ('company_id', '=', self.company_id.id)], limit=1)
+    #         if discount_account:
+    #             self.writeoff_account_id = discount_account.id
 
-    def get_discount_amount(self, inv):
-        discount = 0.0
-        company = self.journal_id.company_id
-        currency = self.currency_id or self.journal_id.currency_id or company.currency_id
-        if self.outstanding_account_id:
-            discount_line = self.env['account.move.line'].search([('account_id', '=', self.outstanding_account_id.id), ('move_id', '=', self.move_id.id)])
-            if discount_line:
-                amount = discount_line.debit or discount_line.credit
-                move_currency = discount_line.currency_id
-                # if currency != company.currency_id:
-                #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                # else:
-                #     discount_amount = amount
-                if move_currency == currency and move_currency != company.currency_id:
-                    discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                else:
-                    discount_amount = amount
-                if move_currency == currency and move_currency != company.currency_id:
-                    discount_amount = amount
-                else:
-                    discount_amount = company.currency_id._convert(amount, currency, company, self.date)
-                if inv and move_currency:
-                    invoice_currency = inv.currency_id
-                    if move_currency == invoice_currency:
-                        discount_amount = discount_line.amount_currency
-                    elif invoice_currency == company.currency_id:
-                        discount_amount = amount
-                    else:
-                        discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
-                return discount_amount
-        return discount
+    # def get_discount_amount(self, inv):
+    #     discount = 0.0
+    #     company = self.journal_id.company_id
+    #     currency = self.currency_id or self.journal_id.currency_id or company.currency_id
+    #     if self.outstanding_account_id:
+    #         discount_line = self.env['account.move.line'].search([('account_id', '=', self.outstanding_account_id.id), ('move_id', '=', self.move_id.id)])
+    #         if discount_line:
+    #             amount = discount_line.debit or discount_line.credit
+    #             move_currency = discount_line.currency_id
+    #             # if currency != company.currency_id:
+    #             #     discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             # else:
+    #             #     discount_amount = amount
+    #             if move_currency == currency and move_currency != company.currency_id:
+    #                 discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             else:
+    #                 discount_amount = amount
+    #             if move_currency == currency and move_currency != company.currency_id:
+    #                 discount_amount = amount
+    #             else:
+    #                 discount_amount = company.currency_id._convert(amount, currency, company, self.date)
+    #             if inv and move_currency:
+    #                 invoice_currency = inv.currency_id
+    #                 if move_currency == invoice_currency:
+    #                     discount_amount = discount_line.amount_currency
+    #                 elif invoice_currency == company.currency_id:
+    #                     discount_amount = amount
+    #                 else:
+    #                     discount_amount = invoice_currency._convert(amount, move_currency, company, self.date)
+    #             return discount_amount
+    #     return discount
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
@@ -126,13 +126,13 @@ class AccountPaymentRegister(models.TransientModel):
                 'account_id': self.writeoff_account_id.id,
             }
 
-        if not self.currency_id.is_zero(self.payment_difference) and self.payment_difference_handling == 'discount':
-            payment_vals['write_off_line_vals'] = {
-                'name': self.writeoff_label,
-                'amount': self.discount_amount,
-                'currency_id': self.currency_id.id,
-                'account_id': self.writeoff_account_id.id,
-            }
+        # if not self.currency_id.is_zero(self.payment_difference) and self.payment_difference_handling == 'discount':
+        #     payment_vals['write_off_line_vals'] = {
+        #         'name': self.writeoff_label,
+        #         'amount': self.discount_amount,
+        #         'currency_id': self.currency_id.id,
+        #         'account_id': self.writeoff_account_id.id,
+        #     }
         return payment_vals
 
     def _prepare_payment_moves(self):
@@ -167,8 +167,8 @@ class AccountPaymentRegister(models.TransientModel):
             write_off_amount = 0.0
             if payment.payment_difference_handling == 'reconcile':
                 write_off_amount = -payment.payment_difference or 0.0
-            elif payment.payment_difference_handling == 'discount':
-                write_off_amount = -payment.discount_amount or 0.0
+            # elif payment.payment_difference_handling == 'discount':
+            #     write_off_amount = -payment.discount_amount or 0.0
             if payment.payment_type in ('outbound', 'transfer'):
                 counterpart_amount = payment.amount
                 liquidity_line_account = payment.journal_id.default_debit_account_id

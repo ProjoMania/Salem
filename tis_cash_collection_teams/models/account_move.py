@@ -37,3 +37,12 @@ class AccountMove(models.Model):
             raise AccessError(_("You don't have the access rights to post an invoice."))
         else:
             return res
+
+    @api.model
+    def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
+        current_user = self.env.user
+        partner_ids = self.env['res.partner'].search([('cash_collection_team_id.member_ids', 'in', [self.env.user.id])])
+        if not current_user.has_group('base.group_erp_manager'):
+            domain += [('partner_id', 'in', partner_ids.ids)]
+        return super().web_search_read(domain, specification, offset=offset, limit=limit, order=order,
+                                       count_limit=count_limit)

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="visit_order_tree_view" model="ir.ui.view">
+        <field name="name">visit.order.tree.view</field>
+        <field name="model">visit.order</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="sequence"/>
+                <field name="drug_store_id"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="visit_order_form_view" model="ir.ui.view">
+        <field name="name">visit.order.form.view</field>
+        <field name="model">visit.order</field>
+        <field name="arch" type="xml">
+            <form string="" js_class="visit_form">
+                <header>
+                    <button name="action_sale_order" string="Create Sale Order"
+                            invisible="status in ['draft','ordered','waiting_for_drag_store','delivered']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_ordered" string="Ordered"
+                            invisible="status in ['ordered', 'waiting_for_drag_store', 'delivered', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_waiting" string="Waiting for Drug Store"
+                            invisible="status in ['draft','waiting_for_drag_store', 'delivered', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_delivered" string="Delivered"
+                            invisible="status in ['draft','ordered', 'delivered', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_done" string="Done"
+                            invisible="status in ['draft','ordered','waiting_for_drag_store','done']"
+                            type="object" class="oe_highlight"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_sale_order" class="oe_stat_button" type="object" icon="fa-bar-chart">
+                            <div class="o_stat_info">
+                                <field name="sale_count"/>
+                                <span class="o_stat_text">Sale Order</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="True"/>
+                            <field name="drug_store_id" required="True"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="order_date"/>
+                            <field name="sales_rep_id"/>
+                        </group>
+                        <div>
+                            <br/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Visit Lines">
+                            <field name="visit_order_ids">
+                                <tree editable="bottom">
+                                    <field name="product_category_id"/>
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="amount"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visit_order" model="ir.actions.act_window">
+        <field name="name">Visit Order</field>
+        <field name="res_model">visit.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_visit_order" name="Visit Order" action="action_visit_order" parent="main_menu_visit"/>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo noupdate="1">
+    <record id="create_activity_for_receivable_payable_notification" model="ir.cron">
+        <field name="name">Activity: Receivable and Payable Notification</field>
+        <field name="model_id" ref="pharma_receivable_payable_notification.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model._activity_for_receivable_payable_notification()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

@@ -11,7 +11,7 @@
     'description': 'Cash Collection Teams For Invoice',
     'website': 'http://www.technaureus.com',
     'license': 'Other proprietary',
-    'depends': ['account'],
+    'depends': ['account', 'account_accountant'],
     'data': [
         'security/cash_collection_security_groups.xml',
         'security/ir.model.access.csv',

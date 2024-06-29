@@ -9,8 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='picking_type_id']" position="after">
                     <field name="is_close" invisible="1" groups="aspl_transfer_status.group_warehouse_keeper"/>
-                    <field name="transfer_status_id" attrs="{'readonly': [('is_close', '=', True)]}"
-                           groups="aspl_transfer_status.group_warehouse_keeper"/>
+                    <field name="transfer_status_id" readonly="is_close" groups="aspl_transfer_status.group_warehouse_keeper"/>
                     <field name="required_attachment" readonly="1"
                            groups="aspl_transfer_status.group_warehouse_keeper"/>
                 </xpath>
@@ -24,7 +23,7 @@
                                 <field name="file_url"/>
                                 <field name="file"/>
                                 <button type="object" name="download_attachment" class="oe_highlight" icon="fa-download"
-                                        attrs="{'invisible': [('file', '=', False)]}"/>
+                                        invisible="not file_url"/>
                             </tree>
                         </field>
                     </page>

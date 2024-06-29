@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="visit_promotion_tree_view" model="ir.ui.view">
+        <field name="name">visit.promotion.tree.view</field>
+        <field name="model">visit.promotion</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="visit_promotion_form_view" model="ir.ui.view">
+        <field name="name">visit.promotion.form.view</field>
+        <field name="model">visit.promotion</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                            <page string="Display">
+                                <field name="image_ids" mode="kanban">
+                                    <kanban>
+                                        <field name="image" widget="image"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="col-3 oe_kanban_global_click">
+                                                    <div class="o_kanban_image" style="width:100%;height:100%;">
+                                                        <img alt="Image" t-att-src="kanban_image('promotion.images', 'image', record.id.raw_value)" />
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                        </notebook>
+                </sheet>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
+            </form>
+        </field>
+    </record>
+
+    <record id="action_promotion" model="ir.actions.act_window">
+        <field name="name">Promotion</field>
+        <field name="res_model">visit.promotion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_promotion" name="Promotion" action="action_promotion" parent="main_menu_visit"/>
+</odoo>
