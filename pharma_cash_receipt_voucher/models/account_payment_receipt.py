@@ -74,8 +74,18 @@ class AccountMove(models.Model):
             return super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
                                                            force_balance=force_balance)
         for line_vals in write_off_line_vals:
+            print(line_vals)
+            print(self.env.company.currency_id)
+            print(self)
+            balance = self.currency_id._convert(
+                                  from_amount=line_vals.get('amount', 0),
+                                  to_currency=self.env.company.currency_id,
+                                  company=self.env.company.id,
+                                  date=self.date,
+                              )
             line_vals.update({'amount_currency': line_vals.pop('amount', 0.0),
-                              'balance': line_vals.pop('balance', 0.0)})
+                              'balance': balance})
+        print(write_off_line_vals)
         result = super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
                                                          force_balance=force_balance)
         for move_line in result:
