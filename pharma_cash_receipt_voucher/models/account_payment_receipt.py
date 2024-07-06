@@ -68,32 +68,28 @@ class AccountMove(models.Model):
         self.ensure_one()
         return '%s' % (self.name)
 
-    def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
-        write_off_line_vals = isinstance(write_off_line_vals, dict) and [write_off_line_vals]
-        if not write_off_line_vals:
-            return super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
-                                                           force_balance=force_balance)
-        for line_vals in write_off_line_vals:
-            print(line_vals)
-            print(self.env.company.currency_id)
-            print(self)
-            balance = self.currency_id._convert(
-                                  from_amount=line_vals.get('amount', 0),
-                                  to_currency=self.env.company.currency_id,
-                                  company=self.env.company.id,
-                                  date=self.date,
-                              )
-            line_vals.update({'amount_currency': line_vals.pop('amount', 0.0),
-                              'balance': balance})
-        print(write_off_line_vals)
-        result = super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
-                                                         force_balance=force_balance)
-        for move_line in result:
-            if self.analytic_account_id:
-                move_line.update({
-                    'analytic_account_id': self.analytic_account_id.id,
-                })
-        return result
+    # def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
+    #     write_off_line_vals = isinstance(write_off_line_vals, dict) and [write_off_line_vals]
+    #     if not write_off_line_vals:
+    #         return super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
+    #                                                        force_balance=force_balance)
+    #     for line_vals in write_off_line_vals:
+    #         balance = self.currency_id._convert(
+    #                               from_amount=line_vals.get('amount', 0),
+    #                               to_currency=self.env.company.currency_id,
+    #                               company=self.env.company.id,
+    #                               date=self.date,
+    #                           )
+    #         line_vals.update({'amount_currency': line_vals.pop('amount', 0.0),
+    #                           'balance': balance})
+    #     result = super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
+    #                                                      force_balance=force_balance)
+    #     for move_line in result:
+    #         if self.analytic_account_id:
+    #             move_line.update({
+    #                 'analytic_account_id': self.analytic_account_id.id,
+    #             })
+    #     return result
 
     def action_post(self):
         result = super().action_post()
