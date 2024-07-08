@@ -42,7 +42,7 @@ class AccountMove(models.Model):
     def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
         current_user = self.env.user
         partner_ids = self.env['res.partner'].search([('cash_collection_team_id.member_ids', 'in', [self.env.user.id])])
-        if not current_user.has_group('base.group_erp_manager'):
+        if not current_user.has_group('base.group_erp_manager') and current_user.has_group('tis_cash_collection_teams.cash_collection_user_access'):
             domain += [('partner_id', 'in', partner_ids.ids)]
         return super().web_search_read(domain, specification, offset=offset, limit=limit, order=order,
                                        count_limit=count_limit)

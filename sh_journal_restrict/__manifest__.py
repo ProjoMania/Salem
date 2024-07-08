@@ -11,7 +11,7 @@
     "description": """This module restricts journals for specific users. You can add access users on journal configuration, only allowed users can access that journal. Users are allocated in specific journals like invoice, bill, cash, bank, sale & purchase, So users can not access a journal where the journal is not available for that user.""",
     "version": "15.0.4",
     "depends": [
-        "account"
+        "account", "tis_cash_collection_teams"
     ],
     "application": True,
     "data": [
