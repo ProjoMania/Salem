@@ -10,3 +10,4 @@ class AccountMove(models.Model):
             partner_tags = current_user.partner_category_id.ids
             domain += [('partner_id.category_id', 'in', partner_tags)]
         return super().web_search_read(domain, specification, offset=offset, limit=limit, order=order, count_limit=count_limit)
+

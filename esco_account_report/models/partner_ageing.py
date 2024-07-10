@@ -13,6 +13,55 @@ class report_account_aged_partner(models.AbstractModel):
     _name = "account.aged.partner.balance.report.handler"
     _inherit = "account.aged.partner.balance.report.handler"
 
+    def _common_custom_unfold_all_batch_data_generator(self, internal_type, report, options, lines_to_expand_by_function):
+        rslt = {} # In the form {full_sub_groupby_key: all_column_group_expression_totals for this groupby computation}
+        report_periods = 8 # The report has 6 periods
+
+        for expand_function_name, lines_to_expand in lines_to_expand_by_function.items():
+            for line_to_expand in lines_to_expand: # In standard, this loop will execute only once
+                if expand_function_name == '_report_expand_unfoldable_line_with_groupby':
+                    report_line_id = report._get_res_id_from_line_id(line_to_expand['id'], 'account.report.line')
+                    expressions_to_evaluate = report.line_ids.expression_ids.filtered(lambda x: x.report_line_id.id == report_line_id and x.engine == 'custom')
+
+                    if not expressions_to_evaluate:
+                        continue
+
+                    for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
+                        # Get all aml results by partner
+                        aml_data_by_partner = {}
+                        for aml_id, aml_result in self._aged_partner_report_custom_engine_common(column_group_options, internal_type, 'id', None):
+                            aml_result['aml_id'] = aml_id
+                            aml_data_by_partner.setdefault(aml_result['partner_id'], []).append(aml_result)
+
+                        # Iterate on results by partner to generate the content of the column group
+                        partner_expression_totals = rslt.setdefault(f"[{report_line_id}]=>partner_id", {})\
+                                                        .setdefault(column_group_key, {expression: {'value': []} for expression in expressions_to_evaluate})
+                        for partner_id, aml_data_list in aml_data_by_partner.items():
+                            partner_values = self._prepare_partner_values()
+                            for i in range(report_periods):
+                                partner_values[f'period{i}'] = 0
+
+                            # Build expression totals under the right key
+                            partner_aml_expression_totals = rslt.setdefault(f"[{report_line_id}]partner_id:{partner_id}=>id", {})\
+                                                                .setdefault(column_group_key, {expression: {'value': []} for expression in expressions_to_evaluate})
+                            for aml_data in aml_data_list:
+                                for i in range(report_periods):
+                                    period_value = aml_data[f'period{i}']
+                                    partner_values[f'period{i}'] += period_value
+                                    partner_values['total'] += period_value
+
+                                for expression in expressions_to_evaluate:
+                                    partner_aml_expression_totals[expression]['value'].append(
+                                        (aml_data['aml_id'], aml_data[expression.subformula])
+                                    )
+
+                            for expression in expressions_to_evaluate:
+                                partner_expression_totals[expression]['value'].append(
+                                    (partner_id, partner_values[expression.subformula])
+                                )
+
+        return rslt
+
     def _aged_partner_report_custom_engine_common(self, options, internal_type, current_groupby, next_groupby, offset=0, limit=None):
         report = self.env['account.report'].browse(options['report_id'])
         report._check_groupby_fields((next_groupby.split(',') if next_groupby else []) + ([current_groupby] if current_groupby else []))
@@ -194,7 +243,6 @@ class report_account_aged_partner(models.AbstractModel):
         ]
         self._cr.execute(query, params)
         query_res_lines = self._cr.dictfetchall()
-
         if not current_groupby:
             return build_result_dict(report, query_res_lines)
         else:
