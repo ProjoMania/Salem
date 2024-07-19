@@ -32,7 +32,6 @@ class AccountPayment(models.Model):
                 company=self.env.company.id,
                 date=self.date,
             )
-            print(balance)
             line_vals.update({'amount_currency': amount_currency,
                               'balance': balance})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals, force_balance=force_balance)
