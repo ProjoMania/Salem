@@ -40,7 +40,6 @@ class AccountPayment(models.Model):
                 move_line.update({
                     'analytic_account_id': self.analytic_account_id.id,
                 })
-        print(result)
         return result
 
     def action_post(self):
