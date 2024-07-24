@@ -18,13 +18,21 @@ class AccountPayment(models.Model):
             return super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals,
                                                            force_balance=force_balance)
         for line_vals in write_off_line_vals:
+            amount_currency = line_vals.get('amount', 0.0)
+            if self.payment_type == 'inbound':
+                amount_currency = line_vals.get('amount', 0.0)
+                # Receive money.
+            elif self.payment_type == 'outbound':
+                # Send money.
+                amount_currency = -line_vals.get('amount', 0.0)
+            line_vals.pop('amount', 0.0)
             balance = self.currency_id._convert(
-                from_amount=line_vals.get('amount', 0),
+                from_amount=amount_currency,
                 to_currency=self.env.company.currency_id,
                 company=self.env.company.id,
                 date=self.date,
             )
-            line_vals.update({'amount_currency': line_vals.pop('amount', 0.0),
+            line_vals.update({'amount_currency': amount_currency,
                               'balance': balance})
         result = super(AccountPayment, self)._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals, force_balance=force_balance)
         for move_line in result:

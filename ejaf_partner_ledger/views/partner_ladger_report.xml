@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!-- FIXME: need to rewrite this template  -->
-<!--        <template id="template_partner_ledger_report2" inherit_id="account_reports.filter_info_template">-->
-<!--            <xpath expr="//div[hasclass('print_only')]" position="inside">-->
-<!--                <div class="col-3 mb4 text-right">-->
-<!--                    <img t-attf-src="/web/binary/company_logo?company={{ res_company.id }}"-->
-<!--                         style="display : block ; width :250px;height : 120px;" alt="Logo"/>-->
-<!--                </div>-->
-<!--            </xpath>-->
-<!--        </template>-->
+        <template id="template_partner_ledger_report2" inherit_id="account_reports.company_information">
+            <xpath expr="//div[hasclass('row')]" position="inside">
+                <div class="col-3 mb4 text-right">
+                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)"
+                         style="display : block ; width :250px;height : 120px;" alt="Logo"/>
+                </div>
+            </xpath>
+        </template>
 
     </data>
 </odoo>
