@@ -21,7 +21,7 @@ class AccountJournal(models.Model):
         query_res = {res['journal_id']: res for res in self.env.cr.dictfetchall()}
         result = {}
         for journal in self:
-            journal_vals = query_res[journal.id]
+            journal_vals = query_res[journal.id] if journal.id in query_res.keys() else {"journal_id": journal.id, "balance_end_real": 0, "amount_currency": 0, "journal_currency": journal.currency_id.id}
             result[journal.id] = (
                 bool(journal_vals['journal_id']),
                 journal_vals['balance_end_real'] if journal_vals[
