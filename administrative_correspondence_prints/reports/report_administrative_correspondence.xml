@@ -7,49 +7,54 @@
                 <t t-call="web.basic_layout">
                     <div class="page" style="height:900px;">
                         <div class="row">
-                            <table style="float: right;direction: rtl;width: 100%;">
+                            <br/>
+                            <table style="text-align:right;float: right;direction: rtl;width: auto;margin-left:auto;margin-right:0px;">
                             <tr>
                                 <td style="width:110px;">
-                                    <strong width="20px">العدد / No: </strong>
+                                    <strong width="50px">العدد / No: </strong>
                                 </td>
-                                <td>
+                                <td width="700px">
                                     <span t-field="o.name"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width:110px;">
-                                    <strong width="20px">التاريخ / Date: </strong>
+                                    <strong width="50px">التاريخ / Date: </strong>
                                 </td>
-                                <td>
+                                <td width="700px">
                                     <span t-field="o.created_on"/>
                                 </td>
                             </tr>
                         </table>
                         </div>
-                        <br/>
+
                         <div class="row">
-                            <div style="text-align:center;margin-top: 90px;direction: rtl">
-                                <h1 class="text-center">إلى / To:
+                            <div style="text-align:center;margin-top: 90px;direction: rtl;width:600px;position:absolute;left:50%;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);">
+                                <h4 class="text-center" style="position:relative">إلى / To:
                                  <br/><t t-esc="o.sent_to_id.name"/>
-                                </h1>
+                                </h4>
                             </div>
                         </div>
                         <br/>
-                        <br/>
                         <div class="row">
-                            <div style="direction: rtl;float: right">
-                                <span t-field="o.body"/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <div style="direction: rtl;float: right;text-align:right;width: 100%;position:absolute;right:0px;">
+                            <div>
+                                <span style="direction: rtl;float: right" t-field="o.body"/>
                             </div>
+                        </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4" style="float: left;margin-left: 90px;">
-                            <h1>الصيدلاني</h1>
+                            <h4>الصيدلاني</h4>
                         </div>
                     </div>
                 </t>
             </t>
         </t>
-
     </template>
 </odoo>
