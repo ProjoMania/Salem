@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="report_administrative_correspondence">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="height:900px;">
+                        <div class="row">
+                            <table style="float: right;direction: rtl;width: 100%;">
+                            <tr>
+                                <td style="width:110px;">
+                                    <strong width="20px">العدد / No: </strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:110px;">
+                                    <strong width="20px">التاريخ / Date: </strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.created_on"/>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div style="text-align:center;margin-top: 90px;direction: rtl">
+                                <h1 class="text-center">إلى / To:
+                                 <br/><t t-esc="o.sent_to_id.name"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div style="direction: rtl;float: right">
+                                <span t-field="o.body"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4" style="float: left;margin-left: 90px;">
+                            <h1>الصيدلاني</h1>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>
