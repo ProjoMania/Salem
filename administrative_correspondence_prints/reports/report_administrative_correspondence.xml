@@ -44,6 +44,14 @@
                                 </h4>
                             </div>
                         </div>
+                        <br/><br/><br/><br/>
+                        <div class="row">
+                            <div style="text-align:center;margin-top: 90px;direction: rtl;width:600px;position:absolute;left:50%;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);">
+                                <h4 class="text-center" style="position:relative">الموضوع / Subkect:
+                                 <br/><t t-esc="o.template_id.name"/>
+                                </h4>
+                            </div>
+                        </div>
                         <br/>
                         <div class="row">
                             <br/>
