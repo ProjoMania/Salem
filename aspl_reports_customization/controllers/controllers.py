@@ -10,7 +10,6 @@ class WebsiteProductDetails(http.Controller):
     def products_details(self, model=None):
         name = model.split('?')
         name1 = request.env[name[0]].sudo().search([('id', '=', name[1])])
-        print(name1)
         if name1:
             return http.request.render("aspl_reports_customization.website_valid_doc_template",
                                        {'id': name1, 'model': name[0], 'record': name1})
@@ -32,6 +31,8 @@ class WebsiteProductDetails(http.Controller):
             report_name = 'hr_expense.report_expense_sheet'
         elif model == 'hr.payslip':
             report_name = 'hr_payroll.report_payslip_lang'
+        elif model == 'administrative.correspondence':
+            report_name = 'administrative_correspondence_prints.report_administrative_correspondence'
         elif model == 'stock.picking':
             # if doc_id.name == 'outgoing':
             report_name = 'stock.report_deliveryslip'
