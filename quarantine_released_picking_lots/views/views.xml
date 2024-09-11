@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_stock_move_line_operation_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.move.line.operation.tree.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='quant_id']" position="replace">
+                        <field name="quarantine_product_domain" column_invisible="True"/>
+                        <field name="lot_state"/>
+                        <field name="quant_id"
+                        domain="quarantine_product_domain"
+                        context="{'default_location_id': location_id, 'default_product_id': product_id, 'search_view_ref': 'stock.quant_search_view', 'tree_view_ref': 'stock.view_stock_quant_tree', 'form_view_ref': 'stock.view_stock_quant_form', 'readonly_form': True}"
+                        widget="pick_from"
+                        column_invisible="not parent.show_quant"
+                        options="{'no_create': True, 'no_open': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_type_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.form.inherit</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='use_existing_lots']" position="replace">
+                    <field name="allow_quarantine_delivery"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

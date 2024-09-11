@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quarantine_released_picking_lots_quarantine_released_picking_lots,quarantine_released_picking_lots.quarantine_released_picking_lots,model_quarantine_released_picking_lots_quarantine_released_picking_lots,base.group_user,1,1,1,1
