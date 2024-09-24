@@ -26,15 +26,20 @@
                         </div>
                     </div>
                     <div class="page">
-                        <div class="row">
-                            <br/>
+                        <div class="col-12 text-right">
+                            <style>
+                                body {
+                                font-family: 'Tajawal', 'Lateef', 'Amiri', 'Arial', sans-serif;
+
+                                }
+                            </style>
                             <table style="text-align:right;float: right;direction: rtl;width: auto;margin-left:auto;margin-right:0px;">
                                 <tr>
                                     <td style="width:110px;">
                                         <strong width="50px">العدد / No:</strong>
                                     </td>
                                     <td width="700px">
-                                        <span t-field="o.name"/>
+                                        <t t-esc="o.name"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -42,55 +47,29 @@
                                         <strong width="50px">التاريخ / Date:</strong>
                                     </td>
                                     <td width="700px">
-                                        <span t-field="o.created_on"/>
+                                        <t t-esc="o.created_on"/>
                                     </td>
                                 </tr>
                             </table>
                         </div>
-
-                        <div class="row">
-                            <div style="text-align:center;margin-top: 90px;direction: rtl;width:600px;position:absolute;left:50%;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);">
-                                <h4 class="text-center" style="position:relative">إلى / To:
-                                    <br/>
-                                    <t t-esc="o.sent_to_id.name"/>
-                                </h4>
-                            </div>
+                        <div class="col-12 text-center" style="margin-top: 90px;">
+                            <h4>إلى / To:
+                                <br/>
+                                <t t-esc="o.sent_to_id.name"/>
+                            </h4>
                         </div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <div class="row">
-                            <div style="text-align:center;margin-top: 90px;direction: rtl;width:600px;position:absolute;left:50%;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);">
-                                <h4 class="text-center" style="position:relative">الموضوع / Subject:
-                                    <br/>
-                                    <t t-esc="o.template_id.name"/>
-                                </h4>
-                            </div>
+                        <div class="col-12 text-center">
+                            <h4>الموضوع / Subject:
+                                <br/>
+                                <t t-esc="o.template_id.name"/>
+                            </h4>
                         </div>
-                        <br/>
-                        <div class="row">
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <div style="direction: rtl;float: right;text-align:right;width: 100%;position:absolute;right:0px;">
-                                <div style="page-break-inside:auto;page-break-after:auto;">
-                                    <span style="direction: rtl;float: right" t-field="o.body"/>
-                                </div>
+                        <div class="col-12">
+                            <div style="page-break-inside:auto;page-break-after:auto;">
+                                <t t-esc="o.body"/>
                             </div>
                         </div>
                     </div>
-                    <div class="footer"/>
                 </t>
             </t>
         </t>
