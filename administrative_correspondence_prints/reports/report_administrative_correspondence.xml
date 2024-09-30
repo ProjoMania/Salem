@@ -33,7 +33,7 @@
 
                                 }
                             </style>
-                            <table style="text-align:right;float: right;direction: rtl;width: auto;margin-left:auto;margin-right:0px;">
+                            <table class="table table-borderless" style="text-align:right;float: right;direction: rtl;width: auto;margin-left:auto;margin-right:0px;border-style: none;">
                                 <tr>
                                     <td style="width:110px;">
                                         <strong width="50px">العدد / No:</strong>
