@@ -53,16 +53,16 @@
                             </table>
                         </div>
                         <div class="col-12 text-center" style="margin-top: 90px;font-size: 10px;">
-                            <h3>إلى / To:
+                            <h5>إلى / To:
                                 <br/>
                                 <t t-esc="o.sent_to_id.name"/>
-                            </h3>
+                            </h5>
                         </div>
                         <div class="col-12 text-center" style="font-size: 10px;">
-                            <h3>الموضوع / Subject:
+                            <h5>الموضوع / Subject:
                                 <br/>
                                 <t t-esc="o.template_id.name"/>
-                            </h3>
+                            </h5>
                         </div>
                         <div class="col-12 mt-3">
                             <div style="page-break-inside:auto;page-break-after:auto;">
