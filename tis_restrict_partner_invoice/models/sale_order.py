@@ -51,7 +51,7 @@ class SaleOrder(models.Model):
                 res = super(SaleOrder, self).action_confirm()
                 account_moves = self.env['account.move'].search(
                     [('partner_id', '=', self.partner_id.id), ('move_type', '=', 'out_invoice'),
-                     ('state', '=', 'posted'), ('payment_state', '!=', 'paid')],
+                     ('state', '=', 'posted'), ('payment_state', '!=', 'paid'), ('payment_state', '!=', 'reversed')],
                     order='create_date ASC', limit=1)
                 if account_moves:
                     today = date.today()

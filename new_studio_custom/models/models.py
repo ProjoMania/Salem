@@ -94,18 +94,6 @@ class Hrexpensesheet(models.Model):
 
     x_studio_work_location = fields.Char(string="Work Location", related="employee_id.work_location_id.name")
 
-    @api.depends('account_move_ids', 'payment_state', 'approval_state', 'account_move_ids.payment_state')
-    def _compute_state(self):
-        for sheet in self:
-            if sheet.payment_state != 'not_paid':
-                sheet.state = 'done'
-            elif sheet.account_move_ids:
-                sheet.state = 'post'
-            elif sheet.approval_state:
-                sheet.state = sheet.approval_state
-            else:
-                sheet.state = 'draft'
-
 
 class Hrpayslip(models.Model):
     _inherit = "hr.payslip"

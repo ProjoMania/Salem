@@ -5,11 +5,11 @@
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
     'description': """
-Long description of module's purpose
+block lots to be delivered to the customer till the lot is released, this dobale by check box on the delivery operation 
     """,
 
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
+    'author': "Moashirat",
+    'website': "https://moashirat.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml

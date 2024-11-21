@@ -25,7 +25,7 @@ class AccountMove(models.Model):
             res = super(AccountMove, self).action_post()
             account_moves = self.search(
                 [('partner_id', '=', self.partner_id.id), ('move_type', '=', 'out_invoice'),
-                 ('state', '=', 'posted'), ('payment_state', '!=', 'paid')],
+                 ('state', '=', 'posted'), ('payment_state', '!=', 'reversed'), ('payment_state', '!=', 'paid')],
                 order='create_date ASC', limit=1)
             if account_moves:
                 today = date.today()
