@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo.addons.shipment_document_tracking. See LICENSE file for full copyright and licensing details.
+from email.policy import default
 
 from odoo import fields, models, api, _
 
@@ -27,7 +28,8 @@ class ShipmentDocTracking(models.Model):
     po_ids = fields.One2many('purchase.order', string="Orders", inverse_name='tracking_id')
     purchase_order_count = fields.Integer(compute="_compute_origin_po_count", string='Purchase Order Count')
     invoice_count = fields.Integer(compute="_compute_invoice", string='Bill Count', copy=False, default=0, store=True)
-
+    company_id = fields.Many2one('res.company', string="Company" ,default=lambda self: self.env.company)
+    airways_ref = fields.Char(string="Airways Bill Reference")
     @api.depends('bill_ids')
     def _compute_invoice(self):
         for order in self:
@@ -78,8 +80,22 @@ class ShipmentDocTracking(models.Model):
 
     @api.model
     def create(self, vals):
+        new_activity_vals=[]
         vals['name'] = self.env['ir.sequence'].next_by_code('shipment.doc.tracking')
-        return super(ShipmentDocTracking, self).create(vals)
+        res=super(ShipmentDocTracking, self).create(vals)
+        for rec in res.doc_ids:
+            # rec.assigned_to,rec.date_deadline = res.id,fields.Datetime.now()
+            new_activity_vals.append({
+                'res_id': res.id,
+                'res_model_id': self.env['ir.model']._get_id(res._name),
+                'date_deadline': rec.date_deadline,
+                'user_id': rec.assigned_to.id,
+                'summary': rec.doc_type_id.name,
+                'note': rec.description,
+                'activity_type_id': rec.activity_type_id.id,
+            })
+        self.env['mail.activity'].create(new_activity_vals)
+        return res
 
     @api.depends("doc_ids", "doc_ids.is_reviewed")
     def onchange_doc_ids(self):

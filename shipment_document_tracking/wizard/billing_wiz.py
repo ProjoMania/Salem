@@ -31,6 +31,7 @@ class BillingWiz(models.TransientModel):
             self.tracking_id = self.env['shipment.doc.tracking'].create({
                 'partner_id': self.partner_id.id,
                 'partner_ref': self.po_id.partner_ref,
+                'airways_ref': self.po_id.airways_ref,
                 'doc_ids': doc_list
             })
             self.po_id.tracking_id = self.tracking_id.id

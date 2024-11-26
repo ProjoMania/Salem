@@ -24,6 +24,7 @@ class DocDoc(models.Model):
     date_deadline = fields.Datetime(string="Deadline Date")
     is_uploaded = fields.Boolean(string="Is Uploaded", default=False ,compute="_compute_is_uploaded", store=True)
     is_reviewed = fields.Boolean(string="Is Reviewed", default=False)
+    activity_type_id = fields.Many2one('mail.activity.type', 'Activity Type', readonly=True)
 
 
     @api.depends('document_file','url')

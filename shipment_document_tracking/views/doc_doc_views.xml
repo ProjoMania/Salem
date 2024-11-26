@@ -46,6 +46,7 @@
                             <group>
                                 <field name="uploaded_by" readonly="1"/>
                                 <field name="assigned_to" readonly="is_reviewed"/>
+                                <field name="activity_type_id"/>
                                 <field name="validated_by" readonly="1"/>
                                 <field name="uploaded_date" readonly="1"/>
                             </group>

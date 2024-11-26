@@ -10,6 +10,8 @@
     'depends': ['base','mail','purchase'],
     'data': [
         'security/ir.model.access.csv',
+        'security/ir_rules.xml',
+
         'data/sequence.xml',
         'views/doc_doc_views.xml',
         'views/res_partner_views.xml',

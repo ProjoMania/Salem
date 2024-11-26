@@ -14,7 +14,7 @@ class DocType(models.Model):
     date_deadline_type = fields.Selection(string="Deadline Type", selection=[('hours', 'Hours'), ('days', 'Days')],
                                           required=True, default='days')
     date_deadline = fields.Float(string="Deadline Amount", default=5)
-
+    activity_type_id = fields.Many2one('mail.activity.type', 'Activity Type', readonly=True)
 
 class Partner(models.Model):
     _inherit = ['res.partner']

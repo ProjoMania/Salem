@@ -2,21 +2,26 @@ from odoo import api, Command, fields, models, _
 from odoo.tools import format_amount, format_date, formatLang, groupby
 from odoo.tools.float_utils import float_is_zero
 from odoo.exceptions import UserError, ValidationError
+import datetime
+from dateutil.relativedelta import relativedelta
+
 
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     tracking_id = fields.Many2one('shipment.doc.tracking', 'Tracking Order', copy=False)
+    airways_ref = fields.Char('AIRWAYS BILL', copy=False)
 
     def view_shipment_tracking(self):
         return {
             'name': _('Tracking Order'),
             'type': 'ir.actions.act_window',
-            'view_mode': 'form',
+            'view_mode': 'form,list',
             'res_id': self.tracking_id.id,
             'res_model': self.tracking_id._name
         }
+
 
     def action_create_invoice(self):
         if self.env.company.allow_shipment_tracking:
@@ -30,7 +35,7 @@ class PurchaseOrder(models.Model):
             }
         else:
             return self._action_create_invoice()
-    
+
     def _action_create_invoice(self):
         """Create the invoice associated to the PO.
         """
@@ -128,3 +133,24 @@ class PurchaseOrder(models.Model):
             'tracking_id': self.tracking_id.id or False,
         }
         return invoice_vals
+
+    def action_create_sdt_manually(self):
+            doc_list = []
+            for doc in self.partner_id.doc_type_ids:
+                deadline = datetime.datetime.now()
+                if doc.date_deadline_type == 'hours':
+                    deadline += relativedelta(hours=doc.date_deadline)
+                elif doc.date_deadline_type == 'days':
+                    deadline += relativedelta(days=doc.date_deadline)
+                doc_list.append((0, 0, {
+                        'doc_type_id': doc.id,
+                        'description': doc.description,
+                        'assigned_to': doc.assigned_to.id or False,
+                        'date_deadline': deadline
+                    }))
+            self.tracking_id = self.env['shipment.doc.tracking'].create({
+                'partner_id': self.partner_id.id,
+                'partner_ref': self.partner_ref,
+                'airways_ref': self.airways_ref,
+                'doc_ids': doc_list
+            })
