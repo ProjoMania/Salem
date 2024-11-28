@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+
+        <template id="add_survey_redirect" name="CRM assets backend" inherit_id="website_hr_recruitment.apply">
+            <xpath expr="//form[@id='hr_recruitment_form']" position="attributes">
+                <attribute name="data-success-mode">redirect</attribute>
+                <attribute name="data-success-page">/apply/success</attribute>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

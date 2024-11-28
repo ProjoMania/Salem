@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="hr_job_form_inherit_survey_link" model="ir.ui.view">
+            <field name="name">hr.job.form.inherit.survey.link</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+                <field name="department_id" position="after">
+                    <field name="survey_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="survey_survey_view_form_inherit_survey">
+            <field name="name">survey.survey.view.form.inherit.survey</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="applicant_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="hr_applicant_view_form_inherit_survey_result">
+            <field name="name">hr.applicant.view.form.inherit.survey_result</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email_from']" position="after">
+                    <field name="result_ids" widget="many2many_tags" readonly="1"/>
+                </xpath>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_open_survey_result" type="object" class="oe_stat_button" icon="fa-id-card-o"
+                            groups="hr.group_hr_user">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="survey_result_count"/>
+                            </span>
+                            <span class="o_stat_text">Survey Results</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
