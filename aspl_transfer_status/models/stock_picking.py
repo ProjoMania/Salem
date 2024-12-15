@@ -19,7 +19,15 @@ class StockPicking(models.Model):
     attachment_ids = fields.One2many('stock.picking.attachment', 'picking_id', string='Attachments')
     transfer_status_id = fields.Many2one('transfer.status', string="Transfer Status")
     required_attachment = fields.Integer(related='transfer_status_id.attachment_file', string='Required Attachment')
-    is_close = fields.Boolean(related='transfer_status_id.status_id.is_close')
+    is_close = fields.Boolean(string='Is Close', )
+
+    def write(self, vals):
+        if 'transfer_status_id' in vals:
+            transfer_status_id = self.env['transfer.status'].search([('id', '=', vals.get('transfer_status_id'))])
+            if transfer_status_id:
+                vals.update({'is_close': transfer_status_id.status_id.is_close})
+        return super().write(vals)
+
 
     @api.onchange('picking_type_id')
     def onchange_picking_type_id(self):

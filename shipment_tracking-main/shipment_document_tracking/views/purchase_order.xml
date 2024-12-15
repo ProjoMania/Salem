@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="tracking_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="view_shipment_tracking" type="object"
+                            invisible="not tracking_id"
+                            class="oe_stat_button" icon="fa-archive">
+                        <span>SDT</span>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
