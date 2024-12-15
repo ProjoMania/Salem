@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="action_report_administrative_correspondence" model="ir.actions.report">
+            <field name="name">Correspondence</field>
+            <field name="model">administrative.correspondence</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">administrative_correspondence_prints.report_administrative_correspondence</field>
+            <field name="report_file">administrative_correspondence_prints.report_administrative_correspondence</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+            <field name="binding_model_id" ref="administrative_correspondence.model_administrative_correspondence"/>
+        </record>
+    </data>
+</odoo>

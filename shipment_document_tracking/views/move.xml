@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="tracking_status" invisible="not tracking_id or move_type != 'in_invoice'"
+                           string="Tracking Status"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="tracking_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="view_shipment_tracking" type="object"
+                            invisible="not tracking_id or move_type != 'in_invoice'"
+                            class="oe_stat_button" icon="fa-archive">
+                        <span>SDT</span>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

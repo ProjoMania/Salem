@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="report_administrative_correspondence">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="header">
+                        <div class="col-auto text-right">
+                            <t t-if="o">
+                                <t t-if="o._name">
+                                    <t t-set="name" t-value="o._name"/>
+                                </t>
+                            </t>
+                            <t t-if="o">
+                                <t t-if="o.id">
+                                    <t t-set="id" t-value="o.id"/>
+                                </t>
+                            </t>
+                            <t t-if="o._name">
+                                <t t-set="name" t-value="o._name"/>
+                                <t t-set="id" t-value="o.id"/>
+                            </t>
+                            <img t-att-src="'data:image/*;base64,%s' % o.company_id.create_qr_code(name, id).decode('utf-8')"
+                                 width="100px" height="100px" class="pull-right"/>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div class="col-12 text-right">
+                            <style>
+                                body {
+                                font-family: 'Tajawal', 'Lateef', 'Amiri', 'Arial', sans-serif;
+
+                                }
+                            </style>
+                            <table class="table table-borderless" style="text-align:right;float: right;direction: rtl;width: auto;margin-left:auto;margin-right:0px;border-style: none;">
+                                <tr>
+                                    <td style="width:110px;">
+                                        <strong width="50px">العدد / No:</strong>
+                                    </td>
+                                    <td width="700px">
+                                        <t t-esc="o.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:110px;">
+                                        <strong width="50px">التاريخ / Date:</strong>
+                                    </td>
+                                    <td width="700px">
+                                        <t t-esc="o.created_on"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-12 text-center" style="margin-top: 90px;font-size: 10px;">
+                            <h6>
+                                <strong>
+                                    إلى / To:
+                                    <br/>
+                                    <t t-esc="o.sent_to_id.name"/>
+                                </strong>
+                            </h6>
+                        </div>
+                        <div class="col-12 text-center" style="font-size: 10px;">
+                            <h6>
+                                <strong>
+                                    الموضوع / Subject:
+                                    <br/>
+                                    <t t-esc="o.template_id.name"/>
+                                </strong>
+                            </h6>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div style="page-break-inside:auto;page-break-after:auto;">
+                                <t t-esc="o.body"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
