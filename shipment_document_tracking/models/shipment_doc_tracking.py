@@ -80,20 +80,30 @@ class ShipmentDocTracking(models.Model):
 
     @api.model
     def create(self, vals):
-        new_activity_vals=[]
+        # new_activity_vals=[]
         vals['name'] = self.env['ir.sequence'].next_by_code('shipment.doc.tracking')
         res=super(ShipmentDocTracking, self).create(vals)
         for rec in res.doc_ids:
+            subscribers = [res.partner_id.id] if res.partner_id and res.partner_id not in res.sudo().message_partner_ids else None
+            res.message_subscribe(subscribers)
+            if rec.activity_type_id and rec.assigned_to:
+                res.activity_schedule(
+                    date_deadline=rec.date_deadline,
+                    activity_type_id=rec.activity_type_id.id,
+                    summary=rec.doc_type_id.name,
+                    user_id=rec.assigned_to.id,
+                    note=rec.description
+                )
             # rec.assigned_to,rec.date_deadline = res.id,fields.Datetime.now()
-            new_activity_vals.append({
-                'res_id': res.id,
-                'res_model_id': self.env['ir.model']._get_id(res._name),
-                'date_deadline': rec.date_deadline,
-                'user_id': rec.assigned_to.id,
-                'summary': rec.doc_type_id.name,
-                'note': rec.description,
-                'activity_type_id': rec.activity_type_id.id,
-            })
+        #     new_activity_vals.append({
+        #         'res_id': res.id,
+        #         'res_model_id': self.env['ir.model']._get_id(res._name),
+        #         'date_deadline': rec.date_deadline,
+        #         'user_id': rec.assigned_to.id,
+        #         'summary': rec.doc_type_id.name,
+        #         'note': rec.description,
+        #         'activity_type_id': rec.activity_type_id.id,
+        #     })
         # self.env['mail.activity'].create(new_activity_vals)
         return res
 
