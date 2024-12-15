@@ -102,7 +102,7 @@
                 
                     <thead style="background-color: #30378c;">
                         <tr>
-<!--                             <td style="width: 11%;" class="table_header"><span>Item #</span></td> -->
+                            <td style="width: 11%;" class="table_header"><span>Item #</span></td>
                             <td style="width: 46%;" class="table_header text-center"><span>Description</span></td>
                             <td style="width: 21%;" class="table_header text-center"><span>QTY</span></td>
 <!--                            <td class="table_header text-center"><span>UOM</span></td>-->
@@ -112,11 +112,15 @@
                     </thead>
                      <tbody>
                     <t t-set="current_subtotal" t-value="0"/>
+                    <t t-set="line_count" t-value="0"/>
                     <t t-foreach="o.order_line" t-as="line">
                         <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                        <t t-set="line_count" t-value="line_count + 1"/>
 
                         <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
-<!--                         <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td> -->
+                            <td class="text-center">
+                                <span t-esc="line_count"/>
+                            </td>
                             <t t-if="not line.display_type">
                                 <td id="product">
                                     <span t-field="line.name"/>
