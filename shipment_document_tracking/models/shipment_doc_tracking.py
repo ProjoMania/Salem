@@ -94,7 +94,7 @@ class ShipmentDocTracking(models.Model):
                 'note': rec.description,
                 'activity_type_id': rec.activity_type_id.id,
             })
-        self.env['mail.activity'].create(new_activity_vals)
+        # self.env['mail.activity'].create(new_activity_vals)
         return res
 
     @api.depends("doc_ids", "doc_ids.is_reviewed")
