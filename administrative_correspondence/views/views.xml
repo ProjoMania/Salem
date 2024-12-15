@@ -175,9 +175,7 @@
                         </div>
                         <notebook>
                             <page string="Content Template">
-                                <group>
-                                    <field name="body" nolabel="1"/>
-                                </group>
+                                <field name="body" nolabel="1"/>
                             </page>
                         </notebook>
                     </sheet>

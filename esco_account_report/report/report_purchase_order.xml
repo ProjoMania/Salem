@@ -99,36 +99,91 @@
                 <br/>
                 <t t-set="i" t-value="1" />
                 <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed; border-color: grey;">
+                
                     <thead style="background-color: #30378c;">
                         <tr>
-                            <td style="width: 11%;" class="table_header"><span>Item #</span></td>
+<!--                             <td style="width: 11%;" class="table_header"><span>Item #</span></td> -->
                             <td style="width: 46%;" class="table_header text-center"><span>Description</span></td>
-                            <td style="width: 10%;" class="table_header text-center"><span>QTY</span></td>
+                            <td style="width: 21%;" class="table_header text-center"><span>QTY</span></td>
 <!--                            <td class="table_header text-center"><span>UOM</span></td>-->
                             <td style="width: 14%;" class="table_header text-center"><span>Unit Price</span></td>
                             <td style="width: 19%;" class="table_header text-center"><span>Total</span></td>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr t-foreach="o.sudo().order_line" t-as="line">
-                            <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
-                            <td style="padding-left: 15px;padding-right: 15px;"><span t-field="line.name"/></td>
-                            <td class="text-center"><span t-esc='"{:,}".format(int(line.product_qty))'/></td>
-<!--                            <td class="text-center"><span t-field="line.product_uom"/></td>-->
-                            <td class="text-center"><span t-field="line.price_unit"/></td>
-                            <td style="background-color: white !important;" class="text-center"><span t-field="line.price_subtotal"
-                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                     <tbody>
+                    <t t-set="current_subtotal" t-value="0"/>
+                    <t t-foreach="o.order_line" t-as="line">
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+
+                        <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+<!--                         <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td> -->
+                            <t t-if="not line.display_type">
+                                <td id="product">
+                                    <span t-field="line.name"/>
+                                </td>
+<!--                                 <t t-set="taxes" t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id])"/>
+                                <td name="td_taxes" t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}">
+                                    <span t-out="taxes">Tax 15%</span>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="line.date_planned"/>
+                                </td> -->
+                                <td class="text-end">
+                                    <span t-field="line.product_qty"/>
+                                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                                    <span t-if="line.product_packaging_id">
+                                        (<span t-field="line.product_packaging_qty" t-options='{"widget": "integer"}'/> <span t-field="line.product_packaging_id"/>)
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.price_unit"/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.price_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </t>
+                            <t t-if="line.display_type == 'line_section'">
+                                <td colspan="99" id="section">
+                                    <span t-field="line.name"/>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99" id="note">
+                                    <span t-field="line.name"/>
+                                </td>
+                            </t>
                         </tr>
-                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
-                            <td class="text-center" style="background-color: white !important;"><span>-</span></td></tr>
-                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
-                            <td class="text-center" style="background-color: white !important;"><span>-</span></td></tr>
-                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>
-                            <td class="text-center" style="background-color: white !important;"><span>-</span></td></tr>
-<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
-<!--                            <td class="text-center" style="background-color: white !important;"><span>-</span></td></tr>-->
-                    </tbody>
+                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-end">
+                                <td colspan="99" id="subtotal">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span
+                                        t-esc="current_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                    />
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
                 </table>
+            
+<!--             <t t-if="line.display_type == 'line_section'">
+                                <td colspan="99" id="section">
+                                    <span t-field="line.name"/>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99" id="note">
+                                    <span t-field="line.name"/>
+                                </td>
+                            </t> -->
+            
                 <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">
                     <table style="width: 36%; margin-left: 2%;border: none; ">
                         <tr>
