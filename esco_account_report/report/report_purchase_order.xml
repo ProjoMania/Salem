@@ -102,7 +102,7 @@
                 
                     <thead style="background-color: #30378c;">
                         <tr>
-<!--                             <td style="width: 11%;" class="table_header"><span>Item #</span></td> -->
+                            <td style="width: 11%;" class="table_header"><span>Item #</span></td>
                             <td style="width: 46%;" class="table_header text-center"><span>Description</span></td>
                             <td style="width: 21%;" class="table_header text-center"><span>QTY</span></td>
 <!--                            <td class="table_header text-center"><span>UOM</span></td>-->
