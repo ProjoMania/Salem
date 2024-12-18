@@ -1,322 +1,280 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="esco_report_purchaseorder_document">
         <t t-call="esco_account_report.external_layout_bait">
-<!--            <link rel="stylesheet" type="text/css" href="/esco_account_report/static/src/css/font.css"/>-->
-<!--            <style>-->
-
-<!--            </style>-->
-            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
-<!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
+            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)" />
             <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
                 <t t-if="o.sudo().dest_address_id">
                 </t>
                 <span class="bold_header">Purchase Order</span>
                 <div class="row" style="width: 100%; ">
-                    <table style="width: 48%; margin-right: 4%; margin-left: 2%; border-collapse: collapse; border: none; table-layout: fixed;">
+                    <table
+                        style="width: 48%; margin-right: 4%; border-collapse: collapse; border: none; table-layout: fixed;">
                         <tr>
                             <td style="width:28%;">
                                 <span>PO. No.</span>
                             </td>
-                            <td style="width:72%;" class="text-center top_border left_border right_border td_style_left">
-                                <span t-field="o.name" style="margin-left: 15px; margin-right: 15px;"/>
+                            <td style="width:72%;"
+                                class="text-center top_border left_border right_border td_style_left">
+                                <span t-field="o.name"
+                                    style="margin-left: 15px; margin-right: 15px;" />
                             </td>
                         </tr>
                         <tr>
                             <td style="width:28%;">
                                 <span>Date</span>
                             </td>
-                            <td style="width:72%; " class="text-center top_border left_border right_border bottom_border td_style_left">
-                                <span t-field="o.order_date" style="margin-left: 25px; margin-right: 15px;"/>
+                            <td style="width:72%; "
+                                class="text-center top_border left_border right_border bottom_border td_style_left">
+                                <span t-field="o.order_date"
+                                    style="margin-left: 25px; margin-right: 15px;" />
                             </td>
                         </tr>
                     </table>
                     <div style="width: 5%;">
                     </div>
                     <div style="width: 43%; text-align: left; ">
-                        <table style="width: 100%; border-collapse: collapse; border: none; float: right;">
+                        <table
+                            style="width: 100%; border-collapse: collapse; border: none; float: right;">
                             <thead>
                                 <tr>
-                                    <td class="table_header text-left top_border left_border right_border bottom_border">
+                                    <td
+                                        class="table_header text-left top_border left_border right_border bottom_border">
                                         <span style="margin-left: 2%; margin-right: 2%;">Vendor</span>
                                     </td>
                                 </tr>
                             </thead>
-<!--                            <tr>-->
-<!--                                <td style="border: none;">-->
-<!--                                    <div t-field="o.partner_id.name"/><br/>-->
-<!--                                    <div t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></div>-->
-<!--                                    <div t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <td style="color: black; background-color: white;border: none; ">-->
-<!--                                    <div class="row" style="border: none; ">-->
-<!--                                        <span>ID No.</span>-->
-<!--                                        <div style="width: 90%;height: 25px; border: 1px solid black;">-->
-<!--                                            <span t-field="o.partner_id.id"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
                         </table>
-                        <div style=" direction: ltr;">
-                            <div class="float: left;" style="border: none;">
-                                <div t-field="o.sudo().partner_id.name" style=""/>
-                                <div>
-                                    <t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span>&#160;</span>
-                                    <t t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>
+                        <div style="direction: ltr;">
+                            <div class="float: left;"
+                                style="border: none;padding-top: 5px;margin-top: 5px;">
+                                <div style="margin-top: 20px;">
+                                    <br />
+                                    <t t-esc="o.sudo().partner_id.name" />
+                                </div>
+                                <div style="padding-top: 5px;margin-top: 5px;">
+                                    <t t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city" />
+                                    </t>
+                                    <span>&#160;</span>
+                                    <t t-if="o.partner_id.state_id">
+                                        <span t-field="o.partner_id.state_id.name" />
+                                    </t>
                                 </div>
                             </div>
-                            <div class="row " style="border: none; margin-left: 1%; margin-right: 1%;">
-                                <span>ID No.</span><span>&#160;</span>
-                                <div class="text-center" style="width: 85%;height: 25px; border: 1px solid grey;">
-                                    <span t-field="o.partner_id.id"/>
+                            <div class="row "
+                                style="border: none; margin-left: 1%; margin-right: 1%;">
+                                <span>ID No.</span>
+                                <span>&#160;</span>
+                                <div class="text-center"
+                                    style="width: 85%;height: 25px; border: 1px solid grey;">
+                                    <span t-field="o.partner_id.id" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br/>
-                <table class="table table-sm table_with_header" style="border-collapse: collapse; border-color: grey;">
+                <br />
+                <table class="table table-sm table_with_header"
+                    style="border-collapse: collapse; border-color: grey;">
                     <thead style="background-color: #30378c !important;">
                         <tr>
-                            <td class="table_header text-center"><span>Payment</span></td>
-                            <td class="table_header text-center"><span>Delivery Date</span></td>
-                            <td class="table_header text-center"><span>Conditions Terms</span></td>
-                            <td class="table_header text-center"><span>Shipping to</span></td>
+                            <td class="table_header text-center">
+                                <span>Payment</span>
+                            </td>
+                            <td class="table_header text-center">
+                                <span>Delivery Date</span>
+                            </td>
+                            <td class="table_header text-center">
+                                <span>Conditions Terms</span>
+                            </td>
+                            <td class="table_header text-center">
+                                <span>Shipping to</span>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style="background-color: white !important;">
-                            <td class="text-center"><span style="color: white">1</span><span t-field="o.payment_type_id"/></td>
-                            <td class="text-center"><span t-field="o.delivery_date"/></td>
-                            <td class="text-center"><span t-field="o.condition_term_id"/></td>
-                            <td class="text-center" style="background-color: white !important;"><span t-field="o.shipping_data_id"/></td>
+                            <td class="text-center">
+                                <span style="color: white">1</span>
+                                <span t-field="o.payment_type_id" />
+                            </td>
+                            <td class="text-center">
+                                <span t-field="o.delivery_date" />
+                            </td>
+                            <td class="text-center">
+                                <span t-field="o.condition_term_id" />
+                            </td>
+                            <td class="text-center" style="background-color: white !important;">
+                                <span t-field="o.shipping_data_id" />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <br/>
+                <br />
                 <t t-set="i" t-value="1" />
-                <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed; border-color: grey;">
-                
+                <table class="table table-sm table_with_header"
+                    style="border-collapse: collapse; table-layout: fixed; border-color: grey;">
+
                     <thead style="background-color: #30378c;">
                         <tr>
-                            <td style="width: 11%;" class="table_header"><span>No.</span></td>
-                            <td style="width: 46%;" class="table_header text-center"><span>Description</span></td>
-                            <td style="width: 21%;" class="table_header text-center"><span>QTY</span></td>
-<!--                            <td class="table_header text-center"><span>UOM</span></td>-->
-                            <td style="width: 14%;" class="table_header text-center"><span>Unit Price</span></td>
-                            <td style="width: 19%;" class="table_header text-center"><span>Total</span></td>
+                            <td style="width: 11%;" class="table_header">
+                                <span>No.</span>
+                            </td>
+                            <td style="width: 46%;" class="table_header text-center">
+                                <span>Description</span>
+                            </td>
+                            <td style="width: 21%;" class="table_header text-center">
+                                <span>QTY</span>
+                            </td>
+                            <td style="width: 14%;" class="table_header text-center">
+                                <span>Unit Price</span>
+                            </td>
+                            <td style="width: 19%;" class="table_header text-center">
+                                <span>Total</span>
+                            </td>
                         </tr>
                     </thead>
-                     <tbody>
-                    <t t-set="current_subtotal" t-value="0"/>
-                    <t t-set="line_count" t-value="0"/>
-                    <t t-foreach="o.order_line" t-as="line">
-                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
-                        <t t-if="not line.display_type">
-                            <t t-set="line_count" t-value="line_count + 1"/>
-                        </t>
-
-                        <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
-                            <td class="text-center">
-                                <t t-if="not line.display_type">
-                                    <span t-esc="line_count"/>
-                                </t>
-                                <t t-else="">
-                                    <span>-</span>
-                                </t>
-                            </td>
+                    <tbody>
+                        <t t-set="current_subtotal" t-value="0" />
+                        <t t-set="line_count" t-value="0" />
+                        <t t-foreach="o.order_line" t-as="line">
+                            <t t-set="current_subtotal"
+                                t-value="current_subtotal + line.price_subtotal" />
                             <t t-if="not line.display_type">
-                                <td id="product">
-                                    <span t-field="line.name"/>
-                                </td>
-<!--                                 <t t-set="taxes" t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id])"/>
-                                <td name="td_taxes" t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}">
-                                    <span t-out="taxes">Tax 15%</span>
-                                </td>
+                                <t t-set="line_count" t-value="line_count + 1" />
+                            </t>
+
+                            <tr
+                                t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                                 <td class="text-center">
-                                    <span t-field="line.date_planned"/>
-                                </td> -->
-                                <td class="text-end">
-                                    <span t-field="line.product_qty"/>
-                                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
-                                    <span t-if="line.product_packaging_id">
-                                        (<span t-field="line.product_packaging_qty" t-options='{"widget": "integer"}'/> <span t-field="line.product_packaging_id"/>)
-                                    </span>
+                                    <t t-if="not line.display_type">
+                                        <span t-esc="line_count" />
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
                                 </td>
-                                <td class="text-end">
-                                    <span t-field="line.price_unit"/>
-                                </td>
-                                <td class="text-end">
-                                    <span t-field="line.price_subtotal"
-                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                </td>
-                            </t>
-                            <t t-if="line.display_type == 'line_section'">
-                                <td colspan="99" id="section">
-                                    <span t-field="line.name"/>
-                                </td>
-                                <t t-set="current_section" t-value="line"/>
-                                <t t-set="current_subtotal" t-value="0"/>
-                            </t>
-                            <t t-if="line.display_type == 'line_note'">
-                                <td colspan="99" id="note">
-                                    <span t-field="line.name"/>
-                                </td>
-                            </t>
-                        </tr>
-                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
-                            <tr class="is-subtotal text-end">
-                                <td colspan="99" id="subtotal">
-                                    <strong class="mr16">Subtotal</strong>
-                                    <span
-                                        t-esc="current_subtotal"
-                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'
-                                    />
-                                </td>
+                                <t t-if="not line.display_type">
+                                    <td id="product">
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_qty" />
+                                        <span t-field="line.product_uom.name" groups="uom.group_uom" />
+                                        <span t-if="line.product_packaging_id"> (<span
+                                                t-field="line.product_packaging_qty"
+                                                t-options='{"widget": "integer"}' /> <span
+                                                t-field="line.product_packaging_id" />) </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.price_unit" />
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; align-items: center; justify-content: space-between;">
+                                            <!-- Align currency symbol to the left -->
+                                            <span t-esc="line.currency_id.symbol"
+                                                style="text-align: left; margin-right: auto;"></span>
+
+                                            <!-- Center the price_subtotal -->
+                                            <span t-esc="line.price_subtotal"
+                                                style="text-align: center; margin-left: auto;"></span>
+                                        </div>
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99" id="section">
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <t t-set="current_section" t-value="line" />
+                                    <t t-set="current_subtotal" t-value="0" />
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99" id="note">
+                                        <span t-field="line.name" />
+                                    </td>
+                                </t>
                             </tr>
-                        </t>
-                    </t>
-                </tbody>
-                </table>
-            
-<!--             <t t-if="line.display_type == 'line_section'">
-                                <td colspan="99" id="section">
-                                    <span t-field="line.name"/>
-                                </td>
-                                <t t-set="current_section" t-value="line"/>
-                                <t t-set="current_subtotal" t-value="0"/>
+                            <t
+                                t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                <tr class="is-subtotal text-center">
+                                    <td colspan="99" id="subtotal">
+                                        <strong class="mr16">Subtotal</strong>
+                                        <span
+                                            t-esc="current_subtotal"
+                                            t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                        />
+                                    </td>
+                                </tr>
                             </t>
-                            <t t-if="line.display_type == 'line_note'">
-                                <td colspan="99" id="note">
-                                    <span t-field="line.name"/>
-                                </td>
-                            </t> -->
-            
-                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">
-                    <table style="width: 36%; margin-left: 2%;border: none; ">
+                        </t>
+                    </tbody>
+                </table>
+
+                <div class="row justify-content-end "
+                    style="margin-right: 0px; margin-top: -5px; border-color: grey;">
+                    <table style="width: 29.8%; margin-left: 2%;border: 1px black solid; ">
                         <tr>
-                            <td class="right_border_light">
+                            <td style="padding-left: 10px !important;border: 1px black solid;">
                                 <span>Subtotal</span>
                             </td>
-                            <td class="text-center left_border_light right_border_light bottom_border"
-                                style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
-                                <span t-field="o.amount_total"
-                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+
+                            <td style="width: 141px !important;border: 1px black solid;">
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between;">
+                                    <!-- Align currency symbol to the left -->
+                                    <span t-esc="o.currency_id.symbol"
+                                        style="text-align: left; margin-right: auto;margin-left:2px;"></span>
+
+                                    <span t-esc="o.amount_total" style="text-align: center; margin-left: auto;"/>
+                                </div>
                             </td>
                         </tr>
-<!--                        <tr>-->
-<!--                            <td class="right_border_light">-->
-<!--                                <span>Discount</span>-->
-<!--                            </td>-->
-<!--                            <td class="text-center top_border_light left_border_light right_border_light bottom_border">-->
-<!--                                <span>-</span>-->
-<!--                            </td>-->
-<!--                        </tr>-->
                         <tr>
-                            <td class="right_border_light">
+                            <td style="padding-left: 10px !important;border: 1px black solid;">
                                 <span>Other</span>
                             </td>
-                            <td class="text-center top_border_light left_border_light right_border_light bottom_border_light">
+                            <td class="text-center" style="border: 1px black solid;">
                                 <span>-</span>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <br/>
+                            <td style="padding-left: 10px !important;border: 1px black solid;">
+                                <br />
                                 <span class="bold_text">Total</span>
                             </td>
-                            <td class="bold_text text-center top_border_light"
-                                style="border-bottom-style: hidden !important ; border-right-style: hidden !important ;
-                                border-left-style: hidden !important;">
-                                <br/>
-                                <span t-field="o.amount_total"
-                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                <hr style="margin-top: 6px; color: grey; background-color: grey;"/>
-                                <hr style="margin-top: -14px; color: grey; background-color: grey; "/>
+                            <td class="bold_text" style="border: 1px black solid;">
+                                <br />
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between;">
+                                    <!-- Align currency symbol to the left -->
+                                    <span t-esc="o.currency_id.symbol"
+                                        style="text-align: left; margin-right: auto;margin-left:2px;"></span>
+
+                                    <span t-esc="o.amount_total" style="text-align: center; margin-left: auto;"/>
+                                </div>
                             </td>
                         </tr>
-<!--                        <tr>-->
-<!--                            <td class="bold_text">-->
-<!--                                <br/>-->
-<!--                                <span class="bold_text no_border">Total</span>-->
-<!--                            </td>-->
-<!--                            <td class="no_border bold_text text-center top_border_light">-->
-<!--                                <br/>-->
-<!--                                <span t-field="o.amount_total"-->
-<!--                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
-<!--                                <hr style="margin-top: 6px; color: grey; background-color: grey;"/>-->
-<!--                                <hr style="margin-top: -14px; color: grey; background-color: grey;"/>-->
-<!--                            </td>-->
-<!--                        </tr>-->
                     </table>
                 </div>
-<!--                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">-->
-<!--                    <table style="width: 31%; margin-left: 2%;border: none; ">-->
-<!--                        <tr>-->
-<!--                            <td class="bold_text">-->
-<!--                                <br/>-->
-<!--                                <span class="bold_text no_border">Total</span>-->
-<!--                            </td>-->
-<!--                            <td class=" bold_text text-center top_border_light"-->
-<!--                                style="border-bottom: double solid lightgrey !important;">-->
-
-<!--                                <br/>-->
-<!--                                <span t-field="o.amount_total"-->
-<!--                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
-<!--                                <hr style="margin-top: 6px; color: grey; background-color: grey;"/>-->
-<!--                                <hr style="margin-top: -14px; color: grey; background-color: grey; "/>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--                <div class="row justify-content-end" >-->
-<!--                    <div class="row" style="width: 30%; border-collapse: collapse; margin-left: 2%;border: none; ">-->
-<!--                        <div style="width: 50%;">-->
-<!--                            <span>Total</span>-->
-<!--                        </div>-->
-<!--                        <div style="width: 50%;" class="text-center">-->
-<!--                            <span t-field="o.amount_total"-->
-<!--                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
-<!--                            <hr style="border-color: black; "/>-->
-<!--                            <hr style="border-color: black; "/>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div style="margin-top: 230px;" class="bold_sub_header">Notes</div>-->
-<!--                <div style="width: 100%;height: 100px;padding: 50px;border: 1px solid black;">-->
-<!--                    <span t-field="o.notes"/>-->
-<!--                </div>-->
-                <br/>
+                <br />
                 <div class="text-center row col-12"
-                     style="margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                    style="margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
                     <div class="col-4">
-<!--                        Signature-->
+                        <!--  Signature-->
                         <div style="height:140px; min-height:140px;">
-                            <img t-if="o.validated_by_id.signature_image" t-att-src="image_data_uri(o.validated_by_id.signature_image)"
-                                     alt="Signature" style="height:140px;width:260px; margin-top: -30px;"/>
+                            <img t-if="o.validated_by_id.signature_image"
+                                t-att-src="image_data_uri(o.validated_by_id.signature_image)"
+                                alt="Signature" style="height:140px;width:260px; margin-top: -30px;" />
                         </div>
-                        <hr style="border-color: black; margin-top: -30px;"/>
-                        <span t-field="o.validated_by_id"/>
+                        <hr style="border-color: black; margin-top: -30px;" />
+                        <span t-field="o.validated_by_id" />
                     </div>
                     <div class="col-4">
                     </div>
                     <div class="col-4">
                     </div>
-
-<!--                    <div class="col-4">-->
-<!--                        <div style="height:140px; min-height:140px;">-->
-<!--                            <img t-att-src="image_data_uri(o.create_uid.signature_image)"-->
-<!--                                     alt="Signature" style="height:140px;width:260px; margin-top: -10px; margin-bottom: -10"/>-->
-<!--                        </div>-->
-<!--                        <hr style="border-color: black; "/>-->
-<!--                        <span t-field="o.create_uid"/>-->
-<!--                        <t t-if="o.create_uid.signature_image">-->
-
-<!--                        </t>-->
-<!--                    </div>-->
                 </div>
             </div>
         </t>
@@ -325,7 +283,7 @@
     <template id="purchase.report_purchaseorder">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esco_account_report.esco_report_purchaseorder_document"/>
+                <t t-call="esco_account_report.esco_report_purchaseorder_document" />
             </t>
         </t>
     </template>
