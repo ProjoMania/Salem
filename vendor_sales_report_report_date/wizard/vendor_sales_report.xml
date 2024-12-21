@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="vendor_sales_report_form" model="ir.ui.view">
+            <field name="name">vendor.sales.report.form.wizard</field>
+            <field name="model">vendor.sales.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Vendor Sales Report">
+                    <sheet>
+                        <group>
+                            <field name="vendor_id"/>
+                            <field name="excluded_vendor_ids" string ="Without this Customer" widget="many2many_tags"/>
+                            <field name="filter_by"/>
+                        </group>
+                        <group>
+                            <field name="from_report_date"
+                                   invisible="filter_by not in ['report_date', 'both']"
+                                   required="filter_by  in ['report_date', 'both']"/>
+
+                            <field name="to_report_date"
+                                   invisible="filter_by not in ['report_date', 'both']"
+                                   required="filter_by  in ['report_date', 'both']"/>
+
+                            <field name="from_date"
+                                   invisible="filter_by  in ['report_date', 'both']"
+                                   required="filter_by  not in ['report_date', 'both']" />
+                            <field name="to_date"
+                                   invisible="filter_by  in ['report_date', 'both']"
+                                   required="filter_by  not in ['report_date', 'both']" />
+                        </group>
+                        <footer>
+                            <button string="Export" name="print_report_xls_menu" type="object" default_focus="1"
+                                    class="oe_highlight"/>
+                            <button string="Cancel" class="btn btn-default" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+
