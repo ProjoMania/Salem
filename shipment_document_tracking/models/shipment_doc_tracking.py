@@ -11,7 +11,7 @@ class ShipmentDocTracking(models.Model):
     _description = 'shipment doc tracking'
     _rec_name = "name"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name", required=True, default="New")
     status = fields.Selection(
         [('not_completed', 'Not Completed'), ('partial', 'Partially Completed'), ('complete', 'Completed')],
         string='Status', required=True, default="not_completed", compute="onchange_doc_ids")
