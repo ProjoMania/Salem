@@ -1,186 +1,74 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<!--    <report-->
-<!--            id="customer_statement_details_qweb"-->
-<!--            model="account.partner.statement"-->
-<!--            string="Customer Statement"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="esco_account_report.report_customer_statement"-->
-<!--            file="esco_account_report.report_customer_statement"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--    />-->
-    <record id="customer_statement_details_qweb" model="ir.actions.report">
-            <field name="name">Customer Statement</field>
-            <field name="model">account.partner.statement</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">esco_account_report.report_customer_statement</field>
-            <field name="report_file">esco_account_report.report_customer_statement</field>
-<!--            <field name="print_report_name">(object._get_report_base_filename())</field>-->
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-            <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
+        <record id="customer_statement_details_qweb" model="ir.actions.report">
+                <field name="name">Customer Statement</field>
+                <field name="model">account.partner.statement</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">esco_account_report.report_customer_statement</field>
+                <field name="report_file">esco_account_report.report_customer_statement</field>
+                <field name="binding_type">report</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
         </record>
 
-<!--    <report-->
-<!--            id="account.action_report_payment_receipt"-->
-<!--            model="account.payment"-->
-<!--            string="Payment Receipt"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="account.report_payment_receipt"-->
-<!--            file="account.report_payment_receipt"-->
-<!--            menu="True"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--    />-->
-    <record id="account.action_report_payment_receipt" model="ir.actions.report">
-            <field name="name">Payment Receipt</field>
-            <field name="model">account.payment</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">account.report_payment_receipt</field>
-            <field name="report_file">account.report_payment_receipt</field>
-<!--             <field name="print_report_name">(object._get_report_base_filename())</field> -->
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_payment"/>-->
-            <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
+        <record id="account.action_report_payment_receipt" model="ir.actions.report">
+                <field name="name">Payment Receipt</field>
+                <field name="model">account.payment</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">account.report_payment_receipt</field>
+                <field name="report_file">account.report_payment_receipt</field>
+                <field name="binding_type">report</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
         </record>
 
-<!--    <report-->
-<!--            string="Purchase Order"-->
-<!--            id="purchase.action_report_purchase_order"-->
-<!--            model="purchase.order"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="purchase.report_purchaseorder"-->
-<!--            file="purchase.report_purchaseorder"-->
-<!--            print_report_name="'Purchase Order - %s' % (object.name)"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--    />-->
-    <record id="purchase.action_report_purchase_order" model="ir.actions.report">
-            <field name="name">Purchase Order</field>
-            <field name="model">purchase.order</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">purchase.report_purchaseorder</field>
-            <field name="report_file">purchase.report_purchaseorder</field>
-            <field name="print_report_name">'Purchase Order - %s' % (object.name)</field>
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-<!--            <field name="binding_type">report</field>-->
-            <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
+        <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+                <field name="name">Purchase Order</field>
+                <field name="model">purchase.order</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">purchase.report_purchaseorder</field>
+                <field name="report_file">purchase.report_purchaseorder</field>
+                <field name="print_report_name">'Purchase Order - %s' % (object.name)</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
         </record>
 
-<!--    <report-->
-<!--            string="Request for Quotation"-->
-<!--            id="purchase.report_purchase_quotation"-->
-<!--            model="purchase.order"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="purchase.report_purchasequotation"-->
-<!--            file="purchase.report_purchasequotation"-->
-<!--            print_report_name="'Request for Quotation - %s' % (object.name)"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--    />-->
-    <record id="purchase.report_purchase_quotation" model="ir.actions.report">
-            <field name="name">Request for Quotation</field>
-            <field name="model">purchase.order</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">purchase.report_purchasequotation</field>
-            <field name="report_file">purchase.report_purchasequotation</field>
-            <field name="print_report_name">'Request for Quotation - %s' % (object.name)</field>
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-<!--            <field name="binding_type">report</field>-->
-            <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
+        <record id="purchase.report_purchase_quotation" model="ir.actions.report">
+                <field name="name">Request for Quotation</field>
+                <field name="model">purchase.order</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">purchase.report_purchasequotation</field>
+                <field name="report_file">purchase.report_purchasequotation</field>
+                <field name="print_report_name">'Request for Quotation - %s' % (object.name)</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
         </record>
 
-<!--    <report-->
-<!--            string="Delivery Slip"-->
-<!--            id="stock.action_report_delivery"-->
-<!--            model="stock.picking"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="stock.report_deliveryslip"-->
-<!--            file="stock.report_deliveryslip"-->
-<!--            print_report_name="(object.picking_type_code == 'outgoing' and 'Delivery Slip OUT - %s' % (object.name) or-->
-<!--                'Delivery Slip IN - %s' % (object.name))"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--    />-->
-    <record id="stock.action_report_delivery" model="ir.actions.report">
-        <field name="name">Delivery Slip</field>
-        <field name="model">stock.picking</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">stock.report_deliveryslip</field>
-        <field name="report_file">stock.report_deliveryslip</field>
-        <field name="print_report_name">(object.picking_type_code == 'outgoing' and 'Delivery Slip OUT - %s' % (object.name) or
-            'Delivery Slip IN - %s' % (object.name))</field>
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-<!--            <field name="binding_type">report</field>-->
-        <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
-    </record>
-<!--    print_report_name="'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"-->
-<!--    print_report_name="(object.picking_type_code == 'outgoing' and 'Delivery Slip OUT - %s' % (object.name) or-->
-<!--                'Delivery Slip IN - %s' % (object.name))"-->
+        <record id="stock.action_report_delivery" model="ir.actions.report">
+                <field name="name">Delivery Slip</field>
+                <field name="model">stock.picking</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">stock.report_deliveryslip</field>
+                <field name="report_file">stock.report_deliveryslip</field>
+                <field name="print_report_name">(object.picking_type_code == 'outgoing' and
+                        'Delivery Slip OUT - %s' % (object.name) or
+                        'Delivery Slip IN - %s' % (object.name))</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
+        </record>
+        <record id="account.account_invoices" model="ir.actions.report">
+                <field name="name">Invoices</field>
+                <field name="model">account.move</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">account.report_invoice_with_payments</field>
+                <field name="report_file">account.report_invoice_with_payments</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
+        </record>
 
-<!--    <report-->
-<!--            id="account.account_invoices"-->
-<!--            model="account.move"-->
-<!--            string="Invoices"-->
-<!--            report_type="qweb-pdf"-->
-<!--            name="account.report_invoice_with_payments"-->
-<!--            file="account.report_invoice_with_payments"-->
-<!--            attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"-->
-<!--            print_report_name="(object._get_report_base_filename())"-->
-<!--            groups="account.group_account_invoice"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--        />-->
-    <record id="account.account_invoices" model="ir.actions.report">
-        <field name="name">Invoices</field>
-        <field name="model">account.move</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">account.report_invoice_with_payments</field>
-        <field name="report_file">account.report_invoice_with_payments</field>
-<!--        <field name="print_report_name">(object._get_report_base_filename())</field>-->
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-<!--            <field name="binding_type">report</field>-->
-        <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
-    </record>
-
-<!--    <report-->
-<!--            id="sale.action_report_saleorder"-->
-<!--            string="Quotation / Order"-->
-<!--            model="sale.order"-->
-<!--            report_type="qweb-pdf"-->
-<!--            file="sale.report_saleorder"-->
-<!--            name="sale.report_saleorder"-->
-<!--            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Sale Order - %s' % (object.name)"-->
-<!--            paperformat="esco_account_report.paperformat_bait"-->
-<!--        />-->
-
-    <record id="sale.action_report_saleorder" model="ir.actions.report">
-        <field name="name">Quotation / Order</field>
-        <field name="model">sale.order</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">sale.report_saleorder</field>
-        <field name="report_file">sale.report_saleorder</field>
-        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Sale Order - %s' % (object.name)</field>
-<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
-<!--            <field name="binding_model_id" ref="model_account_move"/>-->
-<!--            <field name="binding_type">report</field>-->
-        <field name="paperformat_id" ref="esco_account_report.paperformat_bait"/>
-<!--            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),-->
-<!-- (4, ref('account.group_account_readonly'))]"/>-->
-    </record>
-
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+                <field name="name">Quotation / Order</field>
+                <field name="model">sale.order</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_name">sale.report_saleorder</field>
+                <field name="report_file">sale.report_saleorder</field>
+                <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation -
+                        %s' % (object.name)) or 'Sale Order - %s' % (object.name)</field>
+                <field name="paperformat_id" ref="esco_account_report.paperformat_bait" />
+        </record>
 </odoo>

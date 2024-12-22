@@ -15,9 +15,8 @@
                                 <span>PO. No.</span>
                             </td>
                             <td style="width:72%;"
-                                class="text-center top_border left_border right_border td_style_left">
-                                <span t-field="o.name"
-                                    style="margin-left: 15px; margin-right: 15px;" />
+                                class="text-center top_border left_border right_border">
+                                <span t-field="o.name" style="margin-left: 15px; margin-right: 15px;" />
                             </td>
                         </tr>
                         <tr>
@@ -25,9 +24,8 @@
                                 <span>Date</span>
                             </td>
                             <td style="width:72%; "
-                                class="text-center top_border left_border right_border bottom_border td_style_left">
-                                <span t-field="o.order_date"
-                                    style="margin-left: 25px; margin-right: 15px;" />
+                                class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.order_date" style="margin-left: 25px; margin-right: 15px;" />
                             </td>
                         </tr>
                     </table>
@@ -62,8 +60,7 @@
                                     </t>
                                 </div>
                             </div>
-                            <div class="row "
-                                style="border: none; margin-left: 1%; margin-right: 1%;">
+                            <div class="row" style="border: none; margin-right: 1%;">
                                 <span>ID No.</span>
                                 <span>&#160;</span>
                                 <div class="text-center"
@@ -171,15 +168,12 @@
                                         <span t-field="line.price_unit" />
                                     </td>
                                     <td>
-                                        <div
-                                            style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="position:relative;">
                                             <!-- Align currency symbol to the left -->
-                                            <span t-esc="line.currency_id.symbol"
-                                                style="text-align: left; margin-right: auto;"></span>
+                                            <div t-esc="line.currency_id.symbol" style="left:0; position:absolute;"/>
 
                                             <!-- Center the price_subtotal -->
-                                            <span t-esc="line.price_subtotal"
-                                                style="text-align: center; margin-left: auto;"></span>
+                                            <div t-esc="line.price_subtotal" style="position:absolute;left:25%;"/>
                                         </div>
                                     </td>
                                 </t>
@@ -221,13 +215,11 @@
                             </td>
 
                             <td style="width: 141px !important;border: 1px black solid;">
-                                <div
-                                    style="display: flex; align-items: center; justify-content: space-between;">
+                                <div style="position:relative;">
                                     <!-- Align currency symbol to the left -->
-                                    <span t-esc="o.currency_id.symbol"
-                                        style="text-align: left; margin-right: auto;margin-left:2px;"></span>
+                                    <div t-esc="o.currency_id.symbol" style="left:0; position:absolute;"/>
 
-                                    <span t-esc="o.amount_total" style="text-align: center; margin-left: auto;"/>
+                                    <div t-esc="o.amount_total" style="position:absolute;left:25%;"/>
                                 </div>
                             </td>
                         </tr>
@@ -246,13 +238,11 @@
                             </td>
                             <td class="bold_text" style="border: 1px black solid;">
                                 <br />
-                                <div
-                                    style="display: flex; align-items: center; justify-content: space-between;">
+                                <div style="position:relative;">
                                     <!-- Align currency symbol to the left -->
-                                    <span t-esc="o.currency_id.symbol"
-                                        style="text-align: left; margin-right: auto;margin-left:2px;"></span>
+                                    <div t-esc="o.currency_id.symbol" style="left:0; position:absolute;"/>
 
-                                    <span t-esc="o.amount_total" style="text-align: center; margin-left: auto;"/>
+                                    <div t-esc="o.amount_total" style="position:absolute;left:25%;"/>
                                 </div>
                             </td>
                         </tr>
