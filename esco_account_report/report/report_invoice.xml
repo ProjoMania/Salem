@@ -1,29 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="esco_report_invoice_document">
-<!--        <t t-call="web.html_container">-->
         <t t-call="esco_account_report.external_layout_bait">
-<!--            <link rel="stylesheet" type="text/css" href="/esco_account_report/static/src/css/style.css"/>-->
             <style>
 
             </style>
-            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)"/>
-<!--            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>-->
+            <t t-set="o" t-value="o.with_context(lang=o.env.lang or o.partner_id.lang)" />
             <div class="page page_margin" style="font-family: Frutiger_Light; font-size: 17px;">
                 <t t-if="o.move_type == 'out_invoice'">
-                    <h3><strong class="bold_header">INVOICE</strong></h3>
+                    <h3>
+                        <strong class="bold_header">INVOICE</strong>
+                    </h3>
                 </t>
                 <t t-if="o.move_type == 'in_invoice'">
-                    <h3><strong class="bold_header">BILL</strong></h3>
+                    <h3>
+                        <strong class="bold_header">BILL</strong>
+                    </h3>
                 </t>
                 <t t-if="o.move_type == 'out_refund'">
-                    <h3><strong class="bold_header">Credit Note</strong></h3>
+                    <h3>
+                        <strong class="bold_header">Credit Note</strong>
+                    </h3>
                 </t>
                 <t t-if="o.move_type == 'in_refund'">
-                    <h3><strong class="bold_header">Debit Note</strong></h3>
+                    <h3>
+                        <strong class="bold_header">Debit Note</strong>
+                    </h3>
                 </t>
                 <div class="row" style="width: 100%; margin-right: 20px;">
-                    <table style="width: 65%; border-collapse: collapse; margin-left: 2%;border: none; table-layout: fixed;">
+                    <table
+                        style="width: 65%; border-collapse: collapse; margin-left: 2%;border: none; table-layout: fixed;">
                         <tr>
                             <td style="width:30%;">
                                 <t t-if="o.move_type == 'out_invoice'">
@@ -39,8 +45,9 @@
                                     <span>Doc No.</span>
                                 </t>
                             </td>
-                            <td style="width:70%;" class="text-center top_border left_border right_border">
-                                <span t-field="o.name"/>
+                            <td style="width:70%;"
+                                class="text-center top_border left_border right_border">
+                                <span t-field="o.name" />
                             </td>
                         </tr>
                         <tr>
@@ -52,8 +59,9 @@
                                     <span>Vendor Name</span>
                                 </t>
                             </td>
-                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
-                                <span t-field="o.partner_id.name"/>
+                            <td style="width:70%;"
+                                class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.partner_id.name" />
                             </td>
                         </tr>
                         <tr>
@@ -65,19 +73,33 @@
                                     <span>Vendor ID</span>
                                 </t>
                             </td>
-                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
-                                <span t-field="o.partner_id.id"/>
+                            <td style="width:70%;"
+                                class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.partner_id.id" />
                             </td>
                         </tr>
                         <tr>
                             <td style="width:30%;">
                                 <span>Address</span>
                             </td>
-                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
-                                <t style="text-align: center !important;" t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t><span> </span>
-                                <t style="text-align: center !important;" t-if="o.partner_id.state_id"><span t-field="o.partner_id.state_id.name"/></t>
-                                <t style="text-align: center !important;" t-if="o.partner_id.street"><span t-field="o.partner_id.street"/></t><span></span>
-                                <t style="text-align: center !important;" t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/></t>
+                            <td style="width:70%;"
+                                class="text-center top_border left_border right_border bottom_border">
+                                <t style="text-align: center !important;" t-if="o.partner_id.city">
+                                    <span t-field="o.partner_id.city" />
+                                </t>
+                                <span> </span>
+                                <t style="text-align: center !important;"
+                                    t-if="o.partner_id.state_id">
+                                    <span t-field="o.partner_id.state_id.name" />
+                                </t>
+                                <t style="text-align: center !important;" t-if="o.partner_id.street">
+                                    <span t-field="o.partner_id.street" />
+                                </t>
+                                <span></span>
+                                <t style="text-align: center !important;"
+                                    t-if="o.partner_id.street2">
+                                    <span t-field="o.partner_id.street2" />
+                                </t>
                             </td>
                         </tr>
 
@@ -85,8 +107,9 @@
                             <td style="width:30%;">
                                 <span>Date</span>
                             </td>
-                            <td style="width:70%;" class="text-center top_border left_border right_border bottom_border">
-                                <span t-field="o.invoice_date"/>
+                            <td style="width:70%;"
+                                class="text-center top_border left_border right_border bottom_border">
+                                <span t-field="o.invoice_date" />
                             </td>
                         </tr>
                     </table>
@@ -101,59 +124,61 @@
                                 <table></table>
                             </div>
                         </div>
-                        <table style="width: 80%; margin-left: 10%; margin-right: 10%;border: none !important; table-layout: fixed;">
+                        <table
+                            style="width: 80%; margin-left: 10%; margin-right: 10%;border: none !important; table-layout: fixed;">
                             <tr style="border: none !important; ">
-<!--                                <td class="no_border" style="background-color: white !important; color: black !important">-->
-<!--                                    <span>Ref.</span>-->
-<!--                                </td>-->
-<!--                                <td class="text-center top_border left_border right_border bottom_border"-->
-<!--                                    style="width: 50%; background-color: white !important; color: black !important">-->
-<!--                                    <span t-field="o.invoice_origin"/>-->
-<!--                                </td>-->
-<!--                                <td style="background-color: white !important; color: black !important; width: 35%;">-->
-<!--                                    <span>Ref.</span>-->
-<!--                                </td>-->
-<!--                                <td class="text-center top_border left_border right_border bottom_border"-->
-<!--                                    style="width: 65%; background-color: white !important; color: black !important">-->
-<!--                                    <span t-if="o.ref" t-field="o.ref"/> <span t-if="o.invoice_origin" t-field="o.invoice_origin"/>-->
-<!--                                </td>-->
                             </tr>
                         </table>
                     </div>
                 </div>
-                <br/>
+                <br />
                 <t t-set="i" t-value="1" />
-                <table class="table table-sm table_with_header" style="border-collapse: collapse; table-layout: fixed;">
+                <table class="table table-sm table_with_header"
+                    style="border-collapse: collapse; table-layout: fixed;">
                     <thead style="background-color: #30378c;">
                         <tr>
-                            <td style="width: 11%;" class="table_header text-center"><span>Item #</span></td>
-                            <td style="width: 47%;" class="table_header text-center"><span>Description</span></td>
-                            <td style="width: 10%;" class="table_header text-center"><span>QTY</span></td>
-<!--                            <td class="table_header text-center"><span>UOM</span></td>-->
-                            <td style="width: 13%;" class="table_header text-center"><span>Unit Price</span></td>
-                            <td style="width: 19%;" class="table_header text-center"><span>Total</span></td>
+                            <td style="width: 11%;" class="table_header text-center">
+                                <span>Item #</span>
+                            </td>
+                            <td style="width: 47%;" class="table_header text-center">
+                                <span>Description</span>
+                            </td>
+                            <td style="width: 10%;" class="table_header text-center">
+                                <span>QTY</span>
+                            </td>
+                            <td style="width: 13%;" class="table_header text-center">
+                                <span>Unit Price</span>
+                            </td>
+                            <td style="width: 19%;" class="table_header text-center">
+                                <span>Total</span>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="o.sudo().invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">
-                            <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
-                            <td style="padding-left: 15px;padding-right: 15px;" class="text-center"><span t-field="line.name"/></td>
-                            <td class="text-center"><span t-esc='"{:,}".format(int(line.quantity))'/></td>
-<!--                            <td class="text-center"><span t-field="line.product_uom_id"/></td>-->
-                            <td class="text-center" style="background-color: white !important;"><span t-field="line.price_unit"/></td>
-                            <td class="text-center" style="background-color: white !important;"><span t-field="line.price_total"/></td>
+                        <tr
+                            t-foreach="o.sudo().invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"
+                            t-as="line">
+                            <td class="text-center">
+                                <span t-esc="i" />
+                                <t t-set="i" t-value="i+1" />
+                            </td>
+                            <td style="padding-left: 15px;padding-right: 15px;" class="text-center">
+                                <span t-field="line.name" />
+                            </td>
+                            <td class="text-center">
+                                <span t-esc='"{:,}".format(int(line.quantity))' />
+                            </td>
+                            <td class="text-center" style="background-color: white !important;">
+                                <span t-field="line.price_unit" />
+                            </td>
+                            <td class="text-center" style="background-color: white !important;">
+                                <span t-field="line.price_total" />
+                            </td>
                         </tr>
-<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
-<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
-<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
-<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
-<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
-<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
-<!--                        <tr><td><span style="color: white;">1</span></td><td/><td/><td/>-->
-<!--                            <td class="text-center" style="background-color: white !important;"></td></tr>-->
                     </tbody>
                 </table>
-                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">
+                <div class="row justify-content-end "
+                    style="margin-right: 0px; margin-top: -5px; border-color: grey;">
                     <table style="width: 36%; margin-left: 2%;border:">
                         <tr>
                             <td class="right_border_light">
@@ -162,126 +187,101 @@
                             <td class="text-center"
                                 style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
                                 <span t-field="o.amount_total"
-                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
-<!--                        <tr>-->
-<!--                            <td class="right_border_light">-->
-<!--                                <span>Discount</span>-->
-<!--                            </td>-->
-<!--                            <td class="text-center">-->
-<!--                                <span>-</span>-->
-<!--                            </td>-->
-<!--                        </tr>-->
+                        
                         <tr>
                             <td class="bold_text">
-                                <br/>
+                                <br />
                                 <span class="bold_text">Total</span>
                             </td>
                             <td class="bold_text text-center top_border_light"
                                 style="border-bottom-style: hidden !important ; border-right-style: hidden !important;border-left-style: hidden !important;">
-                                <br/>
+                                <br />
                                 <span t-field="o.amount_total"
-                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                <hr style="margin-top: 6px; color: grey; background-color: grey;"/>
-                                <hr style="margin-top: -14px; color: grey; background-color: grey; "/>
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                                <hr style="margin-top: 6px; color: grey; background-color: grey;" />
+                                <hr style="margin-top: -14px; color: grey; background-color: grey; " />
                             </td>
                         </tr>
                     </table>
                 </div>
-<!--                <div class="row justify-content-end " style="margin-right: 0px; margin-top: -5px; border-color: grey;">-->
-<!--                    <br/>-->
-<!--                    <table style="width: 34%; margin-left: 2%;border: none; ">-->
-<!--                        <tr>-->
-<!--                            <td class="bold_text">-->
-<!--                                <br/>-->
-<!--                                <span class="bold_text no_border">Total</span>-->
-<!--                            </td>-->
-<!--                            <td class="no_border bold_text text-center top_border_light" style="">-->
-<!--                                <div style="margin-left: 60px !important;">-->
-<!--                                    <br/>-->
-<!--                                    <span t-field="o.amount_total"-->
-<!--                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
-<!--                                    <hr style="margin-top: 6px; color: grey; background-color: grey;"/>-->
-<!--                                    <hr style="margin-top: -14px; color: grey; background-color: grey;"/>-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
-                <br/>
-                <hr style="width: 70%; border-top: 1px solid black;"/>
-                <table class="table table-sm" style="border-collapse: collapse; width: 70%; font-size: 18px; border: none !important;">
+                <br />
+                <hr style="width: 70%; border-top: 1px solid black;" />
+                <table class="table table-sm"
+                    style="border-collapse: collapse; width: 70%; font-size: 18px; border: none !important;">
                     <tr>
-                        <td class="text-center no_border bold_text_only"><span>Product</span></td>
-                        <td class="text-center no_border bold_text_only"><span>QTY</span></td>
-                        <td class="text-center no_border bold_text_only"><span>Batch Number</span></td>
+                        <td class="text-center no_border bold_text_only">
+                            <span>Product</span>
+                        </td>
+                        <td class="text-center no_border bold_text_only">
+                            <span>QTY</span>
+                        </td>
+                        <td class="text-center no_border bold_text_only">
+                            <span>Batch Number</span>
+                        </td>
                     </tr>
                     <tbody>
                         <t t-foreach="o.sudo().get_pickings()" t-as="picking">
                             <tr t-foreach="picking.move_line_ids" t-as="line">
-                                <td class="text-center no_border"><span t-field="line.product_id.name"/></td>
-                                <td class="text-center no_border" style="background-color: white !important;"><span t-esc='"{:,}".format(int(line.quantity))'/></td>
                                 <td class="text-center no_border">
-                                    <span t-if="line.lot_id.name" t-field="line.lot_id.name"/>
-                                    <span t-if="not line.lot_id.name" t-field="line.lot_name"/>
+                                    <span t-field="line.product_id.name" />
+                                </td>
+                                <td class="text-center no_border"
+                                    style="background-color: white !important;">
+                                    <span t-esc='"{:,}".format(int(line.quantity))' />
+                                </td>
+                                <td class="text-center no_border">
+                                    <span t-if="line.lot_id.name" t-field="line.lot_id.name" />
+                                    <span t-if="not line.lot_id.name" t-field="line.lot_name" />
                                 </td>
                             </tr>
                         </t>
                     </tbody>
                 </table>
-            
-            
-            <!--          adding note/command on invoice             -->
-                    <style>
-                      .my-margin {
-                         margin-left: 50px;
-                         margin-right: 50px;
-                         }
-    </style>  
-      
-                         <div class="text-muted mb-3 my-margin"
-                                       t-attf-style="{'text-align: justify; text-justify: inter-word;' if o.company_id.terms_type != 'html' else ''}"
-                                       t-if="not is_html_empty(o.narration)" name="comment">
-                                 <span t-field="o.narration"/>
-                         </div> 
-<!--        ending of  adding note/command on invoice              -->
-            
-            
-            
-            
-                <hr style="width: 70%; border-top: 1px solid black;"/>
-                <div class="text-center row col-12"
-                     style="margin-top: 400px; margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4">
-                    
-                    
+                <style>
+                    .my-margin {
+                    margin-left: 50px;
+                    margin-right: 50px;
+                    }
+                </style>
 
-                    
-                 
-                    
-<!--                        Signature-->
+                <div class="text-muted mb-3 my-margin"
+                    t-attf-style="{'text-align: justify; text-justify: inter-word;' if o.company_id.terms_type != 'html' else ''}"
+                    t-if="not is_html_empty(o.narration)" name="comment">
+                    <span t-field="o.narration" />
+                </div>
+
+                <hr style="width: 70%; border-top: 1px solid black;" />
+                <div class="text-center row col-12"
+                    style="margin-top: 400px; margin-left:5mm;margin-right:5mm;margin-top: 50px; font-size: 16px;">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+
+
+                        <!--                        Signature-->
                         <div style="height:140px; min-height:140px;">
-                            <img t-if="o.user_id.signature_image"  t-att-src="image_data_uri(o.user_id.signature_image)"
-                                 alt="Signature" style="height:140px;width:260px; margin-top: -30px;"/>
+                            <img t-if="o.user_id.signature_image"
+                                t-att-src="image_data_uri(o.user_id.signature_image)"
+                                alt="Signature" style="height:140px;width:260px; margin-top: -30px;" />
                         </div>
-                        <hr style="border-color: black; margin-top: -50px;"/>
-                            <span t-field="o.user_id"/>
+                        <hr style="border-color: black; margin-top: -50px;" />
+                        <span t-field="o.user_id" />
                     </div>
                 </div>
             </div>
         </t>
-<!--        </t>-->
     </template>
 
     <template id="account.report_invoice_with_payments">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.sudo().lang"/>
+                <t t-set="lang"
+                    t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.sudo().lang" />
                 <t t-call="esco_account_report.esco_report_invoice_document" />
             </t>
         </t>
