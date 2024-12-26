@@ -10,7 +10,7 @@
     'price': '',
     'license': 'LGPL-3',
     'description': """Vendor based xlsx sales report""",
-    'depends': ['sale_management', 'stock', 'contacts', 'product_expiry', 'sale','account_accountant', 'sale_stock'],
+    'depends': ['sale_management', 'stock', 'contacts', 'product_expiry', 'sale','account_accountant', 'sale_stock', 'account'],
     'data': [
         'security/ir.model.access.csv',
 
