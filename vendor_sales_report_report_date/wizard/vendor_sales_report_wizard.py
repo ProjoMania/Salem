@@ -130,8 +130,8 @@ class VendorSalesReport(models.TransientModel):
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
                        o.move_id.move_type == 'out_invoice' and
-                       o.sale_line_ids.order_id.report_date >= start_date and
-                       o.sale_line_ids.order_id.report_date <= end_date and
+                       o.report_date >= start_date and
+                       o.report_date <= end_date and
                        o.move_id.state != 'cancel')
 
     def _prepare_start_end_date(self):
