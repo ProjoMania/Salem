@@ -28,6 +28,10 @@ class VendorSalesReport(models.TransientModel):
 
     from_date = fields.Date(string="From date", tracking=True)
     to_date = fields.Date(string="To date", tracking=True)
+    product_category_ids = fields.Many2many('product.category', string='Product Category')
+    stock_location_ids = fields.Many2many('stock.location', string='Stock Location')
+# * “WH” excluded or included
+# * Without product
 
     def print_report_xls_menu(self):
         data, filename = self._prepare_report_data()
@@ -102,58 +106,58 @@ class VendorSalesReport(models.TransientModel):
                             "invoice_type": "Invoice",
                         }
                         vendor_data_list.append(vendor_based_data)
-                ############################################################################################################
-                move_type = 'out_refund'
-                ############################################################################################################
-                invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list, move_type)
-                for inv_line in invoice_line_ids:
-                    lot_str = False
-                    for line in inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
-                            lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
-                        if line.quantity == inv_line.quantity and line.product_id == inv_line.product_id:
-                            lot_str = line.lot_id.name
-                            break
-                        else:
-                            continue
+                # ############################################################################################################
+                # move_type = 'out_refund'
+                # ############################################################################################################
+                # invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list, move_type)
+                # for inv_line in invoice_line_ids:
+                #     lot_str = False
+                #     for line in inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
+                #             lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
+                #         if line.quantity == inv_line.quantity and line.product_id == inv_line.product_id:
+                #             lot_str = line.lot_id.name
+                #             break
+                #         else:
+                #             continue
 
-                    if not lot_str:
-                        lot_str = False
-                        total_qty = 0
-                        for picking in inv_line.sale_line_ids.order_id.picking_ids.filtered(
-                                lambda o: o.picking_type_code == 'incoming' and o.state == 'done'):
-                            total_qty = 0
-                            for line in picking.move_line_ids_without_package:
-                                if line.product_id == inv_line.product_id:
-                                    lot_ids = inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
-                                        lambda
-                                            o: o.product_id == inv_line.product_id and o.picking_id.id == line.picking_id.id).mapped(
-                                        'lot_id')
-                                    if lot_ids:
-                                        lots = lots_obj.search([("id", "in", lot_ids.ids)])
-                                        lot_str = ''
-                                        for lot in lots:
-                                            lot_str += str(lot.name) + ', '
-                    if inv_line:
-                        vendor_based_data = {
-                            "lot": lot_str if lot_str else "",
-                            "vendor": partner.name if partner else "",
-                            "invoice": inv_line.move_id.name if inv_line else "",
-                            "sale_order": inv_line.sale_line_ids.order_id.name if inv_line.sale_line_ids.order_id.name else "",
-                            "invoice_date": inv_line.move_id.invoice_date if self.filter_by == 'order_date' else inv_line.sale_line_ids.order_id.report_date,
-                            "default_code": inv_line.product_id.default_code if inv_line.product_id.default_code else "",
-                            "product_name": inv_line.product_id.name if inv_line.product_id.name else "",
-                            "team_id": inv_line.move_id.team_id.name if inv_line.move_id.team_id.name else "",
-                            "area": inv_line.move_id.partner_id.area if inv_line.move_id.partner_id.area else "",
-                            "province": inv_line.move_id.partner_id.state_id.name if inv_line.move_id.partner_id.state_id.name else "",
-                            "district": inv_line.move_id.partner_id.street if inv_line.move_id.partner_id.street else "",
-                            "price_unit": inv_line.price_unit if inv_line.price_unit else "",
-                            "customer_name": inv_line.move_id.partner_id.name if inv_line.move_id.partner_id.name else "",
-                            "quantity": -1 * inv_line.quantity if inv_line.quantity else "0",
-                            "price_subtotal": -1 * inv_line.price_subtotal if inv_line.price_subtotal else "0",
-                            "currency": inv_line.currency_id.name if inv_line.currency_id.name else "",
-                            "invoice_type": "Credit Note",
-                        }
-                        vendor_data_list.append(vendor_based_data)
+                #     if not lot_str:
+                #         lot_str = False
+                #         total_qty = 0
+                #         for picking in inv_line.sale_line_ids.order_id.picking_ids.filtered(
+                #                 lambda o: o.picking_type_code == 'incoming' and o.state == 'done'):
+                #             total_qty = 0
+                #             for line in picking.move_line_ids_without_package:
+                #                 if line.product_id == inv_line.product_id:
+                #                     lot_ids = inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
+                #                         lambda
+                #                             o: o.product_id == inv_line.product_id and o.picking_id.id == line.picking_id.id).mapped(
+                #                         'lot_id')
+                #                     if lot_ids:
+                #                         lots = lots_obj.search([("id", "in", lot_ids.ids)])
+                #                         lot_str = ''
+                #                         for lot in lots:
+                #                             lot_str += str(lot.name) + ', '
+                #     if inv_line:
+                #         vendor_based_data = {
+                #             "lot": lot_str if lot_str else "",
+                #             "vendor": partner.name if partner else "",
+                #             "invoice": inv_line.move_id.name if inv_line else "",
+                #             "sale_order": inv_line.sale_line_ids.order_id.name if inv_line.sale_line_ids.order_id.name else "",
+                #             "invoice_date": inv_line.move_id.invoice_date if self.filter_by == 'order_date' else inv_line.sale_line_ids.order_id.report_date,
+                #             "default_code": inv_line.product_id.default_code if inv_line.product_id.default_code else "",
+                #             "product_name": inv_line.product_id.name if inv_line.product_id.name else "",
+                #             "team_id": inv_line.move_id.team_id.name if inv_line.move_id.team_id.name else "",
+                #             "area": inv_line.move_id.partner_id.area if inv_line.move_id.partner_id.area else "",
+                #             "province": inv_line.move_id.partner_id.state_id.name if inv_line.move_id.partner_id.state_id.name else "",
+                #             "district": inv_line.move_id.partner_id.street if inv_line.move_id.partner_id.street else "",
+                #             "price_unit": inv_line.price_unit if inv_line.price_unit else "",
+                #             "customer_name": inv_line.move_id.partner_id.name if inv_line.move_id.partner_id.name else "",
+                #             "quantity": -1 * inv_line.quantity if inv_line.quantity else "0",
+                #             "price_subtotal": -1 * inv_line.price_subtotal if inv_line.price_subtotal else "0",
+                #             "currency": inv_line.currency_id.name if inv_line.currency_id.name else "",
+                #             "invoice_type": "Credit Note",
+                #         }
+                #         vendor_data_list.append(vendor_based_data)
 
         data = {
             "company": res_company.name,

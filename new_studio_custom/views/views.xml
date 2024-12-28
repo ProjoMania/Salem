@@ -59,7 +59,7 @@
                     <attribute name="groups">new_studio_custom.res_groups_109_2d6cb1a2</attribute>
                     <attribute name="studio_approval">True</attribute>
                 </xpath>
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='partner_id']" position="attributes">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="domain">[]</attribute>
                 </xpath>
 <!--                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='partner_bank_id']" position="attributes">-->
@@ -647,7 +647,7 @@
                     <attribute name="studio_approval">True</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_view_stock_valuation_layers']" position="after">
-                    <button class="oe_stat_button" icon="fa-cube" type="action" name="%(detailed_operation_action)d">
+                    <button class="oe_stat_button" icon="fa-cube" type="action" name="%(detailed_operation_action)d" title="">
                         <field widget="statinfo" name="x_picking_id_stock_move_line_count"
                                string="Detailed Operation "/>
                     </button>
