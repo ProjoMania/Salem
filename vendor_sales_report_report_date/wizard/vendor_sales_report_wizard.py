@@ -28,10 +28,11 @@ class VendorSalesReport(models.TransientModel):
 
     from_date = fields.Date(string="From date", tracking=True)
     to_date = fields.Date(string="To date", tracking=True)
-    product_category_ids = fields.Many2many('product.category', string='Product Category')
-    stock_location_ids = fields.Many2many('stock.location', string='Stock Location')
-# * “WH” excluded or included
-# * Without product
+    product_category_ids = fields.Many2many('product.category', string='Product Categories')
+    stock_location_ids = fields.Many2many('stock.location', string='Stock Locations')
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse', check_company=True)
+    exclude_product_ids = fields.Many2many('product.product', string='Excluded Products')
 
     def print_report_xls_menu(self):
         data, filename = self._prepare_report_data()
@@ -106,59 +107,6 @@ class VendorSalesReport(models.TransientModel):
                             "invoice_type": "Invoice",
                         }
                         vendor_data_list.append(vendor_based_data)
-                # ############################################################################################################
-                # move_type = 'out_refund'
-                # ############################################################################################################
-                # invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list, move_type)
-                # for inv_line in invoice_line_ids:
-                #     lot_str = False
-                #     for line in inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
-                #             lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
-                #         if line.quantity == inv_line.quantity and line.product_id == inv_line.product_id:
-                #             lot_str = line.lot_id.name
-                #             break
-                #         else:
-                #             continue
-
-                #     if not lot_str:
-                #         lot_str = False
-                #         total_qty = 0
-                #         for picking in inv_line.sale_line_ids.order_id.picking_ids.filtered(
-                #                 lambda o: o.picking_type_code == 'incoming' and o.state == 'done'):
-                #             total_qty = 0
-                #             for line in picking.move_line_ids_without_package:
-                #                 if line.product_id == inv_line.product_id:
-                #                     lot_ids = inv_line.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(
-                #                         lambda
-                #                             o: o.product_id == inv_line.product_id and o.picking_id.id == line.picking_id.id).mapped(
-                #                         'lot_id')
-                #                     if lot_ids:
-                #                         lots = lots_obj.search([("id", "in", lot_ids.ids)])
-                #                         lot_str = ''
-                #                         for lot in lots:
-                #                             lot_str += str(lot.name) + ', '
-                #     if inv_line:
-                #         vendor_based_data = {
-                #             "lot": lot_str if lot_str else "",
-                #             "vendor": partner.name if partner else "",
-                #             "invoice": inv_line.move_id.name if inv_line else "",
-                #             "sale_order": inv_line.sale_line_ids.order_id.name if inv_line.sale_line_ids.order_id.name else "",
-                #             "invoice_date": inv_line.move_id.invoice_date if self.filter_by == 'order_date' else inv_line.sale_line_ids.order_id.report_date,
-                #             "default_code": inv_line.product_id.default_code if inv_line.product_id.default_code else "",
-                #             "product_name": inv_line.product_id.name if inv_line.product_id.name else "",
-                #             "team_id": inv_line.move_id.team_id.name if inv_line.move_id.team_id.name else "",
-                #             "area": inv_line.move_id.partner_id.area if inv_line.move_id.partner_id.area else "",
-                #             "province": inv_line.move_id.partner_id.state_id.name if inv_line.move_id.partner_id.state_id.name else "",
-                #             "district": inv_line.move_id.partner_id.street if inv_line.move_id.partner_id.street else "",
-                #             "price_unit": inv_line.price_unit if inv_line.price_unit else "",
-                #             "customer_name": inv_line.move_id.partner_id.name if inv_line.move_id.partner_id.name else "",
-                #             "quantity": -1 * inv_line.quantity if inv_line.quantity else "0",
-                #             "price_subtotal": -1 * inv_line.price_subtotal if inv_line.price_subtotal else "0",
-                #             "currency": inv_line.currency_id.name if inv_line.currency_id.name else "",
-                #             "invoice_type": "Credit Note",
-                #         }
-                #         vendor_data_list.append(vendor_based_data)
-
         data = {
             "company": res_company.name,
             "vendor_based": vendor_data_list,
@@ -185,6 +133,7 @@ class VendorSalesReport(models.TransientModel):
                        o.sale_line_ids.order_id.report_date >= start_date and
                        o.sale_line_ids.order_id.report_date <= end_date and
                        o.move_id.state != 'cancel')
+
     def _prepare_start_end_date(self):
         if self.filter_by == 'order_date':
             start_date = self.from_date
@@ -193,6 +142,7 @@ class VendorSalesReport(models.TransientModel):
             start_date = self.from_report_date
             end_date = self.to_report_date
         return end_date, start_date
+
     def _prepare_move_domain(self, start_date, end_date, products_list):
         move_domain = []
         if self.filter_by == 'order_date':
@@ -205,6 +155,7 @@ class VendorSalesReport(models.TransientModel):
         if products_list:
             move_domain.append(("product_id", "in", products_list))
         return move_domain
+
     def _prepare_sale_domain(self, start_date, end_date):
         sale_domain = []
         if self.filter_by == 'order_date':
@@ -215,14 +166,23 @@ class VendorSalesReport(models.TransientModel):
             sale_domain.append(("report_date", "<=", end_date))
         if self.excluded_vendor_ids:
             sale_domain.append(("partner_id", "not in", self.excluded_vendor_ids.ids))
+        if self.warehouse_id:
+            sale_domain.append(("warehouse_id", "=", self.warehouse_id.id))
         return sale_domain
+
     def _prepare_product_list(self, suppliers_for_mail):
         product_list = []
+        env_product_product = self.env['product.product']
+        product_domain = []
+        if self.exclude_product_ids:
+            product_domain.append(("id", "not in", self.exclude_product_ids.ids))
+        if self.product_category_ids:
+            product_domain.append(("categ_id", "in", self.product_category_ids.ids))
         for supplier in suppliers_for_mail:
             product = supplier.product_tmpl_id
-            product_product = self.env['product.product'].sudo().search([("product_tmpl_id", "=", product.id)])
+            product_domain.append(("product_tmpl_id", "=", product.id))
+            product_product = env_product_product.sudo().search(product_domain)
             product_list.append(product_product.ids)
-        import itertools
         products_list = list(itertools.chain.from_iterable(product_list))
         return products_list
 
