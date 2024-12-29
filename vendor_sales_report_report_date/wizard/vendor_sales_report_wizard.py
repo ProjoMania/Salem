@@ -54,10 +54,7 @@ class VendorSalesReport(models.TransientModel):
             if stock_lines:
                 lots_obj = self.env["stock.lot"].search([])
                 sale_orders = self.env["sale.order"].search(self._prepare_sale_domain(start_date, end_date))
-                ############################################################################################################
-                move_type = 'out_invoice'
-                ############################################################################################################
-                invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list, move_type)
+                invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list)
 
                 for inv_line in invoice_line_ids:
                     lot_str = False
@@ -115,24 +112,21 @@ class VendorSalesReport(models.TransientModel):
         }
         return data, filename
 
-    def get_invoice_lines(self, sale_orders, start_date, end_date, products_list, move_type):
+    def get_invoice_lines(self, sale_orders, start_date, end_date, products_list):
         if self.filter_by == 'order_date':
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
                        o.move_id.move_type == 'out_invoice' and
                        o.move_id.invoice_date >= start_date and
-                       o.move_id.invoice_date <= end_date and
-                       o.move_id.state != 'cancel')
+                       o.move_id.invoice_date <= end_date)
         else:
-
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
                        o.move_id.move_type == 'out_invoice' and
                        o.move_id.report_date >= start_date and
-                       o.move_id.report_date <= end_date and
-                       o.move_id.state != 'cancel')
+                       o.move_id.report_date <= end_date)
 
     def _prepare_start_end_date(self):
         if self.filter_by == 'order_date':
