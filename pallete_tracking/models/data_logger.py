@@ -11,7 +11,7 @@ class DataLogger(models.Model):
     serial_number = fields.Char(string="Data Logger Serial Number")
     pallets_no = fields.Many2one('stock.quant.package')
     create_date = fields.Date(string="Create Date")
-    company = fields.Many2one('res.company', string='Company', required=True)
+    company = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
     package_id = fields.Many2one('stock.quant.package')
 
 
