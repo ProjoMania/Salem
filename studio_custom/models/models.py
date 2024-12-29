@@ -1,6 +1,19 @@
 from odoo import models, fields, api, _
 
 
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    def comp_amount(self):
+        records = self.search([('company_id', '=', 31), ('currency_id', '!=', 87), ('move_type', '!=', 'entry')])
+        for rec in records:
+            print(rec.line_ids.mapped('account_id'))
+            print(rec.name)
+            rec._compute_amount()
+            print(rec.amount_untaxed_signed)
+        return True
+
+
 class Accountmoveline(models.Model):
     _inherit = "account.move.line"
 
@@ -52,6 +65,13 @@ class Purchaseorder(models.Model):
 
     x_studio_payment_type_ = fields.Char(name="Payment Type :", )
     x_studio_shipping_to_ = fields.Char(name="Shipping to :", )
+
+    def ccompute_picking_ids(self):
+        records = self.search([("company_id", '=', 31)])
+        for rec in records:
+            rec._compute_picking_ids()
+            print(rec.picking_ids)
+        return True
 
 
 class Rescompany(models.Model):
