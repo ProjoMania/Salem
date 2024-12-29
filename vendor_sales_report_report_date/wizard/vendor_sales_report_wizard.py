@@ -178,6 +178,12 @@ class VendorSalesReport(models.TransientModel):
             product_list.append(product_product.ids)
         import itertools
         products_list = list(itertools.chain.from_iterable(product_list))
+
+        if self.product_category_ids:
+            products_list = self.env['product.product'].sudo().search([("categ_id", "in", self.product_category_ids.ids)]).ids
+
+        if self.exclude_product_ids:
+            products_list = list(set(products_list) - set(self.exclude_product_ids.ids))
         return products_list
 
     # ===================================================================
