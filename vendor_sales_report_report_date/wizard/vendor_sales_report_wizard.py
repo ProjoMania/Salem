@@ -172,17 +172,11 @@ class VendorSalesReport(models.TransientModel):
 
     def _prepare_product_list(self, suppliers_for_mail):
         product_list = []
-        env_product_product = self.env['product.product']
-        product_domain = []
-        if self.exclude_product_ids:
-            product_domain.append(("id", "not in", self.exclude_product_ids.ids))
-        if self.product_category_ids:
-            product_domain.append(("categ_id", "in", self.product_category_ids.ids))
         for supplier in suppliers_for_mail:
             product = supplier.product_tmpl_id
-            product_domain.append(("product_tmpl_id", "=", product.id))
-            product_product = env_product_product.sudo().search(product_domain)
+            product_product = self.env['product.product'].sudo().search([("product_tmpl_id", "=", product.id)])
             product_list.append(product_product.ids)
+        import itertools
         products_list = list(itertools.chain.from_iterable(product_list))
         return products_list
 
@@ -263,7 +257,7 @@ class VendorSalesReport(models.TransientModel):
                     row += 1
             fp = io.BytesIO()
             workbook.save(fp)
-            report_id = self.env['excel.report'].create({
+            report_id = self.env['excel.report.wizard'].create({
                 'excel_file': base64.encodebytes(fp.getvalue()),
                 'file_name': filename
             })
@@ -272,7 +266,7 @@ class VendorSalesReport(models.TransientModel):
                 return {
                     'view_mode': 'form',
                     'res_id': report_id.id,
-                    'res_model': 'excel.report',
+                    'res_model': 'excel.report.wizard',
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
