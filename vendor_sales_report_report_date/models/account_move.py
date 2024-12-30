@@ -5,7 +5,7 @@ from odoo import models, fields, api
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    report_date = fields.Date(string='Report Date',compute='_compute_report_date', store=True)
+    report_date = fields.Date(string='Report Date',compute='_compute_report_date')
 
     @api.depends('line_ids')
     def _compute_report_date(self):
@@ -16,4 +16,4 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    report_date = fields.Date(string='Report Date', related='move_id.report_date', store=True)
+    report_date = fields.Date(string='Report Date', related='move_id.report_date')
