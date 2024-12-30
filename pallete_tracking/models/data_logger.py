@@ -60,6 +60,6 @@ class DataLoggerStockPicking(models.Model):
 class StockQuantPackageDataLogger(models.Model):
     _inherit = 'stock.quant.package'
 
-    logger_id = fields.One2many('data.logger', 'package_id', string='Data Logger')
+    logger_id = fields.One2many('data.logger', 'pallets_no', string='Data Logger')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
