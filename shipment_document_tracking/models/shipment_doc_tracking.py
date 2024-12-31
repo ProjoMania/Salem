@@ -5,6 +5,12 @@ from email.policy import default
 from odoo import fields, models, api, _
 
 
+class MailActivityType(models.Model):
+    _inherit = 'mail.activity.type'
+    
+    category = fields.Selection(selection_add=[('shipment_document_tracking', 'Shipment Document Tracking')])
+
+
 class ShipmentDocTracking(models.Model):
     _name = 'shipment.doc.tracking'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -86,6 +92,8 @@ class ShipmentDocTracking(models.Model):
         for rec in res.doc_ids:
             subscribers = [res.partner_id.id] if res.partner_id and res.partner_id not in res.sudo().message_partner_ids else None
             res.message_subscribe(subscribers)
+            if not rec.activity_type_id:
+                rec.activity_type_id = self.env.ref('shipment_document_tracking.mail_activity_data_document_tracking')
             if rec.activity_type_id and rec.assigned_to:
                 res.activity_schedule(
                     date_deadline=rec.date_deadline,
