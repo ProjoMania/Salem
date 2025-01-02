@@ -19,7 +19,10 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-
+                        <button name="reset_to_draft" string="Reset to Draft" type="object" class="oe_highlight"
+                                invisible="status in ('draft', 'complete')"/>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"
+                                invisible="status != 'draft'"/>
                         <field name="status" widget="statusbar"/>
                     </header>
                     <sheet>
