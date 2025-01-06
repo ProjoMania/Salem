@@ -51,12 +51,11 @@ class AuditlogRule(models.Model):
     _name = "auditlog.rule"
     _description = "Auditlog - Rule"
 
-    name = fields.Char(required=True, states={"subscribed": [("readonly", True)]})
+    name = fields.Char(required=True)
     model_id = fields.Many2one(
         "ir.model",
         "Model",
         help="Select model for which you want to generate log.",
-        states={"subscribed": [("readonly", True)]},
         ondelete="set null",
         index=True,
     )
@@ -69,7 +68,6 @@ class AuditlogRule(models.Model):
         "rule_id",
         string="Users",
         help="if  User is not added then it will applicable for all users",
-        states={"subscribed": [("readonly", True)]},
     )
     log_read = fields.Boolean(
         "Log Reads",
@@ -77,7 +75,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of read/open on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_write = fields.Boolean(
         "Log Writes",
@@ -86,7 +83,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of modification on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_unlink = fields.Boolean(
         "Log Deletes",
@@ -95,7 +91,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of deletion on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_create = fields.Boolean(
         "Log Creates",
@@ -104,7 +99,6 @@ class AuditlogRule(models.Model):
             "Select this if you want to keep track of creation on any "
             "record of the model of this rule"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
     log_type = fields.Selection(
         [("full", "Full log"), ("fast", "Fast log")],
@@ -118,7 +112,6 @@ class AuditlogRule(models.Model):
             "Fast log: only log the changes made through the create and "
             "write operations (less information, but it is faster)"
         ),
-        states={"subscribed": [("readonly", True)]},
     )
 
     state = fields.Selection(
@@ -129,7 +122,6 @@ class AuditlogRule(models.Model):
     action_id = fields.Many2one(
         "ir.actions.act_window",
         string="Action",
-        states={"subscribed": [("readonly", True)]},
     )
     capture_record = fields.Boolean(
         help="Select this if you want to keep track of Unlink Record",
@@ -138,14 +130,12 @@ class AuditlogRule(models.Model):
         "res.users",
         string="Users to Exclude",
         context={"active_test": False},
-        states={"subscribed": [("readonly", True)]},
     )
 
     fields_to_exclude_ids = fields.Many2many(
         "ir.model.fields",
         domain="[('model_id', '=', model_id)]",
         string="Fields to Exclude",
-        states={"subscribed": [("readonly", True)]},
     )
 
     _sql_constraints = [
@@ -223,17 +213,19 @@ class AuditlogRule(models.Model):
         if updated:
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Update the registry when a new rule is created."""
-        if "model_id" not in vals or not vals["model_id"]:
-            raise UserError(_("No model defined to create line."))
-        model = self.env["ir.model"].sudo().browse(vals["model_id"])
-        vals.update({"model_name": model.name, "model_model": model.model})
-        new_record = super().create(vals)
-        if new_record._register_hook():
+        for vals in vals_list:
+            if "model_id" not in vals or not vals["model_id"]:
+                raise UserError(_("No model defined to create line."))
+            model = self.env["ir.model"].sudo().browse(vals["model_id"])
+            vals.update({"model_name": model.name, "model_model": model.model})
+        new_records = super().create(vals_list)
+        updated = [record._register_hook() for record in new_records]
+        if any(updated):
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
-        return new_record
+        return new_records
 
     def write(self, vals):
         """Update the registry when existing rules are updated."""
@@ -309,6 +301,7 @@ class AuditlogRule(models.Model):
         def create_fast(self, vals_list, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env["auditlog.rule"]
+            vals_list = rule_model._update_vals_list(vals_list)
             vals_list2 = copy.deepcopy(vals_list)
             new_records = create_fast.origin(self, vals_list, **kwargs)
             new_values = {}
@@ -713,3 +706,15 @@ class AuditlogRule(models.Model):
             if act_window:
                 act_window.unlink()
         return self.write({"state": "draft"})
+
+    @api.model
+    def _update_vals_list(self, vals_list):
+        # Odoo supports empty recordset assignment (while it doesn't handle
+        # non-empty recordset ¯\_(ツ)_/¯ ), it could be an Odoo issue, but in
+        # the meanwhile we have to handle this case to avoid errors when using
+        # ``deepcopy`` to log data.
+        for vals in vals_list:
+            for fieldname, fieldvalue in vals.items():
+                if isinstance(fieldvalue, models.BaseModel) and not fieldvalue:
+                    vals[fieldname] = False
+        return vals_list

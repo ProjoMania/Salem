@@ -1,5 +1,27 @@
 <templates>
 
+    <t t-name="HrAttendanceCheckInOutButtons">
+        <div class="flex-grow-1">
+            <t t-set="emp_status" t-value="widget.employee.attendance_state"/>
+            <button  t-if="emp_status == 'checked_out'" data-state="check_in" t-attf-class="o_hr_attendance_sign_in_out_icon btn btn-success align-self-center px-5 py-3 mt-4 mb-2">
+                <span class="align-middle fs-2 me-3 text-white">Check IN</span>
+                <i t-attf-class="fa fa-4x fa-sign-in align-middle"/>
+            </button>
+            <button  t-if="emp_status == 'lunch_end' || emp_status == 'checked_in'" data-state="check_out" t-attf-class="o_hr_attendance_sign_in_out_icon btn btn-warning align-self-center px-5 py-3 mt-4 mb-2">
+                <i t-attf-class="fa fa-4x fa-sign-out align-middle"/>
+                <span class="align-middle fs-2 ms-3">Check OUT</span>
+            </button>
+            <button  t-if="emp_status == 'checked_in'" data-state="lunch_start" t-attf-class="o_hr_attendance_sign_in_out_icon btn btn-warning align-self-center px-5 py-3 mt-4 mb-2">
+                <i t-attf-class="fa fa-4x fa-cutlery align-middle"/>
+                <span class="align-middle fs-2 ms-3">Lunch Start</span>
+            </button>
+            <button  t-if="emp_status == 'lunch_start'" data-state="lunch_end" t-attf-class="o_hr_attendance_sign_in_out_icon btn btn-warning align-self-center px-5 py-3 mt-4 mb-2">
+                <i t-attf-class="fa fa-4x fa-cutlery align-middle"/>
+                <span class="align-middle fs-2 ms-3">Lunch End</span>
+            </button>
+        </div>
+    </t>
+
     <t t-extend="HrAttendanceMyMainMenu">
         <t t-jquery="a.o_hr_attendance_sign_in_out_icon:first" t-operation="replace">
             <t t-set="emp_status" t-value="widget.employee.attendance_state"/>

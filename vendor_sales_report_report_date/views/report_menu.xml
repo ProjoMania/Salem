@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="vendor_sales_report_report_date" model="ir.actions.act_window">
+        <field name="name">Create Vendor Sales Report by Report Date</field>
+        <field name="res_model">vendor.sales.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="vendor_sales_report_report_date_menu"
+            name="Vendor Sales Report by Report Date"
+            action="vendor_sales_report_report_date"
+            parent="sale.menu_sale_report"
+            sequence="2"
+    />
+</odoo>

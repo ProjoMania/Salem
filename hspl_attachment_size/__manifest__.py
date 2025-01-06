@@ -9,7 +9,7 @@
     "author": "Heliconia Solutions Pvt. Ltd.",
     "website": "http://heliconia.io/",
     "category": "Tools",
-    "version": "15.0.0.1.0",
+    "version": "15.0.0",
     "depends": ["base"],
     "license": "OPL-1",
     "data": [

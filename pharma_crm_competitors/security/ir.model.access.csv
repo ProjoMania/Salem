@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pharma_crm_competitors.access_competitors,access_competitors,pharma_crm_competitors.model_competitors,base.group_user,1,1,1,1
+pharma_crm_competitors.access_customer_classification,access_customer_classification,pharma_crm_competitors.model_customer_classification,base.group_user,1,1,1,1
+pharma_crm_competitors.access_competitors_images,access_competitors_images,pharma_crm_competitors.model_competitors_images,base.group_user,1,1,1,1

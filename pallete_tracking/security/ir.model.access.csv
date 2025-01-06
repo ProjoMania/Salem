@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pallete_tracking.access_data_logger,access_data_logger,pallete_tracking.model_data_logger,base.group_user,1,1,1,1
+pallete_tracking.access_sale_order_line_wizard,access_sale_order_line_wizard,pallete_tracking.model_sale_order_line_wizard,base.group_user,1,1,1,1
+pallete_tracking.access_sale_order_line_wizard_line,access_sale_order_line_wizard_line,pallete_tracking.model_sale_order_line_wizard_line,base.group_user,1,1,1,1

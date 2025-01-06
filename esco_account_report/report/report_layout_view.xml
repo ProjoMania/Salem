@@ -33,7 +33,7 @@
             </t>
         </t>
 
-        <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}"><t t-raw="0"/></t>
+<!--        <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}"><t t-raw="0"/></t>-->
         <t t-call="esco_account_report.external_layout_background_bait">
             <t t-raw="0"/>
         </t>
@@ -68,7 +68,7 @@
 <!--            </div>-->
             <div class="" style="font-size:14px;">
                     <br/>
-                    <img t-if="company.header_image" t-att-src="'data:image/png;base64,%s' % to_text(company.header_image)"
+                    <img t-if="company.header_image" t-att-src="image_data_uri(company.header_image)"
                     style="width:100%; padding: 0px 18px 0px 18px;"/>
                 </div>
             <div class="clearfix mb8"/>
@@ -88,7 +88,7 @@
              t-att-data-oe-lang="o and o.env.context.get('lang')">
             <t t-call="web.address_layout"/>
             <t t-raw="0"/>
-            <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)"
+            <img t-if="company.upload_image" t-att-src="image_data_uri(company.upload_image)"
                  style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>
             <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="top:300px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>-->
         </div>
@@ -147,7 +147,7 @@
         <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer ">
             <div class="text-center page_margin" style="color: #30358c !important;">
                 <div style="font-size:14px;">
-                    <img t-if="company.footer_image" t-att-src="'data:image/png;base64,%s' % to_text(company.footer_image)"
+                    <img t-if="company.footer_image" t-att-src="image_data_uri(company.footer_image)"
                     style="width:100%;"/>
                 </div>
             </div>
@@ -187,7 +187,7 @@
                  t-att-data-oe-lang="o and o.env.context.get('lang')">
                 <t t-call="web.address_layout"/>
                 <t t-raw="0"/>
-                <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)"
+                <img t-if="company.upload_image" t-att-src="image_data_uri(company.upload_image)"
                      style="top:130px;left:15%;position:absolute;width:70%; opacity: 1;height:auto;"/>
                 <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="top:300px;position:absolute;width:100%; opacity: 0.50;height:auto;"/>-->
             </div>

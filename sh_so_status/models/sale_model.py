@@ -8,15 +8,15 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     sh_fully_delivered = fields.Boolean(
-        string="Delivered", default=False, copy=False, compute="_compute_check_delivery", store=True, compute_sudo=True)
+        string="Delivered", default=False, copy=False, compute="_compute_check_delivery", compute_sudo=True, store=True)
     sh_partially_delivered = fields.Boolean(
-        string="Partially Delivered", default=False, copy=False, compute="_compute_check_delivery", store=True, compute_sudo=True)
-    sh_fully_paid = fields.Boolean(string="Paid", default=False, copy=False,
+        string="Partially Delivered", default=False, copy=False, compute="_compute_check_delivery", compute_sudo=True, store=True)
+    sh_fully_paid = fields.Boolean(string="Paid", store=True, default=False, copy=False,
                                    compute="_compute_check_delivery", search="_search_fully_paid", compute_sudo=True)
     sh_partially_paid = fields.Boolean(string="Partially Paid",  default=False, copy=False,
-                                       compute="_compute_check_delivery", search="_search_partial_paid", compute_sudo=True)
+                                       compute="_compute_check_delivery", search="_search_partial_paid", compute_sudo=True, store=True)
     sh_hidden_compute_field = fields.Boolean(
-        string="Hidden Compute", readonly=True, compute="_compute_check_delivery", compute_sudo=True)
+        string="Hidden Compute", readonly=True, compute="_compute_check_delivery", compute_sudo=True, store=True)
 
     def _search_partial_paid(self, operator, value):
         paid_ids = []

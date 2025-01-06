@@ -235,7 +235,8 @@ function initialize_map_readonly(lat_lng) {
 
 odoo.define('aspl_employee_attendance_map.customer_map', function (require) {
 "use strict";
-	var FormRenderer = require('web.FormRenderer');
+	import { FormRenderer } from '@web/views/form/form_renderer';
+	// var FormRenderer = require('web.FormRenderer');
 
 	FormRenderer.include({
 		_renderView: function () {

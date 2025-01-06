@@ -33,7 +33,6 @@ class AttApproval(models.TransientModel):
 
     def att_approve(self):
         self.state = 'approved'
-        print(self.status)
         if self.status=='checked_out':
             vals = {
                 'employee_id': self.employee_name.id,

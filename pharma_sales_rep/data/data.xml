@@ -1,0 +1,22 @@
+<odoo>
+    <record model="ir.module.category" id="user_category_type">
+        <field name="name">Select User</field>
+        <field name="description">Select user.</field>
+        <field name="sequence">9</field>
+    </record>
+
+    <record model="res.groups" id="group_supervisor">
+        <field name="name">Supervisor</field>
+        <field name="category_id" ref="user_category_type"/>
+    </record>
+
+    <record model="res.groups" id="group_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="user_category_type"/>
+    </record>
+
+    <record model="res.groups" id="group_sales_rep">
+        <field name="name">Sales Rep</field>
+        <field name="category_id" ref="user_category_type"/>
+    </record>
+</odoo>

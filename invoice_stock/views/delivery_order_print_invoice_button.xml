@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <!-- Inheriting the stock.picking form view to add the Print Invoice button -->
+<!--         <record id="view_picking_form_invoice_button" model="ir.ui.view">
+            <field name="name">stock.picking.form.invoice.button</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_print_invoice"
+                            type="object"
+                            string="Print Invoice"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('sale_id.invoice_ids', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record> -->
+    
+    
+    # Button definition (add to delivery order form view)
+<record id="delivery_order_print_invoice_button" model="ir.ui.view">
+    <field name="name">delivery.order.print.invoice.button</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view.delivery.form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//button[@name='action_picking_done']" position="after">
+            <button name="print_invoice" string="Print Invoice" type="object"
+                    class="oe_inline oe_opener" attrs="{&quot;invisible&quot;: [&quot;!&quot;, &#39;sale_order_id&#39;], &#39;help&quot;: &quot;Print the invoice associated with this delivery order.&quot;}"/>
+        </xpath>
+    </field>
+</record>
+    </data>
+</odoo>
+

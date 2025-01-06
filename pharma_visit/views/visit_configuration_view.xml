@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="visit_deal_tree_view" model="ir.ui.view">
+        <field name="name">visit.deal.tree.view</field>
+        <field name="model">visit.deal</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="competitor_id"/>
+                <field name="qty"/>
+                <field name="start_date"/>
+                <field name="Expected_expiry_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="visit_deal_form_view" model="ir.ui.view">
+        <field name="name">visit.deal.form.view</field>
+        <field name="model">visit.deal</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="competitor_id" required="True"/>
+                            <field name="qty"/>
+                            <field name="comments"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="Expected_expiry_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_deal" model="ir.actions.act_window">
+        <field name="name">Deal</field>
+        <field name="res_model">visit.deal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="deal_track_tree_view" model="ir.ui.view">
+        <field name="name">deal.track.tree.view</field>
+        <field name="model">deal.track</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="deal_id" required="True"/>
+                <field name="consumed_qty"/>
+                <field name="comments"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="deal_track_form_view" model="ir.ui.view">
+        <field name="name">deal.track.form.view</field>
+        <field name="model">deal.track</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="deal_id" required="True"/>
+                            <field name="consumed_qty"/>
+                            <field name="comments"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_deal_track" model="ir.actions.act_window">
+        <field name="name">Deal Track</field>
+        <field name="res_model">deal.track</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="promo_papers_tree_view" model="ir.ui.view">
+        <field name="name">promo.papers.tree.view</field>
+        <field name="model">promo.papers</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" required="True"/>
+                <field name="product_id"/>
+                <field name="file"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="promo_papers_form_view" model="ir.ui.view">
+        <field name="name">promo.papers.form.view</field>
+        <field name="model">promo.papers</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="file"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_promo_papers" model="ir.actions.act_window">
+        <field name="name">Promo Papers</field>
+        <field name="res_model">promo.papers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="medical_paper_tree_view" model="ir.ui.view">
+        <field name="name">medical.paper.tree.view</field>
+        <field name="model">medical.paper</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="file"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="medical_paper_form_view" model="ir.ui.view">
+        <field name="name">medical.paper.form.view</field>
+        <field name="model">medical.paper</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="product_id"/>
+                            <field name="file"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_medical_papers" model="ir.actions.act_window">
+        <field name="name">Medical Papers</field>
+        <field name="res_model">medical.paper</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_configuration" name="Configuration" parent="main_menu_visit"/>
+    <menuitem id="menu_deal" name="Deal" action="action_deal" parent="menu_configuration"/>
+    <menuitem id="menu_deal_track" name="Deal Track" action="action_deal_track" parent="menu_configuration"/>
+    <menuitem id="menu_promo_papers" name="Promo Papers" action="action_promo_papers" parent="menu_configuration"/>
+    <menuitem id="menu_medical_papers" name="Medical Paper" action="action_medical_papers" parent="menu_configuration"/>
+</odoo>

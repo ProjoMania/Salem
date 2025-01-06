@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+
+<!--        <record id="studio_customization_odoo_studio_account__d634b9a6-551b-4a9e-8b19-e267af32f7a0" model="ir.ui.view">-->
+<!--            <field name="name">studio.customization.odoo.studio.account..d634b9a6-551b-4a9e-8b19-e267af32f7a0</field>-->
+<!--            <field name="model">account.payment</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_payment_form"/>-->
+<!--            <field name="arch" type="xml">-->
+
+
+<!--                <xpath expr="//field[@name='x_studio_field_Gb6C2']" position="replace"/>-->
+<!--                <xpath expr="//button[@name='action_draft']" position="attributes">-->
+<!--                    <attribute name="studio_approval">True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='button_open_journal_entry']" position="attributes">-->
+<!--                    <attribute name="groups">account.group_account_manager,new_studio_custom.res_groups_150_2d1d024e-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='journal_id']" position="before">-->
+<!--                    <field name="x_studio_cash_collector" widget="many2many_tags"-->
+<!--                           options="{&quot;no_create&quot;:true}"/>-->
+<!--                </xpath>-->
+
+
+<!--            </field>-->
+<!--        </record>-->
+
+
+        <record id="studio_customization_odoo_studio_account__1a4c040e-71e5-4299-989f-032477a16ef0" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..1a4c040e-71e5-4299-989f-032477a16ef0</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form[1]/header[1]/button[@name='action_post']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,new_studio_custom.res_groups_150_2d1d024e
+                    </attribute>
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//form[1]/header[1]/button[@name='action_post'][2]" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_register_payment']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,new_studio_custom.res_groups_150_2d1d024e
+                    </attribute>
+                </xpath>
+<!--                <xpath expr="//button[@name='211']" position="attributes">-->
+<!--                    <attribute name="groups"/>-->
+<!--                    <attribute name="studio_approval">True</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='action_reverse']" position="attributes">
+                    <attribute name="groups"/>
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_109_2d6cb1a2</attribute>
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[]</attribute>
+                </xpath>
+<!--                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='partner_bank_id']" position="attributes">-->
+<!--                    <attribute name="options">{"no_create":true}</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="domain">[]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']" position="attributes">
+                    <attribute name="readonly">state not in ["draft"]</attribute>
+                </xpath>
+<!--                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/form[1]/sheet[1]/group[1]/field[@name='currency_id']"-->
+<!--                       position="after">-->
+<!--                    <field name="x_studio_sales_team" string="Sales Team"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='invoice_payments_widget']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,new_studio_custom.res_groups_150_2d1d024e
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_outstanding_credits_debits_widget']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_150_2d1d024e,account.group_account_invoice
+                    </attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]" position="attributes">
+                    <attribute name="groups">account.group_account_readonly,new_studio_custom.res_groups_150_2d1d024e
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="invisible">payment_state == 'invoicing_legacy' and move_type != 'entry'</attribute>
+                    <attribute name="readonly">state not in ['draft', 'posted']</attribute>
+                </xpath>
+<!--                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/field[@name='line_ids']/tree[1]/field[@name='analytic_account_id']"-->
+<!--                       position="attributes">-->
+<!--                    <attribute name="options">{"no_create":true}</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/field[@name='line_ids']/tree[1]/field[@name='analytic_tag_ids']"-->
+<!--                       position="attributes">-->
+<!--                    <attribute name="options">{"no_create":true}</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/group[1]/group[@name='sale_info_group']/field[@name='ref']"
+                       position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_150_2d1d024e</attribute>
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="x_studio_cash_collector" widget="many2many_tags" string="Cash Collector"
+                           options="{&quot;no_create&quot;:true}"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/group[1]/group[@name='accounting_info_group']/field[@name='company_id']"
+                       position="after">
+                    <field name="x_studio_po_bank_accounts" string="Bank Accounts"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__e3e5740a-90cb-46f6-af7e-cd42d4d0c7f5" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..e3e5740a-90cb-46f6-af7e-cd42d4d0c7f5</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//filter[@name='state']" position="after">
+                    <filter name="studio_group_by_ZNF5l" string="State" context="{'group_by': 'x_studio_state'}"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_sale_ord_eb087a02-036b-487e-ad44-f160e7bf1733" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.sale.ord.eb087a02-036b-487e-ad44-f160e7bf1733</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//filter[@name='customer']" position="after">
+                    <filter name="studio_group_by_Ut6tj" string="state (City)"
+                            context="{'group_by': 'x_studio_state'}"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__7e38eb26-4c4f-4027-a993-b079b99d118b" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..7e38eb26-4c4f-4027-a993-b079b99d118b</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='state']" position="after">
+                    <field optional="show" name="x_studio_state" string="state" invisible="1"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__99c5abae-51ad-43a1-bb97-05cad8b06f69" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..99c5abae-51ad-43a1-bb97-05cad8b06f69</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//filter[@name='status']" position="after">
+                    <filter name="studio_group_by_HbmUV" string="state (city)"
+                            context="{'group_by': 'x_studio_state'}"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__fe571125-c382-4404-a0b1-84b65f21ef91" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..fe571125-c382-4404-a0b1-84b65f21ef91</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='state']" position="after">
+                    <field optional="show" name="x_studio_state"  invisible="1" string="State"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_sale_ord_3feefde3-e491-432c-a05c-7a98a979b9cc" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.sale.ord.3feefde3-e491-432c-a05c-7a98a979b9cc</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='state']" position="after">
+                    <field optional="show" name="x_studio_state" string="state"  invisible="1"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__7145ac4a-c2e2-4a19-acd8-a725f39a7f85" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..7145ac4a-c2e2-4a19-acd8-a725f39a7f85</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="quantity" optional="show"/>
+                </xpath>
+                <xpath expr="//tree[1]/field[@name='name']" position="after">
+                    <field name="amount_residual" optional="show"/>
+                    <field name="amount_residual_currency" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='tax_ids']" position="after">
+                    <field optional="show" name="x_studio_journal_entry_status" string="Journal Entry Status"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_stock_va_63d25fc0-08a1-48fa-9c91-ebb3bfb6073a" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.va.63d25fc0-08a1-48fa-9c91-ebb3bfb6073a</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='value']" position="after">
+                    <field name="remaining_qty" optional="show"/>
+                    <field name="remaining_value" optional="show"/>
+                    <field name="unit_cost" optional="show"/>
+                    <field name="stock_valuation_layer_id" optional="show"/>
+                    <field name="stock_landed_cost_id" optional="show" widget="badge"/>
+                    <field optional="show" name="x_studio_type_of_opreation" string="type of opreation"/>
+                    <field name="stock_valuation_layer_ids" optional="show"/>
+                    <field name="account_move_id" optional="show"/>
+                    <field optional="show" name="x_studio_journal_entry_status_1" string="Journal Entry Status"/>
+                    <field optional="show" name="x_studio_journal_entry_status" string="Journal Entry Status"/>
+                    <field name="stock_move_id" optional="show"/>
+                    <field name="create_uid" optional="show"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="description" optional="show"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_account__a987e6d4-eaa2-497e-abe2-0579ef5c3e4e" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.account..a987e6d4-eaa2-497e-abe2-0579ef5c3e4e</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='account_id']" position="before">
+                    <field name="display_type"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='information']/group[1]/group[3]"
+                       position="inside">
+                    <field name="move_name"/>
+                    <field name="x_studio_journal_type" string="journal type"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="x_studio_related_field_TduGl"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_res_part_6e2d9f77-00ce-4929-98b5-3380c0814eb7" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.res.part.6e2d9f77-00ce-4929-98b5-3380c0814eb7</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='acc_holder_name']" position="after">
+                    <field name="x_studio_name_in_arabic" string="Name in Arabic"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_calendar_4cec4418-ac57-4883-be88-2ee551ae9536" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.calendar.4cec4418-ac57-4883-be88-2ee551ae9536</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ids']" position="after">
+                    <field name="x_studio_company" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_contr_0b3dc8c7-ba76-4deb-93ee-fbc1d75d2878" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.contr.0b3dc8c7-ba76-4deb-93ee-fbc1d75d2878</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='x_studio_field_TqTNl']" position="replace">
+                    <field name="x_studio_employee_company" string="Employee Company"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_emplo_927e754f-539d-4c39-8b93-278db4115b13" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.emplo.927e754f-539d-4c39-8b93-278db4115b13</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='public']/div[1]/div[1]/group[not(@name)][2]/field[@name='id']"
+                       position="attributes">
+                    
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page string="Health Insurance" name="studio_page_asNPb">
+                        <group name="studio_group_asNPb">
+                            <group name="studio_group_asNPb_left" string="Insurance">
+                                <field name="x_studio_insurance_type" string="Insurance Type"  required="True"/>
+                                <field name="x_studio_insurance_status" string="Insurance Status"/>
+                                <field name="x_studio_member_no" string="Member No"
+                                       invisible="x_studio_insurance_status in ['To Request', 'Requested', False]"/>
+                                <field name="x_studio_start_date" string="Start Date"
+                                       invisible="x_studio_insurance_status in ['To Request', 'Requested', False]"
+                                       required="x_studio_insurance_status == 'Active'"/>
+                                <field name="x_studio_end_date" string="End Date"
+                                       invisible="x_studio_insurance_status in ['To Request', 'Requested', False]"
+                                       required="x_studio_insurance_status == 'Active'"/>
+                            </group>
+                            <group name="studio_group_asNPb_right"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_product__028018ef-41e0-4c48-b58b-6c875facabfc" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.product..028018ef-41e0-4c48-b58b-6c875facabfc</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="x_studio_start_date" string="Start Date"  required="True"/>
+                    <field name="x_studio_end_date" string="End Date" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_expen_10662037-ae44-425b-b407-afb4535c16c1" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.expen.10662037-ae44-425b-b407-afb4535c16c1</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/header[1]/button[@name='action_submit_expenses']" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//form[1]/header[1]/button[@name='action_submit_expenses'][2]" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_has_cost']" position="before">
+                    <field name="x_studio_number" string="Number" force_save="True"  readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="string">Expense Category</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sheet_id']" position="attributes">
+                    
+                </xpath>
+                <xpath expr="//field[@name='payment_mode']" position="attributes">
+                    <attribute name="widget">selection</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_expen_0ee1a18a-32d4-4dc6-ac88-20051ff1fcbd" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.expen.0ee1a18a-32d4-4dc6-ac88-20051ff1fcbd</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_my_expenses_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[1]" position="inside">
+                    <field name="x_studio_number" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_expen_7cbe1cf6-88e0-45a4-89bf-5669ed2591f3" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.expen.7cbe1cf6-88e0-45a4-89bf-5669ed2591f3</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_submit_sheet']" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_approve_expense_sheets']" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[@name='employee_details']/field[@name='employee_id']"
+                       position="after">
+                    <field name="x_studio_work_location" string="Work Location"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="readonly">state in ['post', 'done']</attribute>
+                    
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="before">
+                    <field name="x_studio_number" optional="show"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='expenses']/field[@name='expense_line_ids']/tree[1]/field[@name='name']"
+                       position="after">
+                    <field name="description" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_hr_paysl_1d77c677-cdf1-4e43-8212-fa89cf26335f" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.hr.paysl.1d77c677-cdf1-4e43-8212-fa89cf26335f</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_print_payslip']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_136_afd35315</attribute>
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/field[@name='contract_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payslip_run_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payslip_run_id']" position="after">
+                    <field name="x_studio_work_location" string="Work Location"/>
+                </xpath>
+                <xpath expr="//field[@name='struct_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_product__8fdca86d-bf44-4721-957a-1cefd2b7a0e8" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.product..8fdca86d-bf44-4721-957a-1cefd2b7a0e8</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@name='Product Template']/sheet[@name='product_form']/field[@name='id']"
+                       position="attributes">
+                    
+                </xpath>
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='cost_method']" position="attributes">-->
+<!--                    -->
+<!--                    <attribute name="groups">base.group_erp_manager</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='valuation']" position="attributes">-->
+<!--                    -->
+<!--                    <attribute name="groups">base.group_erp_manager</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='cost_currency_id']" position="after">
+                    <field name="x_studio_bdk_target" string="BDK TARGET"/>
+                    <field name="x_studio_bdk_sales_target" string="BDK Sales Target"/>
+                </xpath>
+                <xpath expr="//form[@name='Product Template']/sheet[@name='product_form']/notebook[1]/page[@name='purchase']"
+                       position="attributes">
+                    <attribute name="groups">stock.group_stock_manager,purchase.group_purchase_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_project__2298269d-bfc9-47a7-85a9-dfd6d54297c3" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.project..2298269d-bfc9-47a7-85a9-dfd6d54297c3</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_ids']" position="after">
+                    <field name="x_studio_requested_by" widget="many2many_tags" string="Requested By"/>
+                    <field name="x_studio_many2one_field_kjo2d"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_purchase_4b27a580-6f90-4984-90de-d16f76c1fadf" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.purchase.4b27a580-6f90-4984-90de-d16f76c1fadf</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='currency_id']" position="after">
+                    <xpath expr="//field[@name='payment_term_id']" position="move"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='validated_by_id']" position="after">-->
+<!--                    <field name="x_studio_validate_by_job_title" string="Validate By Job Title"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="readonly">invoice_status == 'invoiced' or state == 'done'</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_stock_mo_be8d5c26-155d-4524-b07f-811b20d5fd7b" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.mo.be8d5c26-155d-4524-b07f-811b20d5fd7b</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_uom']" position="after">
+                    <field optional="show" name="x_studio_stock_valuation_total" string="Stock Valuation total"/>
+                    <field optional="show" name="x_studio_valu_per_unit" string="Valu per unit"/>
+                    <field name="stock_valuation_layer_ids" optional="show"/>
+                    <field name="account_move_ids" optional="show"/>
+                    <field name="unit_factor" optional="show"/>
+                    <field name="picking_code" optional="show"/>
+                    <field name="sale_line_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization_odoo_studio_stock_pr_52823b87-dd2b-4e81-a22e-29790fd94139" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.pr.52823b87-dd2b-4e81-a22e-29790fd94139</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//button[@name='approve']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_152_5512b968</attribute>
+                </xpath>
+                <xpath expr="//button[@name='reject']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_152_5512b968</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="x_studio_product_category" string="Product Category"/>
+                </xpath>
+                <xpath expr="//field[@name='numbering_label']" position="after">
+                    <field name="id"/>
+                </xpath>
+                <xpath expr="//field[@name='attach_request_document']" position="attributes">
+                    <attribute name="readonly">state == "approved"</attribute>
+                </xpath>
+                <xpath expr="//field[@name='attach_approval_document']" position="attributes">
+                    <attribute name="readonly">state == "approved"</attribute>
+                </xpath>
+                <xpath expr="//field[@name='attach_meda_document']" position="attributes">
+                    <attribute name="readonly">state == "approved"</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_stock_mo_bca1cb9e-a47f-4e54-89f2-035ae3eb45c6" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.mo.bca1cb9e-a47f-4e54-89f2-035ae3eb45c6</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='result_package_id']" position="after" import="1">
+                    <field name="x_studio_product_category"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_stock_mo_6a5d497b-f038-4f59-bb99-b2514f207b55" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.mo.6a5d497b-f038-4f59-bb99-b2514f207b55</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field optional="show" name="x_studio_product_category" string="Product Category"
+                           invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="expiration_date" optional="show"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="detailed_operation_action"
+                model="ir.actions.act_window">
+            <field name="name">Detailed Operation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move.line</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="help" type="html">-->
+<!--                None-->
+<!--            </field>-->
+        </record>
+
+
+        <record id="studio_customization_odoo_studio_stock_pi_88da2443-3a7a-4967-a7cc-028af48dab55" model="ir.ui.view">
+            <field name="name">studio.customization.odoo.studio.stock.pi.88da2443-3a7a-4967-a7cc-028af48dab55</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form[1]/header[1]/button[@name='button_validate']" position="attributes">
+                    <attribute name="groups">new_studio_custom.res_groups_120_6308b917</attribute>
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//form[1]/header[1]/button[@name='button_validate'][2]" position="attributes">
+                    <attribute name="studio_approval">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_stock_valuation_layers']" position="after">
+                    <button class="oe_stat_button" icon="fa-cube" type="action" name="%(detailed_operation_action)d" title="">
+                        <field widget="statinfo" name="x_picking_id_stock_move_line_count"
+                               string="Detailed Operation "/>
+                    </button>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='picking_type_id']" position="attributes">
+                    <attribute name="options">{"no_create":true}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <menuitem id="menu_chart_of_accounts(only_read)" name="Chart of Accounts(only read)" sequence="1"
+                  action="account.action_account_form" parent="account.menu_finance_entries"/>
+        <menuitem id="account.menu_finance_entries" name="Accounting" sequence="4"
+                  parent="account_accountant.menu_accounting"/>
+
+    </data>
+</odoo>

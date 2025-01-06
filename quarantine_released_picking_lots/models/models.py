@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+
+
+class StockMoveLine(models.Model):
+    _inherit = 'stock.move.line'
+
+    quarantine_product_domain = fields.Json(string="Quarantine Product Domain", compute="_compute_quarantine_product_domain")
+
+    @api.depends('lot_id', 'picking_type_id')
+    def _compute_quarantine_product_domain(self):
+        for line in self:
+            domain = [('product_id', '=', line.product_id.id), ('location_id', 'child_of', line.picking_id.location_id.id)]
+            if line.picking_type_id.allow_quarantine_delivery:
+                line.quarantine_product_domain = domain
+            else:
+                line.quarantine_product_domain = domain + [('lot_id.state', '=', 'released')]
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(StockMoveLine, self).create(vals_list)
+        for line in res:
+            if not line.picking_type_id.allow_quarantine_delivery and res.filtered(lambda l: l.lot_id.state != 'approved'):
+                raise ValidationError(_('Quarantine product should be released !'))
+        return res
+
+class StockPickingType(models.Model):
+    _inherit = 'stock.picking.type'
+
+    allow_quarantine_delivery = fields.Boolean(string="Allow Quarantine", default=True)

@@ -2,23 +2,23 @@
 <odoo>
 
     <record id="view_production_lot_form_inherit_approval" model="ir.ui.view">
-        <field name="name">stock.production.lot.form.inherit</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">stock.lot.form.inherit</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <xpath expr="/form/*" position="before">
                 <header>
-                    <button name="in_progress" string="Quarantine" type="object" states="draft"
+                    <button name="in_progress" string="Quarantine" type="object"  invisible="state != 'draft'"
                             groups="stock.group_stock_manager" confirm="Are you sure you want to move it to In-Progress?"/>
-                    <button name="approve" string="Approve" type="object" states="progress"
+                    <button name="approve" string="Approve" type="object" invisible="state != 'progress'"
                             groups="stock.group_stock_manager" confirm="Are you sure you want to approve it?"/>
-                    <button name="reject" string="Reject" type="object" states="draft,progress"
+                    <button name="reject" string="Reject" type="object" invisible="state not in ['draft' ,'progress']"
                             groups="stock.group_stock_manager" confirm="Are you sure you want to reject it?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,progress,approved"/>
                 </header>
             </xpath>
             <field name="company_id" position="after">
-                <field name="approved_date" readonly="1" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                <field name="approved_date" readonly="1" invisible="state != 'approved'"/>
                 <field name="total_duration"/>
                 <field name="last_update_duration"/>
                 <field name="numbering_label"/>
@@ -43,11 +43,11 @@
     </record>
 
     <record id="view_move_form_expiry_inherit_approval" model="ir.ui.view">
-        <field name="name">stock.production.lot.form.inherit</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">stock.lot.form.inherit</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
-            <field name="expiration_date" position="replace">
+            <field name="expiration_date" position="after">
                 <label for="life_date"/>
                 <div class="o_address_format">
                     <field name="life_date_month" placeholder="Month..." class="o_address_city"/>/
@@ -83,8 +83,8 @@
     </record>
 
     <record id="view_production_lot_tree_status" model="ir.ui.view">
-        <field name="name">stock.production.lot.tree.inherit</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">stock.lot.tree.inherit</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="attributes">
@@ -103,8 +103,8 @@
     </record>
 
     <!--    <record id="view_production_lot_tree_status" model="ir.ui.view">-->
-    <!--        <field name="name">stock.production.lot.tree.status</field>-->
-    <!--        <field name="model">stock.production.lot</field>-->
+    <!--        <field name="name">stock.lot.tree.status</field>-->
+    <!--        <field name="model">stock.lot</field>-->
     <!--        <field name="arch" type="xml">-->
     <!--            <tree string="Lots/Serial Numbers" multi_edit="1">-->
     <!--                <field name="name"/>-->
@@ -121,7 +121,7 @@
 
     <record model="ir.ui.view" id="search_product_lot_filter_inherit_approval">
         <field name="name">Production Lots Filter Inherit</field>
-        <field name="model">stock.production.lot</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter"/>
         <field name="arch" type="xml">
             <field name="product_id" position="after">
@@ -136,7 +136,7 @@
     <record id="stock.action_production_lot_form" model="ir.actions.act_window">
         <field name="name">Lots/Serial Numbers</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">stock.production.lot</field>
+        <field name="res_model">stock.lot</field>
         <field name="view_ids"
                eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'tree', 'view_id': ref('stock.view_production_lot_tree')}),
@@ -157,7 +157,7 @@
     <!--    <record id="action_production_lot_form_status" model="ir.actions.act_window">-->
     <!--        <field name="name">Lots/Serial Status wise</field>-->
     <!--        <field name="type">ir.actions.act_window</field>-->
-    <!--        <field name="res_model">stock.production.lot</field>-->
+    <!--        <field name="res_model">stock.lot</field>-->
     <!--        <field name="view_ids"-->
     <!--               eval="[(5, 0, 0),-->
     <!--                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_production_lot_tree_status')}),-->

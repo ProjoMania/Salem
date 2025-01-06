@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Medical Batch Approval Process',
-    'summary': 'Esco Contracts',
+    'summary': 'Moashirat',
     'category': 'Inventory',
     'description': """
         Medical Batch Approval Process
     """,
     'sequence': 1,
-    'author': 'Engineering Solutions ESCO',
-    'website': 'http://escoiq.com',
+    'author': 'Moshirat Consulting',
+    'website': 'https:/moashirat.com',
     'depends': ['stock', 'product_expiry'],
     'data': [
         'security/ir.model.access.csv',

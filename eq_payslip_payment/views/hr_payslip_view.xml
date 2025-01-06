@@ -8,7 +8,7 @@
 		<field name="arch" type="xml">
 			<button name="action_payslip_cancel" position="before">
 				<button string="Payslip Payment" name="wizard_payslip_payment"
-					type="object" states="done" class="oe_highlight" />
+					type="object"  invisible="state != 'done'" class="oe_highlight" />
 			</button>
 			<field name="credit_note" position="after">
 				<field name="pay_amount" invisible="1" />
@@ -17,8 +17,7 @@
 			</field>
 			<xpath expr="//sheet/div[hasclass('oe_button_box')]" position="inside">
 				<button name="action_view_entries" class="oe_stat_button"
-					icon="fa-bars" type="object" string="Payslip Payment"
-					attrs="{'invisible': [('payment_move_ids', '=', [])]}" />
+					icon="fa-bars" type="object" string="Payslip Payment" invisible="not payment_move_ids"/>
 			</xpath>
 		</field>
 	</record>

@@ -7,7 +7,7 @@
 {
     'name': "Payslip Payment",
     'category': 'Payroll',
-    'version': '15.0.1.0',
+    'version': '15.0.1',
     'author': 'Equick ERP',
     'description': """ This module allows you to do payslip payment. """,
     'summary': """Payslip Payment | Payroll Payment | employee payslip payment | employee payroll payment | employee payment | payslip payment register. | payroll payment register.""",

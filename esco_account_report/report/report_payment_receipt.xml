@@ -87,7 +87,7 @@
                             <td class="table_header text-center"><span>INV. No.</span></td>
                             <td class="table_header text-center"><span> Amount </span></td>
                             <td class="table_header text-center"><span>Received Amount</span></td>
-                            <td class="table_header text-center"><span>Discount Amount</span></td>
+<!--                            <td class="table_header text-center"><span>Discount Amount</span></td>-->
                             <td class="table_header text-center" style="background-color: #30378c !important;"><span>Balance</span></td>
                         </tr>
                         <tr t-if="o.payment_type == 'outbound'" style="color: white;">
@@ -95,7 +95,7 @@
                             <td class="table_header text-center"><span>Bill No.</span></td>
                             <td class="table_header text-center"><span> Amount </span></td>
                             <td class="table_header text-center"><span>Paid Amount</span></td>
-                            <td class="table_header text-center"><span>Discount Amount</span></td>
+<!--                            <td class="table_header text-center"><span>Discount Amount</span></td>-->
                             <td class="table_header text-center" style="background-color: #30378c !important;"><span>Balance</span></td>
                         </tr>
                     </thead>
@@ -107,7 +107,7 @@
 <!--                            <td class="text-center"><span t-field="o.amount"/></td>-->
                             <td class="text-center"><span t-esc="o.get_cash_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
 <!--                            <td class="text-center"><span t-esc="o._get_invoice_payment_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>-->
-                            <td class="text-center"><span t-esc="o.get_discount_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+<!--                            <td class="text-center"><span t-esc="o.get_discount_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>-->
                             <td class="text-center" style="background-color: white !important;"><span t-field="inv.amount_residual"/></td>
                         </tr>
                         <tr t-foreach="o.reconciled_bill_ids" t-as="inv">
@@ -117,7 +117,7 @@
 <!--                            <td class="text-center"><span t-field="o.amount"/></td>-->
                             <td class="text-center"><span t-esc="o.get_cash_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
 <!--                            <td class="text-center"><span t-esc="o._get_invoice_payment_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>-->
-                            <td class="text-center"><span t-esc="o.get_discount_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+<!--                            <td class="text-center"><span t-esc="o.get_discount_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>-->
                             <td class="text-center" style="background-color: white !important;"><span t-field="inv.amount_residual"/></td>
                         </tr>
                     </tbody>

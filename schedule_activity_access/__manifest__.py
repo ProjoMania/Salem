@@ -13,7 +13,7 @@
     'author': "Aktiv Software",
     'website': "www.aktivsoftware.com",
     'category': 'Discuss',
-    'version': '14.0.1.0.5',
+    'version': '14.0.1',
     'depends': ['sale_management'],
     'data': [
         'security/activity_security.xml',

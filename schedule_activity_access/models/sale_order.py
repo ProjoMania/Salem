@@ -34,8 +34,8 @@ class MailActivity(models.Model):
     @api.depends('res_model', 'res_id', 'user_id')
     def _compute_can_write(self):
         super(MailActivity, self)._compute_can_write()
-        valid_records = self._filter_access_rules('write')
-        print ("FFFFFFFFFFFFFFFFFFFFFF <<<<<<<<<,",valid_records)
+        # valid_records = self._filter_access_rules('write')
+        # print ("FFFFFFFFFFFFFFFFFFFFFF <<<<<<<<<,",valid_records)
         for record in self:
             record.can_write = False
             if self.env.user.has_group('schedule_activity_access.group_activity_administration') or self.env.user.id == record.user_id.id:

@@ -6,7 +6,10 @@ from odoo.exceptions import UserError, ValidationError
 import calendar
 from datetime import datetime
 from pytz import timezone, utc
-from dateutil.relativedelta import relativedelta
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 month_selection = [
     ('1', '01'), ('2', '02'), ('3', '03'),
@@ -17,7 +20,7 @@ month_selection = [
 
 
 class ProductionLot(models.Model):
-    _inherit = 'stock.production.lot'
+    _inherit = 'stock.lot'
     _order = 'life_date asc, state asc, id asc'
 
     def _get_total_duration(self):
@@ -25,7 +28,6 @@ class ProductionLot(models.Model):
             end_date = datetime.now()
             if lot.approved_date:
                 end_date = lot.approved_date
-            # print('diff.total_seconds().....', diff.total_seconds())
             lot.update({
                 'total_duration': (end_date - lot.create_date).days,
                 'last_update_duration': (datetime.now() - lot.last_update_date).days,
@@ -47,7 +49,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_request_document or '',
                 'store_fname': self.attach_request_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -75,7 +77,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_approval_document or '',
                 'store_fname': self.attach_approval_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -105,7 +107,7 @@ class ProductionLot(models.Model):
                 'datas': self.attach_meda_document or '',
                 'store_fname': self.attach_meda_document_filename or '',
                 'type': 'binary',
-                'res_model': "stock.production.lot",
+                'res_model': "stock.lot",
                 'res_id': self.id,
             }
             attachment = Attachment.sudo().create(attachment_value)
@@ -228,7 +230,7 @@ class ProductionLot(models.Model):
             try:
                 res = datetime.strptime(str(1) + str(self.life_date_month) + str(self.life_date_year), '%d%m%Y')
             except Exception as e:
-                print("error", e)
+                _logger.error("Error: %s", e)
                 raise ValidationError(_('Invalid Date'))
             range = calendar.monthrange(int(self.life_date_year), int(self.life_date_month))
             self.life_date = str(self.life_date_year) + '-' + str(self.life_date_month) + '-' + str(range[1])
@@ -239,7 +241,7 @@ class ProductionLot(models.Model):
             try:
                 res = datetime.strptime(str(1) + str(self.use_date_month) + str(self.use_date_year), '%d%m%Y')
             except Exception as e:
-                print("error", e)
+                _logger.error("Error: %s", e)
                 raise ValidationError(_('Invalid Date'))
             range = calendar.monthrange(int(self.use_date_year), int(self.use_date_month))
             self.use_date = str(self.use_date_year) + '-' + str(self.use_date_month) + '-' + str(range[1])
@@ -250,7 +252,7 @@ class ProductionLot(models.Model):
             try:
                 res = datetime.strptime(str(1) + str(self.removal_date_month) + str(self.removal_date_year), '%d%m%Y')
             except Exception as e:
-                print("error", e)
+                _logger.error("Error: %s", e)
                 raise ValidationError(_('Invalid Date'))
             range = calendar.monthrange(int(self.removal_date_year), int(self.removal_date_month))
             self.removal_date = str(self.removal_date_year) + '-' + str(self.removal_date_month) + '-' + str(range[1])
@@ -261,7 +263,7 @@ class ProductionLot(models.Model):
             try:
                 res = datetime.strptime(str(1) + str(self.alert_date_month) + str(self.alert_date_year), '%d%m%Y')
             except Exception as e:
-                print("error", e)
+                _logger.error("Error: %s", e)
                 raise ValidationError(_('Invalid Date'))
             range = calendar.monthrange(int(self.alert_date_year), int(self.alert_date_month))
             self.alert_date = str(self.alert_date_year) + '-' + str(self.alert_date_month) + '-' + str(range[1])
@@ -289,9 +291,9 @@ class ProductionLot(models.Model):
         self.last_update_date = datetime.now()
 
     @api.model
-    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+    def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
         context = self._context or {}
         if context.get('only_approved', False):
-            args += [('state', '=', 'approved')]
-        return super(ProductionLot, self)._search(args, offset, limit, order, count=count,
+            domain += [('state', '=', 'approved')]
+        return super(ProductionLot, self)._search(domain, offset, limit, order,
                                                access_rights_uid=access_rights_uid)

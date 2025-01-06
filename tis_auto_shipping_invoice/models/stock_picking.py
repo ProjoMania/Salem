@@ -20,7 +20,8 @@ class StockPicking(models.Model):
         self.ensure_one()
         return (
             self.picking_type_code == "outgoing"
-            and self.company_id.invoicing_mode == "at_shipping" and self.location_id.warehouse_id.invoicing_mode == "at_shipping"
+            and self.company_id.invoicing_mode == "at_shipping"
+            and self.mapped("move_ids.sale_line_id.order_id").warehouse_id.invoicing_mode == "at_shipping"
         )
 
     def _invoicing_at_shipping(self):
@@ -39,7 +40,7 @@ class StockPicking(models.Model):
         return invoices or _("Nothing to invoice.")
 
     def _get_sales_order_to_invoice(self):
-        return self.mapped("move_lines.sale_line_id.order_id").filtered(
+        return self.mapped("move_ids.sale_line_id.order_id").filtered(
             lambda r: r._get_invoiceable_lines()
         )
 

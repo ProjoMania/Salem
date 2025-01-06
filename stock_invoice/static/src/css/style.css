@@ -1,0 +1,104 @@
+
+.table_with_header {
+    border-collapse: collapse;
+    margin: 5px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    font-family: Frutiger_Light;
+}
+.table_with_header thead tr {
+    background-color: #30358c;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.bold_font {
+    font-family: Frutiger_Bold !important;
+}
+.light_font {
+    font-family: Frutiger_Light !important;
+}
+.roman_font {
+    font-family: Frutiger_Roman !important;
+}
+
+.bold_sub_header {
+    font-family: Frutiger_Bold !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.bold_header {
+    font-family: Frutiger_Roman_bold !important;
+    color: #30378c;
+    font-size: 32px;
+    font-weight: bold;
+}
+.table_header {
+    font-family: Frutiger_Roman_bold !important;
+    color: white !important;
+    background-color: #30378c !important;
+    font-weight: bold;
+    font-size: 20px;
+}
+.top_border {
+    border-top: thin solid grey !important;
+}
+.bottom_border {
+    border-bottom: thin solid grey !important;
+}
+.left_border {
+    border-left: thin solid grey !important;
+}
+.right_border {
+    border-right: thin solid grey !important;
+}
+.top_border_light {
+    border-top: thin solid lightgrey !important;
+}
+.bottom_border_light {
+    border-bottom: thin solid lightgrey !important;
+}
+.left_border_light {
+    border-left: thin solid lightgrey !important;
+}
+.right_border_light {
+    border-right: thin solid lightgrey !important;
+}
+.td_style {
+    text-align: center;
+}
+.td_style_left {
+    text-align: left !important;
+}
+.bold_text {
+    font-family: Frutiger_Roman_bold !important;
+    color: black !important;
+    font-weight: bolder;
+}
+.no_border {
+    border-style : hidden !important;
+}
+
+#main_wrapper {
+  display:table;
+    width: 100%;
+}
+#main_row {
+  display:table-row;
+width: 100%;
+}
+#first {
+  display:table-cell;
+}
+#second {
+  display:table-cell;
+}
+.bold_text_only {
+    font-family: Frutiger_Roman_bold !important;
+    font-weight: bolder;
+}
+
+.page_margin {
+    padding: 0px 40px 0px 40px;
+}

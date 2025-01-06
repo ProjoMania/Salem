@@ -9,9 +9,8 @@
         		    <header>
                         <button string='Clear All' name='clear_all_delivery' class='pull-right' icon="fa-pencil-square-o" type='object'/>
         		    </header>               
-                    <group colspan="4" string="Delivery orders">
-                        <field name="picking_ids" domain ="[('state','!=','cancel'),('id','in',context.get('pickings',False))]"  nolabel="1"/> 
-                    </group>
+                    <separator string="Delivery orders"/>
+                        <field name="picking_ids" domain ="[('state','!=','cancel'),('id','in',context.get('pickings',False))]"  nolabel="1"/>
 
                     <footer>
                         <button name='cancel_selected_delivery_orders'  string='Cancel Delivery Orders' type='object' class="oe_highlight"/>

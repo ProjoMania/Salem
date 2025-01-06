@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Swetha Anand (odoo@cybrosys.com)
+#    Author: Vishnu KP (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -21,22 +21,22 @@
 ###############################################################################
 {
     'name': 'Size Restriction for Attachments',
-    'version': '15.0.1.0.0',
+    'version': '17.0.1.0',
     'category': 'Document Management',
-    'summary': 'Show a error message if attachment greater than users maximum '
-               'attachment size.',
-    'description': 'If the size of attachment is greater than the maximum '
-                   'size assigned for that person then error message will be'
-                   'shown.',
+    'summary': 'Shows an error message if attachment greater '
+               'than users maximum attachment size.',
+    'description': 'If the size of attachment is greater than '
+                   'the maximum size assigned for that person '
+                   'then error message will be shown.',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
     'depends': ['base', 'mail'],
-    'data': {
+    'data': [
         'views/res_users_views.xml'
-    },
-    'images': ['static/description/banner.png'],
+    ],
+    'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',
     'installable': True,
     'auto_install': False,

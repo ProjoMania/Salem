@@ -4,23 +4,18 @@ odoo.define('aspl_employee_attendance_map.main', function(require) {
     var hr_attendance = require('hr_attendance.my_attendances');
     var KioskMode = require('hr_attendance.kiosk_confirm');
     var rpc = require('web.rpc');
-    var core = require('web.core');
     var Dialog = require('web.Dialog');
-    var _t = core._t;
+    import { useService } from "@web/core/utils/hooks";
+    this.orm = useService("orm");
+    import { _t } from "@web/core/l10n/translation";
     var isloc=1;
     var list=[]
     function check_att(latitude, longitude, employee_id) {
         var isWithinPolygon
         if (latitude && longitude && employee_id) {
             var data = [];
-            rpc.query({
-                    model: 'hr.employee',
-                    method: 'search_lat_lng',
-                    args: [employee_id],
-                }, {
-                    async: false
-                })
-                .then(function(res) {
+            this.orm.call('hr.employee', 'search_lat_lng',[employee_id]
+            ).then(function(res) {
                     if (res) {
                         $.each(res, function(key, value) {
                             $.each(value, function(k, v) {

@@ -40,13 +40,11 @@ class ViatrisSalesReport(models.TransientModel):
                 [('categ_id', 'in', product_categories.ids)])
         else:
             products = self.env['product.product'].search([])
-        print("products", products)
         warehouse_ids = self.env['stock.warehouse'].search(
             [('hide_in_viatris_report', '!=', True)])
         warehouse_count = len(warehouse_ids)
         sale_region_ids = self.env['sales.region'].search([])
         sale_region_count = len(sale_region_ids)
-        print("sale_region_ids", sale_region_ids, sale_region_count)
         locations_ids = self.env['stock.location'].search([])
 
         filename = 'Viatris Sales Report' + '.xls'
@@ -158,7 +156,7 @@ class ViatrisSalesReport(models.TransientModel):
                 for location in locations_ids:
                     if location.warehouse_id == warehouse and location.usage == 'internal':
                         if self.customer_id:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                                                 inner join stock_picking as picking on line.picking_id = picking.id
                                                                                                 inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                                                 where type_1.code='incoming'
@@ -186,10 +184,10 @@ class ViatrisSalesReport(models.TransientModel):
                                  ["date", "<=", self.to_date],
                                  ['product_id', '=', product.id],
                                  ['location_dest_id', '=', location.id]])
-                            list_qty = pro_move.mapped('qty_done')
+                            list_qty = pro_move.mapped('quantity')
 
                         else:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='incoming'
@@ -214,7 +212,7 @@ class ViatrisSalesReport(models.TransientModel):
                                  ["date", "<=", self.to_date],
                                  ['product_id', '=', product.id],
                                  ['location_dest_id', '=', location.id]])
-                            list_qty = pro_move.mapped('qty_done')
+                            list_qty = pro_move.mapped('quantity')
                     if list_qty:
                         total_receive_qty = total_receive_qty + sum(list_qty)
                 worksheet.write(product_row, product_col, total_receive_qty,
@@ -225,7 +223,7 @@ class ViatrisSalesReport(models.TransientModel):
                 for location in locations_ids:
                     if location.warehouse_id == warehouse and location.usage == 'internal':
                         if self.customer_id:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='internal'
@@ -241,9 +239,8 @@ class ViatrisSalesReport(models.TransientModel):
                             if len(res) == 0:
                                 pass
                             else:
-                                print("ffffffffffff",product.name,res[0][1])
                                 total_internal_qty = - (total_internal_qty +res[0][1])
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                                                 inner join stock_picking as picking on line.picking_id = picking.id
                                                                                                 inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                                                 where type_1.code='internal'
@@ -261,9 +258,8 @@ class ViatrisSalesReport(models.TransientModel):
                             else:
                                 total_internal_qty = total_internal_qty + \
                                                      res[0][1]
-                                print("ffffffffffff", product.name, res[0][1])
                         else:
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                         inner join stock_picking as picking on line.picking_id = picking.id
                                         inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                         where type_1.code='internal'
@@ -281,7 +277,7 @@ class ViatrisSalesReport(models.TransientModel):
                             else:
                                 total_internal_qty = total_internal_qty + \
                                                      res[0][1]
-                            query = """ select line.product_id,sum(line.qty_done),picking.location_id,type_1.code from stock_move_line as line
+                            query = """ select line.product_id,sum(line.quantity),picking.location_id,type_1.code from stock_move_line as line
                                                                     inner join stock_picking as picking on line.picking_id = picking.id
                                                                     inner join stock_picking_type as type_1 on picking.picking_type_id = type_1.id
                                                                     where type_1.code='internal'
@@ -729,7 +725,6 @@ class ViatrisSalesReport(models.TransientModel):
                             format_2)
             product_row = product_row + 1
 
-        print("product_row", product_row)
         if self.product_category_id:
             scrap_row = product_row + 4
             scrap_head_style = easyxf(
@@ -744,7 +739,6 @@ class ViatrisSalesReport(models.TransientModel):
                 [('product_id', 'in', products.ids),
                  ('date_done', '>=', self.from_date),
                  ('date_done', '<=', self.to_date)])
-            print("scrap_ids", scrap_ids)
             scrap_pdt_row = scrap_row + 3
             if scrap_ids:
                 worksheet.write_merge(scrap_row, scrap_row + 2, 1, 4, 'SCRAP',

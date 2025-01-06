@@ -18,13 +18,10 @@ class StockPicking(models.Model):
 
     def action_cancel(self):
         quant_obj= self.env['stock.quant']
-        moves = self.env['account.move']
-        return_picking_obj = self.env['stock.return.picking']
         account_move_obj=self.env['account.move']
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         for picking in self:
             if self.env.context.get('Flag',False) and picking.state =='done':
-                account_moves = picking.move_lines
+                account_moves = picking.move_ids_without_package
                 for move in account_moves:
                     if move.state=='cancel':
                         continue
@@ -40,9 +37,9 @@ class StockPicking(models.Model):
 
                     if move.state == "done" and move.product_id.type == "product":
                         for move_line in move.move_line_ids:
-                            quantity = move_line.product_uom_id._compute_quantity(move_line.qty_done, move_line.product_id.uom_id)
-                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_id, quantity, move_line.lot_id)
-                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_dest_id, quantity * -1, move_line.lot_id)
+                            quantity = move_line.product_uom_id._compute_quantity(move_line.quantity, move_line.product_id.uom_id)
+                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_id, quantity=quantity, lot_id=move_line.lot_id)
+                            quant_obj._update_available_quantity(move_line.product_id, move_line.location_dest_id, quantity=quantity * -1, lot_id=move_line.lot_id)
                     if move.procure_method == 'make_to_order' and not move.move_orig_ids:
                         move.state = 'waiting'
                     elif move.move_orig_ids and not all(orig.state in ('done', 'cancel') for orig in move.move_orig_ids):
@@ -75,10 +72,10 @@ class StockPicking(models.Model):
         for res in self:
             if res.state =='cancel':
                 res.state ='draft'
-                res.move_lines.write({'state':'draft'})
-                if res.move_lines.move_line_ids:
-                    for mvl in res.move_lines.move_line_ids:
-                        mvl.write({'qty_done':0.00})
+                res.move_ids.write({'state':'draft'})
+                if res.move_ids.move_line_ids:
+                    for mvl in res.move_ids.move_line_ids:
+                        mvl.write({'quantity':0.00})
                 res.is_locked = False
 
         return True

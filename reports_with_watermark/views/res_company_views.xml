@@ -7,12 +7,12 @@
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('o_address_format')]" position="after">
                 <field name="watermark"/>
-                <field name="watermark_option" attrs="{'invisible':[('watermark','!=', True)],'required':[('watermark','=', True)]}"/>
-                <field name="upload_image" widget="image" class="oe_left oe_avatar" attrs="{'invisible':[('watermark_option','!=', 'backgroundimage')]}" accept=".png"/> 
-                <field name="rotate_image" attrs="{'invisible': [('watermark_option','!=','name')]}"/>
-                <field name="rotate_angle" attrs="{'invisible': ['|','|','|',('rotate_image','!=',True),('watermark_option','=', 'logo'),('watermark_option','=','backgroundimage'),('watermark_option','!=', 'name')],'required': [('rotate_image','=',True)]}"/>
-                <field name="font_size" attrs="{'invisible':[('watermark_option','!=', 'name')]}"/>
-                <field name="font_color" widget="color" attrs="{'invisible':[('watermark_option','!=', 'name')]}" placeholder="rgb" />
+                <field name="watermark_option" invisible="not watermark" required="watermark"/>
+                <field name="upload_image" widget="image" class="oe_left oe_avatar" invisible="watermark_option != 'backgroundimage'" accept=".png"/>
+                <field name="rotate_image" invisible="watermark_option != 'name'"/>
+                <field name="rotate_angle" invisible="not rotate_image or watermark_option in ['logo', 'backgroundimage']" required="rotate_image"/>
+                <field name="font_size" invisible="watermark_option != 'name'"/>
+                <field name="font_color" widget="color" invisible="watermark_option != 'name'"/> placeholder="rgb" />
                 <field name="footer_image" widget="image" class="oe_left oe_avatar" accept=".png"/>
                 <field name="header_image" widget="image" class="oe_left oe_avatar" accept=".png"/>
             </xpath>

@@ -3,7 +3,7 @@
 # Technaureus Info Solutions Pvt. Ltd 2023. All rights reserved.
 {
     'name': 'Restrict Partner Invoice',
-    'version': '15.0.0.5',
+    'version': '15.0.0',
     'category':
         'sale', 'invoicing'
     'summary': 'Restrict partner invoice',

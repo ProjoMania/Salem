@@ -18,7 +18,7 @@ class VendorSalesReport(models.TransientModel):
         filename = 'Vendor Sales Report' + '.xls'
         res_company = self.env.company
         vendor_data_list = []
-        suppliers_for_mail = self.env['product.supplierinfo'].sudo().search([("name", "=", partner.id)])
+        suppliers_for_mail = self.env['product.supplierinfo'].sudo().search([("partner_id", "=", partner.id)])
 
         if suppliers_for_mail:
             product_list = []
@@ -31,7 +31,7 @@ class VendorSalesReport(models.TransientModel):
             stock_lines = self.env['stock.move.line'].sudo().search([("product_id", "in", products_list)])
 
             if stock_lines:
-                lots_obj = self.env["stock.production.lot"].search([])
+                lots_obj = self.env["stock.lot"].search([])
                 # sale_orders = self.env["sale.order"].search([("date_order", ">=", from_dt), ("date_order", "<=", to_dt),
                 #                                              ("name", "=", 'BDI-SO-2022-0424')])
                                                              # ("name", "in", ('BDI-SO-2022-1302','BDI-SO-2022-0134','BDI-SO-2022-0007'))])
@@ -39,12 +39,12 @@ class VendorSalesReport(models.TransientModel):
                 ############################################################################################################
                 # move type = out_invoice
                 ############################################################################################################
-                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.product_id.id in products_list and o.move_id.move_type == 'out_invoice' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
+                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.move_id.state != 'cancel' and o.product_id.id in products_list and o.move_id.move_type == 'out_invoice' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
                     lot_str = False
                     total_qty = 0
                     # this code for select the lot from Delivery according to the same quantity
                     for line in invoice.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(lambda o: o.picking_id.backorder_id.id == False and o.picking_id.picking_type_code == 'outgoing' and o.picking_id.state == 'done'):
-                        if line.qty_done == invoice.quantity and line.product_id == invoice.product_id:
+                        if line.quantity == invoice.quantity and line.product_id == invoice.product_id:
                             lot_str = line.lot_id.name
                             break
                         else:
@@ -101,11 +101,11 @@ class VendorSalesReport(models.TransientModel):
                 ############################################################################################################
                 # move type = credit notes(out_refund)
                 ############################################################################################################
-                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.product_id.id in products_list and o.move_id.move_type == 'out_refund' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date and o.move_id.state != 'cancel'):
+                for invoice in sale_orders.invoice_ids.invoice_line_ids.filtered(lambda o: o.move_id.state != 'cancel' and o.product_id.id in products_list and o.move_id.move_type == 'out_refund' and o.move_id.invoice_date >= self.from_date and o.move_id.invoice_date <= self.to_date):
                     lot_str = False
                     # this code for select the lot from Delivery according to the same quantity
                     for line in invoice.sale_line_ids.order_id.picking_ids.move_line_ids_without_package.filtered(lambda o: o.picking_id.picking_type_code == 'incoming' and o.picking_id.state == 'done'):
-                        if line.qty_done == invoice.quantity and line.product_id == invoice.product_id:
+                        if line.quantity == invoice.quantity and line.product_id == invoice.product_id:
                             lot_str = line.lot_id.name
                             break
                         else:

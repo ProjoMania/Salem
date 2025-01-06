@@ -9,7 +9,7 @@
                  <xpath expr="//field[@name='vat']" position="after">
                      <field name="area"/>
                     <field name="supplier_rank" invisible="1"/>
-                    <field name="automated_sales_report" attrs="{'invisible': [('supplier_rank', '=', 0)]}"/>
+                    <field name="automated_sales_report" invisible="supplier_rank == 0"/>
                 </xpath>
             </field>
         </record>

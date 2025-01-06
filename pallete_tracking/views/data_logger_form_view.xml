@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_data_logger_tree" model="ir.ui.view">
+            <field name="name">data_logger.tree</field>
+            <field name="model">data.logger</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="serial_number"/>
+                    <field name="pallets_no"/>
+                    <field name="create_date"/>
+                    <field name="company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_data_logger_form" model="ir.ui.view">
+            <field name="name">data_logger.form</field>
+            <field name="model">data.logger</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="serial_number"/>
+                            <field name="pallets_no"/>
+                            <field name="create_date"/>
+                            <field name="company"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_data_logger_tree" model="ir.actions.act_window">
+            <field name="name">Data Logger</field>
+            <field name="res_model">data.logger</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="pallete_tracking.view_data_logger_tree"/>
+        </record>
+
+        <record id="action_data_logger_form" model="ir.actions.act_window">
+            <field name="name">Data Logger</field>
+            <field name="res_model">data.logger</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pallete_tracking.view_data_logger_form"/>
+        </record>
+
+    </data>
+
+</odoo>

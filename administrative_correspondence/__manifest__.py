@@ -16,6 +16,7 @@
     # for the full list
     'category': 'Uncategorized',
     'version': '0.1',
+    "license": "LGPL-3",
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'mail'],
@@ -24,12 +25,13 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+
         'data/correspondence_data.xml',
+
+        'views/views.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
     ],
 }

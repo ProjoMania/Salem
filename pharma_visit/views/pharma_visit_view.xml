@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pharma_visit_tree_view" model="ir.ui.view">
+        <field name="name">pharma.visit.tree.view</field>
+        <field name="model">pharma.visit</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="partner_id"/>
+                <field name="sales_rep_id"/>
+                <field name="visit_type"/>
+                <field name="timer_start"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pharma_visit_form_view" model="ir.ui.view">
+        <field name="name">pharma.visit.form.view</field>
+        <field name="model">pharma.visit</field>
+        <field name="arch" type="xml">
+            <form string="" js_class="visit_form">
+                <header>
+                    <button name="action_timer_start" string="Start"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_timer_stop" string="Finish"
+                            type="object" class="oe_highlight"/>
+                    <field name="timer_start" widget="timer_start_field"
+                           class="d-flex align-self-center me-auto ms-2 h2"/>
+                    <button name="create_visit_order" string="Create Visit Order"
+                            invisible="state in ['draft', 'exception', 'waiting_for_approval', 'approved']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_approved" string="Approved"
+                            invisible="state in ['draft', 'exception', 'approved', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_waiting_approval" string="Waiting Approval"
+                            invisible="state in ['draft', 'approved', 'waiting_for_approval', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_done" string="Done"
+                            invisible="state in ['exception', 'waiting_for_approval', 'done']"
+                            type="object" class="oe_highlight"/>
+                    <button name="action_share" string="Share"
+                            type="object" class="oe_highlight" invisible="not survey_id"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_visit_order" class="oe_stat_button" type="object" icon="fa-bar-chart">
+                            <div class="o_stat_info">
+                                <field name="visit_count"/>
+                                <span class="o_stat_text">Visit Order</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="True"/>
+                            <field name="sales_rep_id"/>
+                            <field name="visit_type"/>
+                            <field name="promotion_id"/>
+                            <field name="survey_id"/>
+                        </group>
+                        <group>
+                            <field name="start_time"/>
+                            <field name="finish_time"/>
+                            <field name="time_spend" widget="timesheet_uom"/>
+                            <field name="company_id"/>
+                        </group>
+                        <div>
+                            <span>Lat :
+                                <field name="partner_latitude" nolabel="1" class="oe_inline"/>
+                            </span>
+                            <br/>
+                            <span>Long:
+                                <field name="partner_longitude" nolabel="1" class="oe_inline"/>
+                            </span>
+                            <br/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Visit Lines">
+                            <field name="visit_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_category_id"/>
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="amount"/>
+                                    <field name="total"/>
+                                    <field name="drug_store_id"/>
+                                    <field name="avail_qty"/>
+                                    <button name="add_foc_product_product" string="Add FOC Product" class="btn btn-primary" type="object"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visit" model="ir.actions.act_window">
+        <field name="name">Visit</field>
+        <field name="res_model">pharma.visit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="main_menu_visit" name="Visit"/>
+    <menuitem id="menu_visit" name="Visit" action="action_visit" parent="main_menu_visit"/>
+</odoo>

@@ -8,10 +8,10 @@
             <form string="Customer Statement">
                 <group>
                     <group>
-                        <field name="partner_id" required="1"/>
+                        <field name="partner_id" required="True"/>
                     </group>
                     <group>
-                        <field name="date_from" string="Start Date" required="1"/>
+                        <field name="date_from" string="Start Date" required="True"/>
                         <field name="date_to" string="End Date"/>
                     </group>
                 </group>
@@ -61,7 +61,7 @@
 
                     </group>
                     <group>
-                        <field name="date" string="Start Date" required="1"/>
+                        <field name="date" string="Start Date" required="True"/>
                         <field name="date_to" string="End Date"/>
                         <field name="payment_total" readonly="1"/>
                         <field name="balance" readonly="1"/>

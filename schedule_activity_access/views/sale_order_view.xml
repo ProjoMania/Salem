@@ -10,11 +10,11 @@
                 <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,reject_by_customer"/>
             </xpath>
             <xpath expr="//button[@name='action_draft']" position="after">
-                <button name="action_rejected" states="draft,sent"
+                <button name="action_rejected" invisible="state not in ['draft', 'sent']"
                         type="object" string="REJECT BY CUSTOMER"/>
             </xpath>
             <xpath expr="//button[@name='action_draft']" position="attributes">
-                <attribute name="states">cancel,reject_by_customer</attribute>
+                <attribute name="invisible">state not in ['cancel', 'reject_by_customer']</attribute>
             </xpath>
         </field>
     </record>

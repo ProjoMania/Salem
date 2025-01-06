@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, http, tools, _
-from odoo.exceptions import UserError
+from odoo import http
 
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
-from odoo.http import request
-from datetime import datetime
-from pathlib import Path
-from dateutil.relativedelta import relativedelta
 import json
-import os
-from os import path
-import base64
-from werkzeug.exceptions import NotFound
-from werkzeug.utils import redirect
-from PIL import Image
-import math
-import io
-import base64
-from odoo.http import content_disposition, request
+from odoo.http import content_disposition, request, serialize_exception
 from odoo.tools import html_escape
-from odoo.addons.web.controllers.main import _serialize_exception
 
 
 class XLSXReportController(http.Controller):
@@ -43,7 +27,7 @@ class XLSXReportController(http.Controller):
 			response.set_cookie('fileToken', token)
 			return response
 		except Exception as e:
-			se = _serialize_exception(e)
+			se = serialize_exception(e)
 			error = {
 				'code': 200,
 				'message': 'Odoo Server Error',

@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Hr Attendance Lunch Time',
-    'version': '14.0.3.1',
+    'version': '17.0.1.1',
     'category': 'Human Resources/Attendances',
     'author': 'Dev JS',
     'sequence': 99,
@@ -10,30 +10,27 @@
     'depends': [
         'hr',
         'hr_attendance',
-        'aspl_employee_attendance_map'
     ],
     'data': [
-        # 'views/assets.xml',
         'views/hr_attendance.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+           'hr_lunch_time/static/src/js/attendance_menu.js',
+        #    'hr_lunch_time/static/src/js/kiosk_face_recognition.js',
+        #    'hr_lunch_time/static/src/js/kiosk_mode.js',
+            'hr_lunch_time/static/src/xml/menu.xml',
+        ],
+    },
     'demo': [],
     'images': [
         'static/description/banner.png'
     ],
     'installable': True,
     'auto_install': False,
-    # 'qweb': [
-    #     'static/src/xml/attendance.xml',
-    # ],
-    'assets': {
-        'web.assets_backend': [
-            'hr_lunch_time/static/src/js/kiosk_face_recognition.js',
-            'hr_lunch_time/static/src/js/kiosk_mode.js',
-        ],
-        'web.assets_qweb': [
-            'hr_lunch_time/static/src/xml/attendance.xml',
-        ]
-    },
+    'qweb': [
+        'static/src/xml/attendance.xml',
+    ],
     'application': True,
     'price': 15,
     'currency': 'EUR',

@@ -1,0 +1,63 @@
+<templates>
+
+    <t t-inherit="hr_attendance.attendance_menu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='toggler']/i" position="replace">
+            <i class="fa fa-circle" t-attf-class="text-{{ (this.state.emp_state == 'checked_in' || this.state.emp_state == 'lunch_end') ? 'success' : 'danger' }}" role="img" aria-label="Attendance"/>
+        </xpath>
+        <xpath expr="//button[@t-if='this.isFirstAttendance']" position="replace">
+            <t t-if="this.isFirstAttendance">
+                <button t-if="state.emp_state == 'checked_out'" t-on-click="() => this.onClickSignInOut('check_in')"
+                        t-attf-class="btn btn-success mb-1">
+                    <span>Check in</span>
+                    <i t-attf-class="fa fa-sign-in ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'checked_in'" t-on-click="() => this.onClickSignInOut('lunch_start')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Lunch Start</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'lunch_end' || state.emp_state == 'checked_in'"
+                        t-on-click="() => this.onClickSignInOut('check_out')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Check Out</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'lunch_start'" t-on-click="() => this.onClickSignInOut('lunch_end')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Lunch End</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('att_container', 'd-flex', 'flex-column')]/button" position="replace">
+            <t t-if="!this.isFirstAttendance">
+                <button t-if="state.emp_state == 'checked_out'" t-on-click="() => this.onClickSignInOut('check_in')"
+                        t-attf-class="btn btn-success mb-1">
+                    <span>Check in</span>
+                    <i t-attf-class="fa fa-sign-in ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'checked_in'" t-on-click="() => this.onClickSignInOut('lunch_start')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Lunch Start</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'lunch_end' || state.emp_state == 'checked_in'"
+                        t-on-click="() => this.onClickSignInOut('check_out')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Check Out</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+                <button t-if="state.emp_state == 'lunch_start'" t-on-click="() => this.onClickSignInOut('lunch_end')"
+                        t-attf-class="btn btn-warning mb-1">
+                    <span>Lunch End</span>
+                    <i t-attf-class="fa fa-sign-out ms-1"/>
+                </button>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="check_in_check_out_buttons">
+
+    </t>
+
+</templates>

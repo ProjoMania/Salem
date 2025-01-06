@@ -9,7 +9,7 @@
 				<field name="arch" type="xml">
 					<xpath expr="//button[@name='button_cancel']" position="after">
 						<field name ="cancel_done_picking" invisible="1"/>
-						<button name="cancel_picking" type="object" attrs="{'invisible': [('cancel_done_picking','=',False)]}" 
+						<button name="cancel_picking" type="object" invisible="not cancel_done_picking"
 						string="Cancel Delivery" class="oe_highlight" help="Click here to cancel delivery" />
 					</xpath>
 				</field>

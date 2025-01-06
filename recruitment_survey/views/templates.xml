@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+
+        <template id="add_survey_redirect" name="CRM assets backend" inherit_id="website_hr_recruitment.apply">
+            <xpath expr="//form[@id='hr_recruitment_form']" position="attributes">
+                <attribute name="data-success-mode">redirect</attribute>
+                <attribute name="data-success-page">/apply/success</attribute>
+            </xpath>
+        </template>
+
+        <template id="survey_button_retake" inherit_id="survey.survey_button_retake">
+            <xpath expr="//div" position="replace">
+                <div>
+                    <t t-if="not answer.scoring_success and not answer.is_session_answer">
+                        <t t-if="survey.is_attempts_limited">
+                            <t t-set="attempts_left" t-value="survey._get_number_of_attempts_lefts(answer.partner_id, answer.email, answer.invite_token)" />
+                            <t t-if="attempts_left > 0">
+                                <p><span>Number of attempts left</span>: <span t-esc="attempts_left"></span></p>
+                                <p><a role="button" class="btn btn-primary btn-lg" t-att-href="'/survey/retry/%s/%s' % (survey.access_token, answer.access_token)">
+                                Retry</a></p>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <p><a role="button" class="btn btn-primary btn-lg" t-attf-href="/jobs">All Jobs</a></p>
+                        </t>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

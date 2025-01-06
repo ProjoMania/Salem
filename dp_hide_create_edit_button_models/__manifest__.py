@@ -25,5 +25,6 @@
     'auto_install': False,
     "price"       : 15,
     "currency"    : "EUR",
+    'license': 'LGPL-3',
     "images"      : ["static/description/banner.png",],
 }

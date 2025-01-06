@@ -54,12 +54,12 @@
             <field name="arch" type="xml">
                 <form string="Administrative Correspondence Form">
                     <header>
-                        <button name="set_pending" string="Set Pending" class="oe_highlight" states="draft"
+                        <button name="set_pending" string="Set Pending" class="oe_highlight" invisible="state != 'draft'"
                                 type="object"/>
-                        <button name="set_submitted" string="Set Submitted" class="oe_highlight" states="draft"
+                        <button name="set_submitted" string="Set Submitted" class="oe_highlight" invisible="state != 'draft'"
                                 type="object"/>
-                        <button name="reset_draft" string="Reset to Draft" states="submitted,pending,cancelled" type="object"/>
-                        <button name="set_cancelled" string="Cancel" states="draft,pending" type="object"/>
+                        <button name="reset_draft" string="Reset to Draft" invisible="state not in ['submitted', 'pending', 'cancelled']" type="object"/>
+                        <button name="set_cancelled" string="Cancel" invisible="state not in ['draft', 'pending']" type="object"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,pending,submitted"/>
                     </header>
                     <sheet>
@@ -75,9 +75,9 @@
                                 <field name="template_id" options="{'no_open':True,'no_create_edit': True}"/>
                                 <field name="type" readonly="1"/>
                                 <field name="parent_id" domain="[('company_id', '=', company_id)]"/>
-                                <field name="sent_from_id" attrs="{'readonly':[('state', 'in', ['cancelled', 'submitted'])]}" required="1"/>
-                                <field name="sent_to_id" attrs="{'readonly':[('state', 'in', ['cancelled', 'submitted'])], 'invisible':[('type', '=', 'inbound')], 'required': [('type', 'in', ['internal', 'outbound'])]}"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="sent_from_id" readonly="state in ['cancelled', 'submitted']" required="True"/>
+                                <field name="sent_to_id" readonly="state in ['cancelled', 'submitted']" invisible="type == 'inbound'" required="type in ['internal', 'outbound']"/>
+                                <field name="company_id" />
                             </group>
                             <group>
                                 <field name="created_on"/>
@@ -175,9 +175,7 @@
                         </div>
                         <notebook>
                             <page string="Content Template">
-                                <group>
-                                    <field name="body" nolabel="1"/>
-                                </group>
+                                <field name="body" nolabel="1"/>
                             </page>
                         </notebook>
                     </sheet>

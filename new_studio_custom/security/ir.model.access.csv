@@ -1,0 +1,18 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_payment_d3d2a82a-7c50-4721-88c5-e73ea1a862ad,account.payment,account.model_account_payment,new_studio_custom.res_groups_150_2d1d024e,1,1,1,1
+account_payment_regi_7ae1c84c-15d3-41a9-8a66-2be3260fa4f8,account.payment.register,account.model_account_move,new_studio_custom.res_groups_150_2d1d024e,1,1,0,0
+account_move_86b17b68-64db-4737-a171-ef73848e09eb,account.move,account.model_account_move,new_studio_custom.res_groups_150_2d1d024e,1,1,0,0
+account_account_563b9787-9aaa-481c-b9eb-569aa184cbc7,account.account,account.model_account_account,new_studio_custom.account_charts_read__65beefc6-4dc2-41ae-8ba4-a3b084507bd1,1,0,0,0
+account_account_read_d5d7fb96-f5a8-477b-942b-66e027a80951,account.account.readonly,account.model_account_account,new_studio_custom.account_charts_read__65beefc6-4dc2-41ae-8ba4-a3b084507bd1,1,0,0,0
+product_template_acc_e78aa900-aeec-42ba-bcf5-53570a91dda5,product.template.account.manager,product.model_product_template,new_studio_custom.res_groups_109_2d6cb1a2,1,0,0,0
+create_product_2788a6a4-9830-41dd-bcfe-1932ee86551c,Create Product,product.model_product_template,new_studio_custom.create_product_24277ab5-fa2b-40b5-85cb-603466d9bf93,1,1,1,1
+manager_13069b21-aba1-4498-b810-4d57f1daacdc,manager,account.model_account_payment,new_studio_custom.res_groups_144_1ce32dcc,1,1,1,0
+admin_9aee85a4-fad6-44f6-8892-ea1350e55082,admin,administrative_correspondence.model_administrative_correspondence,new_studio_custom.group_administrative_correspondence,1,1,1,0
+res_partner_b9e8f21d-f707-40a7-9075-050e5bd69960,res.partner,base.model_res_partner,base.group_erp_manager,1,1,1,1
+account_move_4f63cb07-ebdc-4a53-82e0-06cc8894028e,account.move,account.model_account_move,new_studio_custom.res_groups_154_324da1c2,1,1,0,0
+administrative_manag_4bf7a990-8cf7-4948-88d3-de08948697ee,Administrative Manager,administrative_correspondence.model_administrative_correspondence_template,new_studio_custom.group_administrative_correspondence,1,1,1,1
+account_move_8e4bc6c7-e8f7-4d5d-8761-e128871e5d35,account.move,account.model_account_move,account.group_account_user,1,1,1,1
+stock_location_manag_e602c2cc-0849-448f-8f94-88767ff69e88,stock.location.manager,stock.model_stock_location,new_studio_custom.res_groups_137_1b35e064,1,1,1,1
+res_partner_category_8c40a6b1-68b9-4a4a-9110-d36b982c7412,res_partner_category group_partner_manager,base.model_res_partner_category,base.group_erp_manager,1,1,1,1
+cash_collection_team_8e2e21da-0cf6-419a-a34d-75ad6e27124c,cash.collection.teams,tis_cash_collection_teams.model_cash_collection_teams,base.group_erp_manager,1,1,1,1
+edit_contacts_28f2fe21-c287-4452-bdf9-e100e53633f8,Edit Contacts,base.model_res_users,new_studio_custom.edit_contacts_558f11a0-1e2e-4832-bb93-ab7d284d44eb,1,1,1,1

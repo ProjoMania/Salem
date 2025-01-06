@@ -20,6 +20,7 @@ class ShResUsers(models.Model):
     journal_ids = fields.Many2many(
         'account.journal', string="Journals", copy=False)
 
+
 class ShAccountJournalRestrict(models.Model):
     _inherit = 'account.journal'
 
@@ -35,39 +36,58 @@ class ShAccountJournalRestrict(models.Model):
 
     user_ids = fields.Many2many(
         'res.users', string="Users", copy=False)
+    bypass_journal = fields.Boolean('Bypass Restriction', default=False)
 
     # To apply domain to action_________ 2
     @api.model
-    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+    def _name_search(self, name, domain=None, operator='ilike', limit=100, order=None):
         super(ShAccountJournalRestrict, self)._name_search(
-            name, args=None, operator='ilike', limit=100, name_get_uid=None)
+            name, domain=domain, operator='ilike', limit=100, order=order)
 
         if(
             self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not
             (self.env.user.has_group("base.group_erp_manager"))
         ):
-            domain = [
+            domain += [
                 ("user_ids", "in", self.env.user.id),('name','ilike',name)
             ]
         else:
-            domain = [('name','ilike',name)]
-        return self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
+            domain += [('name','ilike',name)]
+        # return self._search(expression.AND([domains, domain]), limit=limit)
+        return self._search(domain, limit=limit, order=order)
 
     # To apply domain to load menu_________ 1
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, domain, offset=0, limit=None, order=None):
         _ = self._context or {}
-        if(
-            self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not
-            (self.env.user.has_group("base.group_erp_manager"))
-        ):
-            args += [
-                ("user_ids", "in", self.env.user.id),
-            ]
-        return super(ShAccountJournalRestrict, self).search(
-            args,
+        if self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not self.env.user.has_group("base.group_erp_manager"):
+            domain.append(("user_ids", "in", self.env.user.id))
+        return super().search(
+            domain,
             offset=offset,
             limit=limit,
             order=order,
-            count=count,
         )
+
+
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    @api.model
+    def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
+        current_user = self.env.user
+        # partner_ids = self.env['res.partner'].search([('cash_collection_team_id.member_ids', 'in', [self.env.user.id])])
+        if not current_user.has_group('base.group_erp_manager') and current_user.has_group('sh_journal_restrict.group_journal_restrict_feature'):
+            domain += ['|', ('journal_id', 'in', current_user.journal_ids.ids), ('journal_id.bypass_journal', '=', True)]
+        return super(AccountMove, self).web_search_read(domain, specification, offset=offset, limit=limit, order=order,
+                                       count_limit=count_limit)
+
+
+class IRRule(models.Model):
+    _inherit = 'ir.rule'
+
+    def _compute_domain(self, model_name, mode="read"):
+        res = super(IRRule, self)._compute_domain(model_name, mode)
+        if model_name == 'account.move' and self.env.user.has_group('sh_journal_restrict.group_journal_restrict_feature'):
+            res += ['|', ('journal_id', 'in', self.env.user.journal_ids.ids), ('journal_id.bypass_journal', '=', True)]
+        return res

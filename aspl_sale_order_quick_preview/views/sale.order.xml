@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherited_so_quotation_tree_view" model="ir.ui.view">
+        <field name="name">inherited.so.quotation.tree.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <button string="Quick Preview" class="btn btn-outline-success" name="button_quick_preview" type="object"
+                        groups="aspl_sale_order_quick_preview.group_quick_view_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

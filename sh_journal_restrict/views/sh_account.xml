@@ -7,6 +7,7 @@
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="after">
+                <field name="bypass_journal" groups="sh_journal_restrict.group_access_of_assign_user"/>
                 <field name="user_ids" widget="many2many_tags" groups="sh_journal_restrict.group_access_of_assign_user" />
             </xpath>
         </field>

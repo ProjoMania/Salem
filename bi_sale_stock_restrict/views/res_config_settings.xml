@@ -5,8 +5,8 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@data-key='sale_management']" position="inside">
-                <h2>Out Of Stock Product Restriction</h2>
+            <xpath expr="//block[@name='sale_shipping_setting_container']" position="after">
+                <block title="Out Of Stock Product Restriction" name="out_of_stock">
                     <div class="row mt16 o_settings_container">
                         <div class="col-lg-6 col-12 o_setting_box">
                             <div class="o_setting_left_pane">
@@ -19,10 +19,9 @@
                         <div class="col-lg-6 col-12 o_setting_box">
                             <div class="o_setting_left_pane">
                             </div>
-                            <div class="o_setting_right_pane" attrs="{'invisible': [('stock_restriction', '=', False)]}">
+                            <div class="o_setting_right_pane" invisible="not stock_restriction">
                                 <label for="stock_check_type"/>
-                                <field name="stock_check_type" attrs="{
-                                'required': [('stock_restriction', '=', True)]}"/>
+                                <field name="stock_check_type" required="stock_restriction"/>
                             </div>
                         </div>
                     </div>
@@ -36,6 +35,7 @@
                             </div>
                         </div>
                     </div>
+                </block>
             </xpath>
         </field>
     </record>

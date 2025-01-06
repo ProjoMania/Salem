@@ -3,7 +3,7 @@
 
 {
     "name" : "Restrict Out of Stock Product on Sales Order",
-    "version" : "15.0.0.1",
+    "version" : "15.0.0",
     "category" : "Sales",
     'summary': 'Out of stock product restriction on sales order restriction for out of stock product restriction for sales Restrict Out Stock Product Sales stop out of stock product for sale available products only out of stock product alerts out of stock products sales',
     "description": """

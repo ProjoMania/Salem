@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Frutiger_Bold_Condensed';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_67_Bold_Condensed.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_67_Bold_Condensed.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Bold';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Bold2';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_Bold2.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Bold3';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_Bold3.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Bold4';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_Bold4.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Bold5';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_CE_65_Bold_0.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_Bold5.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Frutiger_Light_Condensed';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/Frutiger_LT_47_Light_Condensed.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/Frutiger_LT_47_Light_Condensed.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Light';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-45-light.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/frutiger-lt-arabic-45-light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Light2';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-45-light.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/frutiger-lt-arabic-45-light.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Roman';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf') format('truetype');
+    font-weight: bolder;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Roman_bold';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger_Black_Bold';
+    /*src: url(/esco_account_report/static/src/fonts/Frutiger/frutiger-lt-arabic-55-roman.ttf) format('truetype');*/
+    src: url('../fonts/Frutiger/FrutigerLT75Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

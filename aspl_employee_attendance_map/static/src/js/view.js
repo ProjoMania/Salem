@@ -2,8 +2,7 @@ odoo.define('test.shop_cart', function (require) {
 "use strict";
 
 var rpc = require('web.rpc');
-var core = require('web.core');
-var _t = core._t;
+import { _t } from "@web/core/l10n/translation";
 var form_widget = require('web.Widget');
 
 $(document).on('click', '#test_button', function(){

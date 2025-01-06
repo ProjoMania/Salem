@@ -1,0 +1,123 @@
+<odoo>
+    <data>
+        <record id="res_groups_150_2d1d024e" model="res.groups">
+            <field name="name">Billing (only if he is follower)</field>
+        </record>
+
+        <record id="account_charts_read__65beefc6-4dc2-41ae-8ba4-a3b084507bd1" model="res.groups">
+            <field name="name">Read Only For Chart Of Account</field>
+        </record>
+
+        <record id="res_groups_109_2d6cb1a2" model="res.groups">
+            <field name="name">Advisor (CFO)</field>
+        </record>
+
+        <record id="create_product_24277ab5-fa2b-40b5-85cb-603466d9bf93" model="res.groups">
+            <field name="name">Create Product</field>
+        </record>
+
+        <record id="res_groups_144_1ce32dcc" model="res.groups">
+            <field name="name">follower on invoice</field>
+        </record>
+
+        <record id="group_administrative_correspondence" model="res.groups">
+            <field name="name">Administrative Correspondence</field>
+        </record>
+
+        <record id="res_groups_154_324da1c2" model="res.groups">
+            <field name="name">Cash Collector on Invocie By Sales Team</field>
+        </record>
+
+        <record id="res_groups_137_1b35e064" model="res.groups">
+            <field name="name">Inventory Configuration</field>
+        </record>
+
+        <record id="edit_contacts_558f11a0-1e2e-4832-bb93-ab7d284d44eb" model="res.groups">
+            <field name="name">Edit Contacts "res.users"</field>
+        </record>
+
+        <record id="res_groups_227_91935896" model="res.groups">
+            <field name="name">Expenses Reportar</field>
+        </record>
+
+        <record id="res_groups_221_4476fc6c" model="res.groups">
+            <field name="name">Approval On Post Entry</field>
+        </record>
+
+        <record id="res_groups_226_a593e025" model="res.groups">
+            <field name="name">Inventory Valuation</field>
+        </record>
+
+        <record id="res_groups_228_816830cd" model="res.groups">
+            <field name="name">Expenses Approval Level 1</field>
+        </record>
+
+        <record id="res_groups_229_dc650a50" model="res.groups">
+            <field name="name">Expenses Approval Level 2</field>
+        </record>
+
+        <record id="res_groups_230_1afc0e9c" model="res.groups">
+            <field name="name">Expenses Approval Level 3</field>
+        </record>
+
+        <record id="res_groups_153_0d75e150" model="res.groups">
+            <field name="name">Aged Receivable</field>
+        </record>
+
+        <record id="res_groups_120_6308b917" model="res.groups">
+            <field name="name">Confirming / Validation Inventory Order</field>
+        </record>
+
+        <record id="res_groups_168_6702b458" model="res.groups">
+            <field name="name">Custom Aging</field>
+        </record>
+
+        <record id="res_groups_174_1482f46a" model="res.groups">
+            <field name="name">Hide Cost</field>
+        </record>
+
+        <record id="res_groups_152_5512b968" model="res.groups">
+            <field name="name">Approval on Lots</field>
+        </record>
+
+        <record id="res_groups_136_afd35315" model="res.groups">
+            <field name="name">Print Payslips</field>
+        </record>
+
+        <record id="res_groups_159_d0be35a0" model="res.groups">
+            <field name="name">Cash Collector Manger</field>
+        </record>
+
+        <record id="res_groups_180_608e74fb" model="res.groups">
+            <field name="name">Approval on partner invoice blocking</field>
+        </record>
+
+        <record id="res_groups_182_2ee37d50" model="res.groups">
+            <field name="name">Trail Balance Report</field>
+        </record>
+
+        <record id="res_groups_183_90a75c98" model="res.groups">
+            <field name="name">Invoice Analysis Report</field>
+        </record>
+
+        <record id="res_groups_184_517ddc7b" model="res.groups">
+            <field name="name">Aged Recievable Report</field>
+        </record>
+
+        <record id="res_groups_185_2ba83afa" model="res.groups">
+            <field name="name">Aged Payable Report</field>
+        </record>
+
+        <record id="res_groups_186_99d0776c" model="res.groups">
+            <field name="name">Partner Ledger Report</field>
+        </record>
+
+        <record id="res_groups_187_15226d53" model="res.groups">
+            <field name="name">General Ledger Report</field>
+        </record>
+
+        <record id="res_groups_209_744446a9" model="res.groups">
+            <field name="name">Allowe to see purchase report</field>
+        </record>
+    </data>
+</odoo>

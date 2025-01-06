@@ -57,7 +57,7 @@
                         <span t-field="line.name" />
                      </td>
                      <td>
-                        <span t-field="line.analytic_account_id" />
+                        <span t-field="line.analytic_distribution"/>
                      </td>
                      <td>
                         <span t-field="line.debit" />

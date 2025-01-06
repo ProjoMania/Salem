@@ -2,7 +2,7 @@
 
 {
     'name': 'Ejaf Partner Ledger Report',
-    'version': '13.0.1.0',
+    'version': '13.0.1',
     'summary': """Partner Ledger Report""",
     'author': "Ejaf Technology",
     'website': "http://www.ejaftech.com/",

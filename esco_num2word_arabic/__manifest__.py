@@ -1,7 +1,7 @@
 {
     'name': 'ESCO Num2Words Arabic',
     'summary': 'Arabic Num2Words ... التفقيط',
-    'version': '13.0.0.1',
+    'version': '13.0.0',
     'category': 'Tools',
     'description': """
         Arabic Num2Words

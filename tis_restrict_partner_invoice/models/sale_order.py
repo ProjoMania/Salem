@@ -13,6 +13,13 @@ class SaleOrder(models.Model):
 
     is_approved = fields.Boolean(string="Approved", default=False, readonly=True)
 
+    def _get_forbidden_state_confirm(self):
+        """
+        Returns a set of states that cannot be confirmed
+        It is written for the upgrading purposes, since a method with the same name and function was in v13.0
+        """
+        return set(['cancel', 'done'])
+
     def action_direct_confirm(self):
         if self._get_forbidden_state_confirm() & set(self.mapped('state')):
             raise UserError(_(
@@ -29,8 +36,8 @@ class SaleOrder(models.Model):
         context.pop('default_name', None)
 
         self.with_context(context)._action_confirm()
-        if self.env.user.has_group('sale.group_auto_done_setting'):
-            self.action_done()
+        # if self.env.user.has_group('sale.group_auto_done_setting'):
+        #     self.action_done()
         return True
 
     def action_approve(self):
@@ -44,7 +51,7 @@ class SaleOrder(models.Model):
                 res = super(SaleOrder, self).action_confirm()
                 account_moves = self.env['account.move'].search(
                     [('partner_id', '=', self.partner_id.id), ('move_type', '=', 'out_invoice'),
-                     ('state', '=', 'posted'), ('payment_state', '!=', 'paid')],
+                     ('state', '=', 'posted'), ('payment_state', '!=', 'paid'), ('payment_state', '!=', 'reversed')],
                     order='create_date ASC', limit=1)
                 if account_moves:
                     today = date.today()

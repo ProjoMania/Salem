@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="doctor_speciality_tree_view" model="ir.ui.view">
+        <field name="name">doctor.speciality.tree.view</field>
+        <field name="model">doctor.speciality</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="doctor_speciality_form_view" model="ir.ui.view">
+        <field name="name">doctor.speciality.form.view</field>
+        <field name="model">doctor.speciality</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_speciality" model="ir.actions.act_window">
+        <field name="name">Doctor Speciality</field>
+        <field name="res_model">doctor.speciality</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="doctor_sub_speciality_tree_view" model="ir.ui.view">
+        <field name="name">doctor.sub_speciality.tree.view</field>
+        <field name="model">doctor.sub_speciality</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="speciality_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="doctor_sub_speciality_form_view" model="ir.ui.view">
+        <field name="name">doctor.sub_speciality.form.view</field>
+        <field name="model">doctor.sub_speciality</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="speciality_id" required="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sub_speciality" model="ir.actions.act_window">
+        <field name="name">Doctor SubSpeciality</field>
+        <field name="res_model">doctor.sub_speciality</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="governorate_tree_view" model="ir.ui.view">
+        <field name="name">governorate.tree.view</field>
+        <field name="model">governorate</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" required="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_governorate" model="ir.actions.act_window">
+        <field name="name">Governorate</field>
+        <field name="res_model">governorate</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="briks_briks_tree_view" model="ir.ui.view">
+        <field name="name">briks.briks.tree.view</field>
+        <field name="model">briks.briks</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="gov_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="briks_briks_form_view" model="ir.ui.view">
+        <field name="name">briks.briks.form.view</field>
+        <field name="model">briks.briks</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="gov_id" required="True"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="radius"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_briks" model="ir.actions.act_window">
+        <field name="name">Briks</field>
+        <field name="res_model">briks.briks</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_classification" name="Classification" parent="contacts.menu_contacts"/>
+    <menuitem id="menu_speciality" name="Doctor Speciality" action="action_speciality" parent="menu_classification"/>
+    <menuitem id="menu_sub_speciality" name="Doctor SubSpeciality" action="action_sub_speciality" parent="menu_classification"/>
+    <menuitem id="menu_governorate" name="Governorate" action="action_governorate" parent="menu_classification"/>
+    <menuitem id="menu_briks" name="Briks" action="action_briks" parent="menu_classification"/>
+</odoo>
