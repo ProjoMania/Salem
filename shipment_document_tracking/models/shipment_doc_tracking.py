@@ -18,7 +18,7 @@ class ShipmentDocTracking(models.Model):
 
     name = fields.Char(string="Name", required=True, default="New")
     status = fields.Selection(
-        [('draft', 'Draft'), ('not_completed', 'Not Completed'), ('partial', 'Partially Completed'), ('complete', 'Completed')],
+        [('draft', 'Draft'), ('not_completed', 'Not Completed'), ('partial', 'Partially Completed'), ('complete', 'Completed'), ('cancelled', 'Cancelled')],
         string='Status', required=True, default="draft")
     done_date = fields.Datetime(string="Done Date")
     partner_id = fields.Many2one('res.partner', string="Vendor")
@@ -47,6 +47,9 @@ class ShipmentDocTracking(models.Model):
         self.done_date = False
         for rec in self.doc_ids:
             rec.is_reviewed = False
+    
+    def action_cancel(self):
+        self.status = 'cancelled'
 
     @api.depends('bill_ids')
     def _compute_invoice(self):
