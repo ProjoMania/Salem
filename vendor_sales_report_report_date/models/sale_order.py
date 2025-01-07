@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
     def _compute_report_date(self):
         for rec in self:
             if rec.invoice_ids and rec.is_match_inv_date:
-                rec.report_date= rec.invoice_ids.filtered(lambda o: o.move_id.move_type == 'out_invoice').mapped('invoice_date')[0]
+                rec.report_date= rec.invoice_ids.filtered(lambda o: o.move_type == 'out_invoice').mapped('invoice_date')[0]
             elif rec.invoice_ids and rec.is_report_date:
                 rec.report_date = rec.report_date1
                 rec.report_date1=False
