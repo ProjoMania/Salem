@@ -14,9 +14,9 @@ class SaleOrder(models.Model):
     @api.depends('invoice_ids','is_match_inv_date','is_report_date')
     def _compute_report_date(self):
         for rec in self:
-            if rec.invoice_ids and rec.is_match_inv_date:
+            if rec.invoice_ids and rec.is_match_inv_date and not rec.report_date1:
                 rec.report_date= rec.invoice_ids.filtered(lambda o: o.move_type == 'out_invoice').mapped('invoice_date')[0]
-            elif rec.invoice_ids and rec.is_report_date:
+            elif rec.invoice_ids and rec.is_report_date and not rec.report_date:
                 rec.report_date = rec.report_date1
                 rec.report_date1=False
             else:
