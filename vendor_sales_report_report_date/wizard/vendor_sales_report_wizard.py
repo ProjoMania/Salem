@@ -117,16 +117,16 @@ class VendorSalesReport(models.TransientModel):
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
-                       o.move_id.move_type == 'out_invoice' and
+                       o.move_id.move_type in ( 'out_invoice', 'out_refund') and
                        o.move_id.invoice_date >= start_date and
                        o.move_id.invoice_date <= end_date)
         else:
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
-                       o.move_id.move_type == 'out_invoice' and
-                       o.move_id.report_date >= start_date and
-                       o.move_id.report_date <= end_date)
+                       o.move_id.move_type in ( 'out_invoice', 'out_refund') and
+                       (o.move_id.report_date or o.move_id.invoice_date) >= start_date and
+                       (o.move_id.report_date or o.move_id.invoice_date) <= end_date)
 
     def _prepare_start_end_date(self):
         if self.filter_by == 'order_date':
