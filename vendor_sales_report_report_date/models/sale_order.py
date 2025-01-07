@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
             if rec.invoice_ids and rec.is_match_inv_date:
                 rec.report_date= rec.invoice_ids.mapped('invoice_date')[0]
             elif rec.invoice_ids and rec.is_report_date:
-                rec.report_date=rec.report_date1
+                rec.report_date = rec.report_date1
                 rec.report_date1=False
             else:
                 rec.report_date=False

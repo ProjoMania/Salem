@@ -12,7 +12,8 @@ class AccountMove(models.Model):
     @api.depends('line_ids')
     def _compute_report_date(self):
         for rec in self:
-            rec.report_date =rec.line_ids.sale_line_ids.order_id.report_date
+            if rec.move_type == 'out_invoice':
+                rec.report_date = rec.line_ids.sale_line_ids.order_id.report_date
 
 
 class AccountMoveLine(models.Model):
