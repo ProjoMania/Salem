@@ -5,7 +5,7 @@ from odoo import models, fields,api
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    report_date = fields.Date('Report Date',compute='_compute_report_date',store=True)
+    report_date = fields.Date('Report Date',compute='_compute_report_date',store=False)
     report_date1 = fields.Date('Report Date')
     is_report_date = fields.Boolean(string="Report Date" ,defualt=False)
     is_report_date1_invisible = fields.Boolean('Report Date',compute='_compute_is_report_date1_invisible')
