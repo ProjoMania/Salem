@@ -14,6 +14,8 @@ class AccountMove(models.Model):
         for rec in self:
             if rec.move_type == 'out_invoice':
                 rec.report_date = rec.line_ids.sale_line_ids.order_id.report_date
+            elif rec.move_type == 'out_refund':
+                rec.report_date = rec.invoice_date
             else:
                 rec.report_date = False
 
