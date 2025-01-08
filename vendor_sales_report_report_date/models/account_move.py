@@ -13,7 +13,10 @@ class AccountMove(models.Model):
     def _compute_report_date(self):
         for rec in self:
             if rec.move_type == 'out_invoice':
-                rec.report_date = rec.line_ids.sale_line_ids.order_id.report_date
+                if rec.line_ids.sale_line_ids and rec.line_ids.sale_line_ids.order_id.report_date:
+                    rec.report_date = rec.line_ids.sale_line_ids.order_id.report_date
+                else:
+                    rec.report_date = rec.invoice_date
             elif rec.move_type == 'out_refund':
                 rec.report_date = rec.invoice_date
             else:
