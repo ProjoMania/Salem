@@ -101,7 +101,7 @@ class VendorSalesReport(models.TransientModel):
                             "quantity": inv_line.quantity * (inv_line.move_id.move_type == 'out_refund' and -1 or 1) if inv_line.quantity else "0",
                             "price_subtotal": inv_line.price_subtotal * (inv_line.move_id.move_type == 'out_refund' and -1 or 1) if inv_line.price_subtotal else "0",
                             "currency": inv_line.currency_id.name if inv_line.currency_id.name else "",
-                            "invoice_type": "Invoice",
+                            "invoice_type": "Invoice" if inv_line.move_id.move_type == 'out_invoice' else "Credit Note",
                         }
                         vendor_data_list.append(vendor_based_data)
         data = {
