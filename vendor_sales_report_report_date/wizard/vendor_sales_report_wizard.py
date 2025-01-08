@@ -98,8 +98,8 @@ class VendorSalesReport(models.TransientModel):
                             "district": inv_line.move_id.partner_id.street if inv_line.move_id.partner_id.street else "",
                             "price_unit": inv_line.price_unit if inv_line.price_unit else "",
                             "customer_name": inv_line.move_id.partner_id.name if inv_line.move_id.partner_id.name else "",
-                            "quantity": inv_line.quantity if inv_line.quantity else "0",
-                            "price_subtotal": inv_line.price_subtotal if inv_line.price_subtotal * (inv_line.move_id.move_type == 'out_invoice' and 1 or -1) else "0",
+                            "quantity": inv_line.quantity if inv_line.quantity * (inv_line.move_id.move_type == 'out_refund' and -1 or 1) else "0",
+                            "price_subtotal": inv_line.price_subtotal if inv_line.price_subtotal * (inv_line.move_id.move_type == 'out_refund' and -1 or 1) else "0",
                             "currency": inv_line.currency_id.name if inv_line.currency_id.name else "",
                             "invoice_type": "Invoice",
                         }
