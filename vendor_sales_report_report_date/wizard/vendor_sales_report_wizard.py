@@ -89,7 +89,7 @@ class VendorSalesReport(models.TransientModel):
                             "vendor": partner.name if partner else "",
                             "invoice": inv_line.move_id.name if inv_line else "",
                             "sale_order": inv_line.sale_line_ids.order_id.name if inv_line.sale_line_ids.order_id.name else "",
-                            "invoice_date": inv_line.move_id.invoice_date if self.filter_by == 'order_date' else inv_line.sale_line_ids.order_id.report_date,
+                            "invoice_date": inv_line.move_id.invoice_date if self.filter_by == 'order_date' else (inv_line.move_id.report_date or inv_line.move_id.invoice_date),
                             "default_code": inv_line.product_id.default_code if inv_line.product_id.default_code else "",
                             "product_name": inv_line.product_id.name if inv_line.product_id.name else "",
                             "team_id": inv_line.move_id.team_id.name if inv_line.move_id.team_id.name else "",
@@ -170,7 +170,6 @@ class VendorSalesReport(models.TransientModel):
             product = supplier.product_tmpl_id
             product_product = self.env['product.product'].sudo().search([("product_tmpl_id", "=", product.id)])
             product_list.append(product_product.ids)
-        import itertools
         products_list = list(itertools.chain.from_iterable(product_list))
 
         if self.product_category_ids:
