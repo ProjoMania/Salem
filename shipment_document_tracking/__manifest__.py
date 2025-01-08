@@ -13,6 +13,7 @@
         'security/ir_rules.xml',
 
         'data/sequence.xml',
+        'data/mail_activity_type_data.xml',
         'views/doc_doc_views.xml',
         'views/res_partner_views.xml',
         'views/shipment_doc_tracking.xml',

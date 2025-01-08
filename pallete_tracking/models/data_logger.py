@@ -11,7 +11,7 @@ class DataLogger(models.Model):
     serial_number = fields.Char(string="Data Logger Serial Number")
     pallets_no = fields.Many2one('stock.quant.package')
     create_date = fields.Date(string="Create Date")
-    company = fields.Many2one('res.company', string='Company', required=True)
+    company = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
     package_id = fields.Many2one('stock.quant.package')
 
 
@@ -60,6 +60,6 @@ class DataLoggerStockPicking(models.Model):
 class StockQuantPackageDataLogger(models.Model):
     _inherit = 'stock.quant.package'
 
-    logger_id = fields.One2many('data.logger', 'package_id', string='Data Logger')
+    logger_id = fields.One2many('data.logger', 'pallets_no', string='Data Logger')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

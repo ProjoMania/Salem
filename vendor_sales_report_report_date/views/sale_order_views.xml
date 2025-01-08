@@ -7,7 +7,11 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                  <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="report_date"/>
+                    <field name="is_report_date" invisible=" is_match_inv_date"/>
+                    <field name="is_match_inv_date" invisible="is_report_date"/>
+                    <field name="is_report_date1_invisible" invisible="1"/>
+                    <field name="report_date" invisible="not is_report_date1_invisible"   />
+                    <field name="report_date1" invisible="is_report_date1_invisible"  required="is_report_date"/>
                 </xpath>
             </field>
         </record>

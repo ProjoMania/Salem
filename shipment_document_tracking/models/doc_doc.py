@@ -41,3 +41,5 @@ class DocDoc(models.Model):
         self.is_reviewed = True
         self.validated_by = self.env.user.id
         self.date_done = fields.Datetime.now()
+        if self.tracking_id.status in ('not_completed', 'partial'):
+            self.tracking_id.onchange_doc_ids()

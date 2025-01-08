@@ -11,7 +11,7 @@
     'depends': ['base', 'sale', 'stock'],
     'data': [
         'security/ir.model.access.csv',
-        # 'security/amcl_manager_groups.xml',
+        'security/amcl_manager_groups.xml',
         # 'wizards/so_line_wizard.xml',
         'views/data_loggger_view.xml',
         'views/data_logger_form_view.xml',

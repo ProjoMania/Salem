@@ -54,10 +54,7 @@ class VendorSalesReport(models.TransientModel):
             if stock_lines:
                 lots_obj = self.env["stock.lot"].search([])
                 sale_orders = self.env["sale.order"].search(self._prepare_sale_domain(start_date, end_date))
-                ############################################################################################################
-                move_type = 'out_invoice'
-                ############################################################################################################
-                invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list, move_type)
+                invoice_line_ids = self.get_invoice_lines(sale_orders, start_date, end_date, products_list)
 
                 for inv_line in invoice_line_ids:
                     lot_str = False
@@ -115,24 +112,21 @@ class VendorSalesReport(models.TransientModel):
         }
         return data, filename
 
-    def get_invoice_lines(self, sale_orders, start_date, end_date, products_list, move_type):
+    def get_invoice_lines(self, sale_orders, start_date, end_date, products_list):
         if self.filter_by == 'order_date':
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
-                       o.move_id.move_type == 'out_invoice' and
+                       o.move_id.move_type in ( 'out_invoice', 'out_refund') and
                        o.move_id.invoice_date >= start_date and
-                       o.move_id.invoice_date <= end_date and
-                       o.move_id.state != 'cancel')
+                       o.move_id.invoice_date <= end_date)
         else:
-
             return sale_orders.invoice_ids.invoice_line_ids.filtered(
                 lambda
                     o: o.move_id.state != 'cancel' and o.product_id.id in products_list and
-                       o.move_id.move_type == 'out_invoice' and
-                       o.move_id.report_date >= start_date and
-                       o.move_id.report_date <= end_date and
-                       o.move_id.state != 'cancel')
+                       o.move_id.move_type in ( 'out_invoice', 'out_refund') and
+                       (o.move_id.report_date or o.move_id.invoice_date) >= start_date and
+                       (o.move_id.report_date or o.move_id.invoice_date) <= end_date)
 
     def _prepare_start_end_date(self):
         if self.filter_by == 'order_date':
@@ -172,18 +166,18 @@ class VendorSalesReport(models.TransientModel):
 
     def _prepare_product_list(self, suppliers_for_mail):
         product_list = []
-        env_product_product = self.env['product.product']
-        product_domain = []
-        if self.exclude_product_ids:
-            product_domain.append(("id", "not in", self.exclude_product_ids.ids))
-        if self.product_category_ids:
-            product_domain.append(("categ_id", "in", self.product_category_ids.ids))
         for supplier in suppliers_for_mail:
             product = supplier.product_tmpl_id
-            product_domain.append(("product_tmpl_id", "=", product.id))
-            product_product = env_product_product.sudo().search(product_domain)
+            product_product = self.env['product.product'].sudo().search([("product_tmpl_id", "=", product.id)])
             product_list.append(product_product.ids)
+        import itertools
         products_list = list(itertools.chain.from_iterable(product_list))
+
+        if self.product_category_ids:
+            products_list = self.env['product.product'].sudo().search([("categ_id", "in", self.product_category_ids.ids)]).ids
+
+        if self.exclude_product_ids:
+            products_list = list(set(products_list) - set(self.exclude_product_ids.ids))
         return products_list
 
     # ===================================================================
@@ -263,7 +257,7 @@ class VendorSalesReport(models.TransientModel):
                     row += 1
             fp = io.BytesIO()
             workbook.save(fp)
-            report_id = self.env['excel.report'].create({
+            report_id = self.env['excel.report.wizard'].create({
                 'excel_file': base64.encodebytes(fp.getvalue()),
                 'file_name': filename
             })
@@ -272,7 +266,7 @@ class VendorSalesReport(models.TransientModel):
                 return {
                     'view_mode': 'form',
                     'res_id': report_id.id,
-                    'res_model': 'excel.report',
+                    'res_model': 'excel.report.wizard',
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
