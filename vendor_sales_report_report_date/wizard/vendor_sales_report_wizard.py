@@ -34,6 +34,18 @@ class VendorSalesReport(models.TransientModel):
     warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse', check_company=True)
     exclude_product_ids = fields.Many2many('product.product', string='Excluded Products')
 
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        # The company ids below is determined based on the field: prefix in the company
+        if self.env.company.id in (28, 2, 11, 22):
+            vendor_id = self.env['res.partner'].search([('name', '=', 'Jamjoom Pharma')])
+            defaults['vendor_id'] = vendor_id.id
+            excluded_vendor_ids = self.env['res.partner'].search([('name', '=', 'BDK مكتب بيت الدواء - كردستان')])
+            if self.env.company.id not in (11, 22):
+                defaults['excluded_vendor_ids'] = [(6, 0, excluded_vendor_ids.ids)]
+            defaults['filter_by'] = 'report_date'
+        return defaults
+
     def print_report_xls_menu(self):
         data, filename = self._prepare_report_data()
         return self._generate_excel_report(data, filename)
