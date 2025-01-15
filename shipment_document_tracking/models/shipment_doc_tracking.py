@@ -31,6 +31,7 @@ class ShipmentDocTracking(models.Model):
     doc_ids = fields.One2many('doc.doc', string="Documents", inverse_name="tracking_id")
     bill_ids = fields.One2many('account.move', string="Bills", inverse_name='tracking_id')
     po_ids = fields.One2many('purchase.order', string="Orders", inverse_name='tracking_id')
+    po_id = fields.Many2one('purchase.order', string="Order")
     purchase_order_count = fields.Integer(compute="_compute_origin_po_count", string='Purchase Order Count')
     invoice_count = fields.Integer(compute="_compute_invoice", string='Bill Count', copy=False, default=0, store=True)
     company_id = fields.Many2one('res.company', string="Company" ,default=lambda self: self.env.company)

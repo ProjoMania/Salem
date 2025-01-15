@@ -3,3 +3,4 @@ access_doc_doc,doc_doc,model_doc_doc,base.group_user,1,1,1,1
 access_doc_type,doc_type,model_doc_type,base.group_user,1,1,1,1
 access_purchase_billing_wiz,purchase_billing_wiz,model_purchase_billing_wiz,base.group_user,1,1,1,1
 access_shipment_doc_tracking,shipment_doc_tracking,model_shipment_doc_tracking,base.group_user,1,1,1,1
+access_create_sdt_manually,create_sdt_manually,model_create_sdt_manually,base.group_user,1,1,1,1

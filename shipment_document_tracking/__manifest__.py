@@ -21,6 +21,7 @@
         'views/purchase_order.xml',
         'views/move.xml',
         'wizard/billing_wiz.xml',
+        'wizard/create_sdt_manually_views.xml',
     ],
     'installable': True,
     'application': True,

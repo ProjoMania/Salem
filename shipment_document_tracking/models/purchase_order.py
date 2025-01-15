@@ -1,7 +1,7 @@
-from odoo import api, Command, fields, models, _
-from odoo.tools import format_amount, format_date, formatLang, groupby
+from odoo import fields, models, _
+from odoo.tools import groupby
 from odoo.tools.float_utils import float_is_zero
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -14,6 +14,15 @@ class PurchaseOrder(models.Model):
     airways_ref = fields.Char('AIRWAYS BILL', copy=False)
 
     def view_shipment_tracking(self):
+        shipment_doc_tracking = self.env['shipment.doc.tracking'].search([('po_id', '=', self.id)])
+        if len(shipment_doc_tracking) > 1:
+            return {
+                'name': _('Tracking Order'),
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list,form',
+                'res_model': self.tracking_id._name,
+                'domain': [('id', 'in', shipment_doc_tracking.ids)]
+            }
         return {
             'name': _('Tracking Order'),
             'type': 'ir.actions.act_window',
@@ -134,23 +143,27 @@ class PurchaseOrder(models.Model):
         }
         return invoice_vals
 
-    def action_create_sdt_manually(self):
+    def action_create_sdt_manually(self, creation_type=None):
             doc_list = []
-            for doc in self.partner_id.doc_type_ids:
-                deadline = datetime.datetime.now()
-                if doc.date_deadline_type == 'hours':
-                    deadline += relativedelta(hours=doc.date_deadline)
-                elif doc.date_deadline_type == 'days':
-                    deadline += relativedelta(days=doc.date_deadline)
-                doc_list.append((0, 0, {
-                        'doc_type_id': doc.id,
-                        'description': doc.description,
-                        'assigned_to': doc.assigned_to.id or False,
-                        'date_deadline': deadline
-                    }))
-            self.tracking_id = self.env['shipment.doc.tracking'].create({
-                'partner_id': self.partner_id.id,
-                'partner_ref': self.partner_ref,
-                'airways_ref': self.airways_ref,
-                'doc_ids': doc_list
-            })
+            if self.invoice_count == 1 or creation_type == 'consolidated':
+                for doc in self.partner_id.doc_type_ids:
+                    deadline = datetime.datetime.now()
+                    if doc.date_deadline_type == 'hours':
+                        deadline += relativedelta(hours=doc.date_deadline)
+                    elif doc.date_deadline_type == 'days':
+                        deadline += relativedelta(days=doc.date_deadline)
+                    doc_list.append((0, 0, {
+                            'doc_type_id': doc.id,
+                            'description': doc.description,
+                            'assigned_to': doc.assigned_to.id or False,
+                            'date_deadline': deadline
+                        }))
+                self.tracking_id = self.env['shipment.doc.tracking'].create({
+                    'partner_id': self.partner_id.id,
+                    'partner_ref': self.partner_ref,
+                    'airways_ref': self.airways_ref,
+                    'doc_ids': doc_list
+                })
+            else:
+                action = self.env.ref('shipment_document_tracking.action_create_sdt_manually').read()[0]
+                return action
