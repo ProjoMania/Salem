@@ -23,7 +23,7 @@
                     <button name="view_shipment_tracking" type="object"
                             invisible="not tracking_id"
                             class="oe_stat_button" icon="fa-archive">
-                        <span>SDT</span>
+                        <field name="shipment_doc_count" widget="statinfo" string="SDT"/>
                     </button>
                 </xpath>
 

@@ -1,4 +1,4 @@
-from odoo import fields, models, _
+from odoo import fields, models, api, _
 from odoo.tools import groupby
 from odoo.tools.float_utils import float_is_zero
 from odoo.exceptions import UserError
@@ -12,6 +12,13 @@ class PurchaseOrder(models.Model):
 
     tracking_id = fields.Many2one('shipment.doc.tracking', 'Tracking Order', copy=False)
     airways_ref = fields.Char('AIRWAYS BILL', copy=False)
+    shipment_doc_count = fields.Integer(compute="_compute_shipment_doc_count", string='Shipment Doc Count', copy=False, default=0, store=True)
+    
+    @api.depends('tracking_id')
+    def _compute_shipment_doc_count(self):
+        env_shipment_doc_tracking = self.env['shipment.doc.tracking']
+        for po in self:
+            po.shipment_doc_count = env_shipment_doc_tracking.search_count([('po_id', '=', po.id)])
 
     def view_shipment_tracking(self):
         shipment_doc_tracking = self.env['shipment.doc.tracking'].search([('po_id', '=', self.id)])
