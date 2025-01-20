@@ -30,6 +30,7 @@
         'views/payment_view.xml',
         'views/account_move.xml',
         'views/picking_view.xml',
+        'views/company.xml'
     ],
     "assets": {
         "web.assets_backend": [

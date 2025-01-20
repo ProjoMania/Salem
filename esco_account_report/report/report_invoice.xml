@@ -190,7 +190,7 @@
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
-                        <tr>
+                        <tr t-if="o.company_id.show_paid_amount">
                             <td class="right_border_light">
                                 <span>Paid Amount</span>
                             </td>
@@ -200,7 +200,7 @@
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
-                        <tr>
+                        <tr t-if="o.company_id.show_remaining_balance">
                             <td class="right_border_light">
                                 <span>Remaining Balance</span>
                             </td>

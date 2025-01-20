@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_company_form_inherit_esco" model="ir.ui.view">
+            <field name="name">res.company.form.inherit.esco</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Invoice Report Settings" name="invoice_report_settings">
+                        <group>
+                            <field name="show_paid_amount" widget="boolean_toggle"/>
+                            <field name="show_remaining_balance" widget="boolean_toggle"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+                
+    </data>
+</odoo>
