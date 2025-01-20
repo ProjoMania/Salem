@@ -196,7 +196,7 @@
                             </td>
                             <td class="text-center"
                                 style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
-                                <span t-field="o.amount_paid"
+                                <span t-esc="o.amount_total - o.amount_residual"
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
