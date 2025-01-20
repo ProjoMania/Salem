@@ -179,7 +179,7 @@
                 </table>
                 <div class="row justify-content-end "
                     style="margin-right: 0px; margin-top: -5px; border-color: grey;">
-                    <table style="width: 36%; margin-left: 2%;border:">
+                    <table style="width: 42%; margin-left: 2%;border:1px solid black;">
                         <tr>
                             <td class="right_border_light">
                                 <span>Subtotal</span>
@@ -190,7 +190,26 @@
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
-                        
+                        <tr>
+                            <td class="right_border_light">
+                                <span>Paid Amount</span>
+                            </td>
+                            <td class="text-center"
+                                style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
+                                <span t-field="o.amount_paid"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right_border_light">
+                                <span>Remaining Balance</span>
+                            </td>
+                            <td class="text-center"
+                                style="width: 155px !important; min-width: 154px !important; max-width: 155px !important;">
+                                <span t-field="o.amount_residual"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                            </td>
+                        </tr>
                         <tr>
                             <td class="bold_text">
                                 <br />
