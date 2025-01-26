@@ -21,7 +21,7 @@ class StockMoveLine(models.Model):
     def create(self, vals_list):
         res = super(StockMoveLine, self).create(vals_list)
         for line in res:
-            if not line.picking_type_id.allow_quarantine_delivery and res.filtered(lambda l: l.lot_id.state != 'approved'):
+            if not line.picking_type_id.allow_quarantine_delivery and res.filtered(lambda l: l.lot_id and l.lot_id.state != 'approved'):
                 raise ValidationError(_('Quarantine product should be released !'))
         return res
 
