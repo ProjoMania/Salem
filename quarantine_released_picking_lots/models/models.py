@@ -25,7 +25,7 @@ class StockMoveLine(models.Model):
         for line in self:
             if not line.picking_type_id.allow_quarantine_delivery and line.lot_id and line.lot_id.state != 'approved':
                 _logger.info(f"Quarantine product should be released ! {line.lot_id.name}: {line.lot_id.state}")
-                raise ValidationError(_(f'Quarantine product should be released ! {line.lot_id.name}: {line.lot_id.state}'))
+                raise ValidationError(_(f'Quarantine product should be released!\nProduct: {line.product_id.name}\nLot/Serial: {line.lot_id.name}\nCurrent State: {line.lot_id.state}\nPicking Type: {line.picking_type_id.name}'))
 
 
 class StockPickingType(models.Model):
