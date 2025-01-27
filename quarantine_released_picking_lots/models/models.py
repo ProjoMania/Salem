@@ -17,13 +17,12 @@ class StockMoveLine(models.Model):
             else:
                 line.quarantine_product_domain = domain + [('lot_id.state', '=', 'released')]
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super(StockMoveLine, self).create(vals_list)
-        for line in res:
-            if not line.picking_type_id.allow_quarantine_delivery and res.filtered(lambda l: l.lot_id and l.lot_id.state != 'approved'):
+    @api.constrains('picking_type_id', 'lot_id')
+    def _check_quarantine_delivery(self):
+        for line in self:
+            if not line.picking_type_id.allow_quarantine_delivery and line.lot_id and line.lot_id.state != 'approved':
                 raise ValidationError(_('Quarantine product should be released !'))
-        return res
+
 
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
