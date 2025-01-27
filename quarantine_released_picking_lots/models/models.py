@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMoveLine(models.Model):
@@ -21,7 +24,8 @@ class StockMoveLine(models.Model):
     def _check_quarantine_delivery(self):
         for line in self:
             if not line.picking_type_id.allow_quarantine_delivery and line.lot_id and line.lot_id.state != 'approved':
-                raise ValidationError(_('Quarantine product should be released !'))
+                _logger.info(f"Quarantine product should be released ! {line.lot_id.name}: {line.lot_id.state}")
+                raise ValidationError(_(f'Quarantine product should be released ! {line.lot_id.name}: {line.lot_id.state}'))
 
 
 class StockPickingType(models.Model):
