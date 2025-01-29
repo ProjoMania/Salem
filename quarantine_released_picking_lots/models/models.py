@@ -20,17 +20,21 @@ class StockMoveLine(models.Model):
             else:
                 line.quarantine_product_domain = domain + [('lot_id.state', '=', 'released')]
 
-    def button_validate(self):
-        res = super().button_validate()
-        for line in self:
-            if not line.picking_id.picking_type_id.allow_quarantine_delivery:
-                if line.lot_id and line.lot_state != 'approved':
-                    _logger.info(f"Quarantine product should be released !")
-                    raise ValidationError(_(f'Quarantine product should be released!'))
-        return res
-
 
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
     allow_quarantine_delivery = fields.Boolean(string="Allow Quarantine", default=True)
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    def button_validate(self):
+        res = super().button_validate()
+        for line in self.move_line_ids_without_package:
+            if not line.picking_id.picking_type_id.allow_quarantine_delivery:
+                if line.lot_id and line.lot_state != 'approved':
+                    _logger.info(f"Quarantine product should be released !")
+                    raise ValidationError(_(f'Quarantine product should be released!'))
+        return res
