@@ -49,22 +49,34 @@ class AdministrativeCorrespondence(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Administrative Correspondence'
 
-    name = fields.Char(string="Sequence No.", required=True, default=_("New"))
-    active = fields.Boolean(string="Active", default=True)
-    validated_by_id = fields.Many2one(comodel_name="res.users", string="Validated by", required=False, )
-    user_id = fields.Many2one(comodel_name="res.users", string="Issued By", required=True, default=lambda self: self.env.user)
-    assigned_id = fields.Many2one(comodel_name="res.users", string="Assigned To", required=True, default=lambda self: self.env.user)
-    template_id = fields.Many2one(comodel_name="administrative.correspondence.template", string="Subject", required=True, )
-    type = fields.Selection(string="Type", selection=[('internal', 'Internal'), ('inbound', 'Inbound'), ('outbound', 'Outbound')], required=True, )
-    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=False, default=lambda self: self.env.company)
-    state = fields.Selection(string="State", selection=[('draft', 'Draft'), ('submitted', 'Submitted'), ('pending', 'Pending'), ('cancelled', 'Cancelled') ], required=True, default='draft')
-    created_on = fields.Date(string="Created On", required=True, default=fields.Date.context_today)
-    sent_from_id = fields.Many2one(comodel_name="res.partner", string="Correspondence From", required=False, )
-    sent_to_id = fields.Many2one(comodel_name="res.partner", string="Correspondence To", required=False, )
-    parent_id = fields.Many2one(comodel_name="administrative.correspondence", string="Parent Correspondence", required=False, )
-    correspondence_attachment_ids = fields.One2many(comodel_name="administrative.correspondence.attachment", inverse_name="correspondence_id", string="Attachments", required=False, )
-    tag_ids = fields.Many2many(comodel_name="administrative.correspondence.tags", relation="administrative_correspondence_tags_rel", column1="correspondence_id", column2="tag_id", string="Tags", )
+    name = fields.Char(string="Sequence No.", required=True, default=_("New"), tracking=True)
+    active = fields.Boolean(string="Active", default=True, tracking=True)
+    validated_by_id = fields.Many2one(comodel_name="res.users", string="Validated by", required=False, tracking=True)
+    user_id = fields.Many2one(comodel_name="res.users", string="Issued By", required=True, default=lambda self: self.env.user, tracking=True)
+    assigned_id = fields.Many2one(comodel_name="res.users", string="Assigned To", required=True, default=lambda self: self.env.user, tracking=True)
+    template_id = fields.Many2one(comodel_name="administrative.correspondence.template", string="Subject", required=True, tracking=True)
+    type = fields.Selection(string="Type", selection=[('internal', 'Internal'), ('inbound', 'Inbound'), ('outbound', 'Outbound')], required=True, tracking=True)
+    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=False, default=lambda self: self.env.company, tracking=True)
+    state = fields.Selection(string="State", selection=[('draft', 'Draft'), ('submitted', 'Submitted'), ('pending', 'Pending'), ('cancelled', 'Cancelled') ], required=True, default='draft', tracking=True)
+    created_on = fields.Date(string="Created On", required=True, default=fields.Date.context_today, tracking=True)
+    sent_from_id = fields.Many2one(comodel_name="res.partner", string="Correspondence From", required=False, tracking=True)
+    sent_to_id = fields.Many2one(comodel_name="res.partner", string="Correspondence To", required=False, tracking=True)
+    parent_id = fields.Many2one(comodel_name="administrative.correspondence", string="Parent Correspondence", required=False, tracking=True)
+    correspondence_attachment_ids = fields.One2many(comodel_name="administrative.correspondence.attachment", inverse_name="correspondence_id", string="Attachments", required=False, tracking=True)
+    tag_ids = fields.Many2many(comodel_name="administrative.correspondence.tags", relation="administrative_correspondence_tags_rel", column1="correspondence_id", column2="tag_id", string="Tags", tracking=True)
     body = fields.Html(string="Correspondence Body", )
+    
+    def write(self, vals):
+        res = super(AdministrativeCorrespondence, self).write(vals)
+        if 'body' in vals:
+            """Track the changes in the body"""
+            self.message_post(
+                body=f"Body changed: {self.body}",
+                message_type='notification',
+                subtype_xmlid='mail.mt_note'
+            )
+        return res
+    
 
     @api.onchange('template_id')
     def _onchange_template_id(self):
