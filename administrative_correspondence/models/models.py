@@ -188,3 +188,9 @@ class Company(models.Model):
             })
         if internal_vals:
             self.env['ir.sequence'].create(internal_vals)
+
+
+class MailActivityType(models.Model):
+    _inherit = 'mail.activity.type'
+    
+    category = fields.Selection(selection_add=[('administrative_correspondence', 'Administrative Correspondence')])

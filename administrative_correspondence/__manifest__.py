@@ -27,7 +27,7 @@
         'security/ir.model.access.csv',
 
         'data/correspondence_data.xml',
-
+        'data/mail_activity_type.xml',
         'views/views.xml',
 
     ],
