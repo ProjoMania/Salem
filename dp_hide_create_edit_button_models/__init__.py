@@ -20,31 +20,23 @@ def _get_view(self, view_id=None, view_type=None, **options):
 
     # hide create button on all models
     if self.env.user.has_group('dp_hide_create_edit_button.group_hide_edit_button'):
-        temp = etree.fromstring(arch)
-        temp.set('edit','0')
-        arch = etree.tostring(temp)
+        arch.set('edit','0')
 
     # hide Edit button in model
     if self.env.user.hide_edit_model_ids:
         models = self.env.user.hide_edit_model_ids
         if self._name in models.mapped('model'):
-            temp = etree.fromstring(arch)
-            temp.set('edit','0')
-            arch = etree.tostring(temp)
+            arch.set('edit','0')
 
     # hide write button on all models
     if self.env.user.has_group('dp_hide_create_edit_button.group_hide_create_button'):
-        temp = etree.fromstring(arch)
-        temp.set('create','0')
-        arch = etree.tostring(temp)
+        arch.set('create','0')
 
     # hide create button in model
     if self.env.user.hide_create_model_ids:
         models = self.env.user.hide_create_model_ids
         if self._name in models.mapped('model'):
-            temp = etree.fromstring(arch)
-            temp.set('create','0')
-            arch = etree.tostring(temp)
+            arch.set('create','0')
 
     return arch, view
 
