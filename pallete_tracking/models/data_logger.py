@@ -62,4 +62,9 @@ class StockQuantPackageDataLogger(models.Model):
 
     logger_id = fields.One2many('data.logger', 'pallets_no', string='Data Logger')
 
+    @api.depends('quant_ids.location_id', 'quant_ids.company_id')
+    def _compute_package_info(self):
+        for package in self:
+            package.company_id = self.env.company.id
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
