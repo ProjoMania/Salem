@@ -2,7 +2,7 @@
 # DP InfoSol PVT LTD. See LICENSE file for full copyright and licensing details.
 from . import models
 from odoo.addons.base.models.ir_ui_view import Model
-from lxml import etree
+import xml.etree.ElementTree as ET
 
 get_view_super = Model._get_view
 
@@ -19,7 +19,7 @@ def _get_view(self, view_id=None, view_type=None, **options):
             return arch, view
 
     # hide create button on all models
-    if self.env.user.has_group('dp_hide_create_edit_button.group_hide_edit_button'):
+    if self.env.user.has_group('dp_hide_create_edit_button_models.group_hide_edit_button'):
         arch.set('edit','0')
 
     # hide Edit button in model
@@ -29,7 +29,7 @@ def _get_view(self, view_id=None, view_type=None, **options):
             arch.set('edit','0')
 
     # hide write button on all models
-    if self.env.user.has_group('dp_hide_create_edit_button.group_hide_create_button'):
+    if self.env.user.has_group('dp_hide_create_edit_button_models.group_hide_create_button'):
         arch.set('create','0')
 
     # hide create button in model
