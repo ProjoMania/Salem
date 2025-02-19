@@ -18,25 +18,35 @@ def _get_view(self, view_id=None, view_type=None, **options):
         if app_check.state != 'installed':
             return arch, view
 
-    # hide create button on all models
+    # Determine if edit button should be hidden based on user groups and model settings
+    should_hide_edit = False
+    
+    # Check if user has group-level edit restriction
     if self.env.user.has_group('dp_hide_create_edit_button_models.group_hide_edit_button'):
-        arch.set('edit','0')
-
-    # hide Edit button in model
+        should_hide_edit = True
+        
+    # Check if current model is in user's model-specific edit restrictions
     if self.env.user.hide_edit_model_ids:
-        models = self.env.user.hide_edit_model_ids
-        if self._name in models.mapped('model'):
-            arch.set('edit','0')
+        if self._name in self.env.user.hide_edit_model_ids.mapped('model'):
+            should_hide_edit = True
+            
+    # Set edit attribute based on restrictions
+    arch.set('edit', '0' if should_hide_edit else '1')
 
-    # hide write button on all models
+    # Determine if create button should be hidden based on user groups and model settings
+    should_hide_create = False
+    
+    # Check if user has group-level create restriction
     if self.env.user.has_group('dp_hide_create_edit_button_models.group_hide_create_button'):
-        arch.set('create','0')
-
-    # hide create button in model
+        should_hide_create = True
+        
+    # Check if current model is in user's model-specific create restrictions
     if self.env.user.hide_create_model_ids:
-        models = self.env.user.hide_create_model_ids
-        if self._name in models.mapped('model'):
-            arch.set('create','0')
+        if self._name in self.env.user.hide_create_model_ids.mapped('model'):
+            should_hide_create = True
+            
+    # Set create attribute based on restrictions
+    arch.set('create', '0' if should_hide_create else '1')
 
     return arch, view
 
