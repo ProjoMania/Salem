@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models
 
-class IrUiView(Model):
+class IrUiView(models.Model):
     _inherit = 'ir.ui.view'
 
     def _get_view(self, view_id=None, view_type=None, **options):
