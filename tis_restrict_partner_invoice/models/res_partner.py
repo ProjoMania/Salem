@@ -8,6 +8,6 @@ from odoo import fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    is_due_date_block = fields.Boolean(string='Due Date Block')
-    due_date_period = fields.Integer(default=30)
+    is_due_date_block = fields.Boolean(string='Due Date Block', tracking=True)
+    due_date_period = fields.Integer(default=30, tracking=True)
 
