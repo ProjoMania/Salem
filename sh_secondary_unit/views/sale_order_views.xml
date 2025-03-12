@@ -20,7 +20,7 @@
                 
             </xpath>
             <xpath expr="//field[@name='order_line']/tree" position="inside">
-                <field name="product_uom_domain" invisible="1"/>
+                <field name="product_uom_domain" column_invisible="1"/>
             </xpath>
             
             <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="before">
