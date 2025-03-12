@@ -7,6 +7,29 @@ from odoo import models, fields, api
 class ShSaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
+    product_uom = fields.Many2one(
+        'uom.uom', 
+        string='Unit of Measure',
+        domain="[('id', '=', product_uom_domain)]",
+        required=True,
+        help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control"
+    )
+    
+    product_uom_domain = fields.Many2one('uom.uom', compute='_compute_product_uom_domain')
+    
+    @api.depends('product_id')
+    def _compute_product_uom_domain(self):
+        for line in self:
+            line.product_uom_domain = line.product_id.uom_id.id if line.product_id else False
+    
+    @api.onchange('product_id')
+    def product_id_change(self):
+        res = super(ShSaleOrderLine, self).product_id_change()
+        if self.product_id:
+            # Force the UoM to be the product's UoM
+            self.product_uom = self.product_id.uom_id
+        return res
+
     sh_sec_qty = fields.Float(
         "Secondary Qty",
         digits='Product Unit of Measure'
