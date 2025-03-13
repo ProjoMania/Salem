@@ -24,11 +24,9 @@ class ShSaleOrderLine(models.Model):
     
     @api.onchange('product_id')
     def product_id_change(self):
-        res = super(ShSaleOrderLine, self).product_id_change()
         if self.product_id:
             # Force the UoM to be the product's UoM
             self.product_uom = self.product_id.uom_id
-        return res
 
     sh_sec_qty = fields.Float(
         "Secondary Qty",
