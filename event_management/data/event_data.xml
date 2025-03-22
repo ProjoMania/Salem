@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <data noupdate="1">
+
+        <delete id="event.event_stage_new" model = "event.stage"/>
+        <delete id="event.event_stage_booked" model = "event.stage"/>
+        <delete id="event.event_stage_announced" model = "event.stage"/>
+        <delete id="event.event_stage_done" model = "event.stage"/>
+        <delete id="event.event_stage_cancelled" model = "event.stage"/>
+
+    </data>
+
+
+    <data noupdate="1">
+
+        <record id="event_stage_draft" model="event.stage">
+            <field name="name">Draft</field>
+            <field name="description">Draft</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="event_stage_pending_approval" model="event.stage">
+            <field name="name">Pending Approval</field>
+            <field name="description">Pending Approval</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <!-- <record id="event_stage_approved" model="event.stage">
+            <field name="name">Approved</field>
+            <field name="description">Approved</field>
+            <field name="sequence">3</field>
+        </record> -->
+
+        <record id="event_stage_scheduled" model="event.stage">
+            <field name="name">Scheduled</field>
+            <field name="description">Scheduled</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <record id="event_stage_post_pending_approval" model="event.stage">
+            <field name="name">Pending Post-Event Approval</field>
+            <field name="description">Pending Post-Event Approval</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="event_stage_completed" model="event.stage">
+            <field name="name">Completed</field>
+            <field name="description">Completed</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="event_stage_rejected" model="event.stage">
+            <field name="name">Rejected</field>
+            <field name="description">Rejected</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="event_attachment_name_agenda" model="event.attachment">
+            <field name="name">Agenda</field>
+        </record>
+
+        <record id="event_attachment_speaker_cv" model="event.attachment">
+            <field name="name">Speaker CV</field>
+        </record>
+
+        <record id="event_attachment_speaker_contract" model="event.attachment">
+            <field name="name">Speaker Contract</field>
+        </record>
+
+        <record id="event_attachment_slide_kit" model="event.attachment">
+            <field name="name">Slide Kit</field>
+        </record>
+
+        <record id="event_attachment_venue" model="event.attachment">
+            <field name="name">Venue Quotation</field>
+        </record>
+
+        <record id="event_attachment_opening_script" model="event.attachment">
+            <field name="name">Opening Script</field>
+        </record>
+
+        <record id="event_attachment_invitation" model="event.attachment">
+            <field name="name">Invitation</field>
+        </record>
+
+        <record id="event_attachment_invoice" model="event.attachment">
+            <field name="name">Invoice</field>
+        </record>
+
+        <record id="event_attachment_event_picture" model="event.attachment">
+            <field name="name">Event Pictures</field>
+        </record>
+
+        <record id="event_attachment_attendees_list" model="event.attachment">
+            <field name="name">Attendees List</field>
+        </record>
+
+        <record id="budget_name_venue_rental" model="budget.name">
+            <field name="name">Venue Rental</field>
+        </record>
+
+        <record id="budget_name_catering_food" model="budget.name">
+            <field name="name">Catering And Food</field>
+        </record>
+
+        <record id="budget_name_market_advert" model="budget.name">
+            <field name="name">Marketing And Advertising</field>
+        </record>
+
+        <record id="budget_name_speaker_guests" model="budget.name">
+            <field name="name">Speakers And Guests</field>
+        </record>
+
+        <record id="budget_name_logistics" model="budget.name">
+            <field name="name">Logistics And Transportation</field>
+        </record>
+
+        <record id="budget_name_decoration" model="budget.name">
+            <field name="name">Decoration And Setup</field>
+        </record>
+
+        <record id="budget_name_entertainment" model="budget.name">
+            <field name="name">Entertainment</field>
+        </record>
+
+        <record id="budget_name_security" model="budget.name">
+            <field name="name">Security</field>
+        </record>
+
+        <record id="budget_name_miscellaneous" model="budget.name">
+            <field name="name">Miscellaneous</field>
+        </record>
+
+    </data>
+</odoo>
