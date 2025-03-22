@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+   
+        <record model="ir.ui.view" id="aspl_view_event_form">
+        <field name="name">aspl.event.event.form</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='%(event.event_barcode_action_main_view)d']" position="attributes">
+                <attribute name="invisible">state_name not in ('Draft')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_begin']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lang']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='event_type_id']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='organizer_id']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='address_id']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='event_ticket_ids']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='event_mail_ids']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='badge_format']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='badge_image']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_tz']" position="attributes">
+                    <attribute name="readonly">state_name in ('Completed')</attribute>
+                </xpath>
+                <xpath expr="//form/header" position="inside">
+                    <button name="event_submit_for_approval" class="oe_highlight" string="Submit" groups="event_management.group_event_project_owner"
+                    type="object" invisible="state_name  not in ['Draft']"/>
+                    <button name="pre_event_approved" class="oe_highlight" string="Approve" type="object" invisible="state_name  not in ['Pending Approval']" groups="event_management.group_event_project_manager"/>
+                    <button name="pre_event_rejected" class="oe_highlight" string="Reject" type="object" invisible="state_name  not in ['Pending Approval']" groups="event_management.group_event_project_manager"/>
+                   <!--  <button name="pre_event_scheduled" class="oe_highlight" string="Schedule"
+                               type="object" invisible="stage_id  not in [8]"/> -->
+                    <button name="post_event_pending_approval" class="oe_highlight" string="Submit Post Event"
+                               type="object" invisible="state_name  not in ['Scheduled']" groups="event_management.group_event_project_owner"/>
+                    <button name="event_completed" class="oe_highlight" string="Approve Post Event" groups="event_management.group_event_project_manager"
+                               type="object" invisible="state_name  not in ['Pending Post-Event Approval']"/>
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                        <field name="product_ids" readonly="state_name in ['Completed']" widget="many2many_tags"/>
+                        <field name="estimated_attendees" readonly="state_name in ['Completed']"/>
+                        <field name="estimated_cost" readonly="state_name in ['Completed']" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                        <field name="honorarium_amount" readonly="state_name in ['Completed']" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                        <field name="state_name" invisible="1" readonly="state_name in ['Completed']"/>
+                        
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="project_manager_id" readonly="state_name in ['Completed']"/>
+                </xpath>
+                <xpath expr="//field[@name='badge_image']" position="after">
+                        <field name="speaker" readonly="state_name in ['Completed']"/>
+                        <field name="speaker_specialty" readonly="state_name in ['Completed']"/>
+                </xpath>
+                <xpath expr="//page[@name='event_notes']" position="after">
+                        <page string="Rejection Reason" name="event_reject">
+                            <field name="reason" readonly="state_name in ['Completed']">
+                            </field>
+                        </page>
+                        <page string="Attachments" name="event_attachment">
+                            <field name="attachment_ids" readonly="state_name in ['Completed']">
+                                <tree string="Attachments" editable="bottom">
+                                        <field name="event_attachment_id"/>
+                                        <field name="ir_attachment_ids" widget="many2many_binary"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Budget Details" name="event_budget">
+                            <field name="event_budget_ids" readonly="state_name in ['Completed']">
+                                <tree string="Budget" editable="bottom">
+                                        <field name="budget_id"/>
+                                        <field name="estimated_cost" sum="Total Estimated"/>
+                                        <field name="actual_cost" sum="Total Actual"/>
+                                        <field name="difference_cost"/>
+                                </tree>
+                            </field>
+                        </page>
+
+
+                        <page string="Post-Event Phase" name="post_event_phase" invisible="state_name  in ['Draft', 'Pending Approval', 'Rejected']">
+                            <group>
+                                 <group>
+                                     <field name="actual_attendees_count"  readonly="state_name in ['Completed']"/>
+                                     <field name="variance" readonly="state_name in ['Completed']" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                 </group>
+                                 <group>
+                                      <field name="total_cost" readonly="state_name in ['Completed']" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                 </group>
+                            </group>
+                            <label for="post_attachment_ids" string="Attachments"/>
+                            <field name="post_attachment_ids" readonly="state_name in ['Completed']">
+                                <tree string="Attachments" editable="bottom">
+                                        <field name="event_attachment_id"/>
+                                        <field name="ir_attachment_ids" widget="many2many_binary"/>
+                                </tree>
+                            </field>
+                        </page>
+                </xpath>
+        </field>
+    </record>
+
+
+</data>
+</odoo>
