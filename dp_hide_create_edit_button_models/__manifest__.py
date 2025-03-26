@@ -2,7 +2,7 @@
 # DP InfoSol PVT LTD. See LICENSE file for full copyright and licensing details.
 {
     'name'        : 'Hide Create/Edit Buttons globally or Model Base',
-    'version'     : '14.0',
+    'version'     : '17.0',
     "author"      : "DP InfoSol",
     "support"     : "help.dpinfosol@gmail.com",
     'category'    : 'Administration',

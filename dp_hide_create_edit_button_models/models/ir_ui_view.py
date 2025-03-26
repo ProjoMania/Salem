@@ -4,11 +4,11 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class IrUiView(models.Model):
-    _inherit = 'ir.ui.view'
+class Model(models.AbstractModel):
+    _inherit = 'base'
 
     def _get_view(self, view_id=None, view_type=None, **options):
-        arch, view = super(IrUiView, self)._get_view(view_id, view_type, **options)
+        arch, view = super(Model, self)._get_view(view_id, view_type, **options)
         
         # by pass for root user
         if self.env.uid == 1:
