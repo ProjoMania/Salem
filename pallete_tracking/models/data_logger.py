@@ -65,6 +65,7 @@ class StockQuantPackageDataLogger(models.Model):
     @api.depends('quant_ids.location_id', 'quant_ids.company_id')
     def _compute_package_info(self):
         for package in self:
-            package.company_id = self.env.company.id
+            if not package.company_id:
+                package.company_id = self.env.company.id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
