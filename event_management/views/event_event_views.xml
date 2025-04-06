@@ -80,6 +80,7 @@
                         <field name="project_manager_id" readonly="state_name in ['Completed']"/>
                 </xpath>
                 <xpath expr="//field[@name='badge_image']" position="after">
+                        <field name="event_type" readonly="state_name in ['Completed']"/>
                         <field name="speaker" readonly="state_name in ['Completed']"/>
                         <field name="speaker_specialty" readonly="state_name in ['Completed']"/>
                 </xpath>

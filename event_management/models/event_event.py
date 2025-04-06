@@ -171,6 +171,10 @@ class EventEvent(models.Model):
     speaker = fields.Selection([('yes', 'Yes'), ('no', 'No')], default='yes', tracking=True, required=True)
     project_manager_id = fields.Many2one('hr.employee', string="Manager", tracking=True, required=True)
     speaker_specialty = fields.Text(string="Speaker Specialty", tracking=True, )
+    event_type = fields.Selection([('rtd', 'RTD'), ('local', 'Local Speaker Event'), 
+                                    ('sponsorship', 'Local Sponsorship'), ('ava', 'AVA'),
+                                      ('regional', 'Regional Sponsorship'),('international', 'International Sponsorship'),
+                                      ('external', 'External Standalone')], tracking=True, required=True)
     reason = fields.Text(string="Reason")
     actual_attendees_count = fields.Integer(string="Actual Attendees Count", tracking=True, compute='calculate_actual_attendees',
         readonly=True)
