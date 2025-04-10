@@ -34,7 +34,7 @@ class AccountMove(models.Model):
                 date_difference = (date1 - date2).days
                 date_difference_int = int(date_difference)
                 if today > account_moves.invoice_date_due:
-                    if self.partner_id.due_date_period < date_difference_int:
+                    if self.partner_id.due_date_period < date_difference_int and self.move_type != 'out_refund':
                         raise UserError("Following customer invoice {} due dates are lapse".format(account_moves.name))
             return res
         else:
