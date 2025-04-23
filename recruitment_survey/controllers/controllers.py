@@ -20,5 +20,8 @@ class WebsiteForm(form.WebsiteForm):
         return super(WebsiteForm, self).website_form(model_name, **kwargs)
 
     @http.route('/apply/success', type='http', auth="public", methods=['GET'], website=True, csrf=False)
-    def apply_success(self,**kwargs):
-        return request.redirect(request.session['REQ']['survey_url'])
+    def apply_success(self, **kwargs):
+        if 'REQ' in request.session and request.session['REQ'].get('survey_url'):
+            return request.redirect(request.session['REQ']['survey_url'])
+        else:
+            return request.redirect('/jobs')
