@@ -23,6 +23,22 @@ class ShPurchaseOrderLine(models.Model):
     )
     from_sec_qty = fields.Boolean(default=False)
     from_product_qty = fields.Boolean(default=False)
+    computed_uom = fields.Many2many("uom.uom", compute='_compute_computed_uom')
+    
+    @api.depends('product_id')
+    def _compute_computed_uom(self):
+        """
+        Compute the computed uom for the sale order line.
+        It should be the secondary uom if the product is secondary unit. In addition to the uom with xml_id 'uom.product_uom_unit'
+        """
+        for rec in self:
+            if rec.product_id:
+                if rec.product_id.sh_is_secondary_unit:
+                    rec.computed_uom = rec.product_id.sh_secondary_uom | rec.env.ref('uom.product_uom_unit')
+                else:
+                    rec.computed_uom = rec.env.ref('uom.product_uom_unit')
+            else:
+                rec.computed_uom = False
 
     @api.onchange('product_qty', 'product_uom')
     def onchange_product_uom_qty_sh(self):
