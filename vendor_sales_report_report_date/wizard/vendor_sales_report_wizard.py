@@ -37,7 +37,7 @@ class VendorSalesReport(models.TransientModel):
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
         # The company ids below is determined based on the field: prefix in the company
-        if self.env.company.id in (28, 2, 11, 22):
+        if self.env.company.id in (28, 2, 11, 22, 32):
             vendor_id = self.env['res.partner'].search([('name', '=', 'Jamjoom Pharma')])
             defaults['vendor_id'] = vendor_id.id
             excluded_vendor_ids = self.env['res.partner'].search([('name', '=', 'BDK مكتب بيت الدواء - كردستان')])
