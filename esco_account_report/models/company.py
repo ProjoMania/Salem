@@ -11,6 +11,7 @@ class ResCompany(models.Model):
     
     show_paid_amount = fields.Boolean(string='Show Paid Amount', default=False)
     show_remaining_balance = fields.Boolean(string='Show Remaining Balance', default=False)
+    show_product_total_qty = fields.Boolean(string='Show Product Total QTY', default=False)
 
     def get_amount_in_words(self, amount, currency, lang='ar_001'):
         if lang == 'ar_001':

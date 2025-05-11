@@ -125,7 +125,7 @@
                                 <span t-field="line.price_total" />
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>
                                 <span style="color: white;">1</span>
                             </td>
@@ -151,13 +151,19 @@
                             <td />
                             <td />
                             <td class="text-center" style="background-color: white !important;"></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
                 <div class="row justify-content-end "
                     style="margin-right: 0px; margin-top: -5px; border-color: grey;">
                     <table style="width: 36%; margin-left: 2%;border: none; ">
                         <tr>
+                            <td class="border-none" style="width: 75px !important; min-width: 75px !important; max-width: 75px !important;" t-if="o.company_id.show_product_total_qty">
+                                <span>Total QTY</span>
+                            </td>
+                            <td class="text-center border-none" style="width: 75px !important; min-width: 75px !important; max-width: 75px !important;" t-if="o.company_id.show_product_total_qty">
+                                <span t-esc="sum(o.order_line.mapped('product_uom_qty'))"/>
+                            </td>
                             <td class="right_border_light">
                                 <span>Subtotal</span>
                             </td>
@@ -169,6 +175,8 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="border-none" t-if="o.company_id.show_product_total_qty"/>
+                            <td class="border-none" t-if="o.company_id.show_product_total_qty"/>
                             <td class="bold_text">
                                 <br />
                                 <span class="bold_text">Total</span>

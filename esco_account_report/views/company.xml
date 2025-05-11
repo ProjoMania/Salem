@@ -11,6 +11,7 @@
                         <group>
                             <field name="show_paid_amount" widget="boolean_toggle"/>
                             <field name="show_remaining_balance" widget="boolean_toggle"/>
+                            <field name="show_product_total_qty" widget="boolean_toggle"/>
                         </group>
                     </page>
                 </notebook>
