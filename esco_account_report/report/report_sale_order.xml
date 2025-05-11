@@ -108,7 +108,12 @@
                                 <t t-set="i" t-value="i+1" />
                             </td>
                             <td class="text-left">
-                                <span t-field="line.product_id.name" />
+                                <t t-if="line.product_id.description_sale">
+                                    <span t-field="line.product_id.description_sale" />
+                                </t>
+                                <t t-else="">
+                                    <span t-field="line.product_id.name" />
+                                </t>
                             </td>
                             <td class="text-center">
                                 <span t-esc='"{:,}".format(int(line.product_uom_qty))' />
