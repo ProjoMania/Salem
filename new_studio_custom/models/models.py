@@ -4,6 +4,16 @@ from odoo import models, fields, api, _
 class Accountmove(models.Model):
     _inherit = "account.move"
 
+
+
+    def call_js_remove_outstanding_partial(self, x):
+        res = super(Accountmove, self).js_remove_outstanding_partial(x)
+        return True
+
+    def call_js_assign_outstanding_partial(self, x):
+        res = super(Accountmove, self).js_assign_outstanding_line(x)
+        return True
+
     def compute_x_invoice_ids_payment_transaction_count(self):
         for record in self:
             record['x_invoice_ids_payment_transaction_count'] = self.env['payment.transaction'].search_count(
