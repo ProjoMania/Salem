@@ -4,17 +4,189 @@ from odoo import models, fields, api, _
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    def reconcile_payments(self, move_ids):
+        moves = self.with_context(company_ids = [32, 2]).search([('id', 'in', move_ids)])
+        
+        total_moves = len(moves)
+        print(f"Starting reconciliation of {total_moves} invoices")
+        
+        error_move_ids = []  # List to track moves with errors
+        processed = 0
+        
+        print("Reconciling payments [", end="")
+        
+        # Process in batches instead of using multithreading
+        move_ids = moves.ids
+        batch_size = 250  # Process 10 invoices at a time
+        
+        for start_idx in range(0, len(move_ids), batch_size):
+            batch = move_ids[start_idx:start_idx + batch_size]
+            batch_errors = []
+            
+            for move_id in batch:
+                try:
+                    move = self.with_context(company_ids = [32, 2]).env['account.move'].browse(move_id)
+                    # Store lines to reassign later
+                    pay_term_lines = move.line_ids.filtered(
+                        lambda line: line.account_type in ('asset_receivable', 'liability_payable'))
+                    invoice_partials = []
+                    partial_list = []
+
+                    # Collect all partials in one pass
+                    print(f"Collecting partials for move {move.id} ({move.name})")
+                    for partial in pay_term_lines.matched_debit_ids:
+                        partial_list.append(partial.id)
+                        if partial.credit_move_id.id in move.line_ids.ids:
+                            invoice_partials.append(partial.debit_move_id)
+                        else:
+                            invoice_partials.append(partial.credit_move_id)
+
+                    for partial in pay_term_lines.matched_credit_ids:
+                        partial_list.append(partial.id)
+                        if partial.debit_move_id.id in move.line_ids.ids:
+                            invoice_partials.append(partial.credit_move_id)
+                        else:
+                            invoice_partials.append(partial.debit_move_id)
+                    
+                    # Remove all outstanding partials
+                    if partial_list:
+                        move.with_context(company_ids = [32, 2]).call_js_remove_outstanding_partials(partial_list)
+                        pay_term_lines._compute_amount_residual()
+                        # Re-assign lines
+                        for line in invoice_partials:
+                            move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
+                    
+                    # Commit after each successful move to save progress
+                    self.env.cr.commit()
+                    
+                except Exception as e:
+                    print(f"Error processing move {move_id}: {str(e)}")
+                    # Ensure transaction is rolled back to prevent aborted transaction errors
+                    self.env.cr.rollback()
+                    batch_errors.append(move_id)  # Add move_id to error list
+                
+                # Update progress after each move
+                processed += 1
+                progress = int(50 * processed / total_moves)
+                print("\rReconciling payments [" + "=" * progress + " " * (50 - progress) + "] " +
+                      f"{processed}/{total_moves} ({int(processed/total_moves*100)}%)", end="")
+            self.env.cr.execute("select setval('mail_tracking_value_id_seq', (select max(id) from mail_tracking_value));")
+            self.env.cr.commit()
+            # Add any errors from this batch to the main error list
+            error_move_ids.extend(batch_errors)
+        
+        print("\nCompleted reconciliation of {total_moves} invoices")
+        
+        # Print the list of move_ids that had errors
+        if error_move_ids:
+            print(f"The following {len(error_move_ids)} moves had errors during processing:")
+            print(error_move_ids)
+        else:
+            print("All moves were processed successfully with no errors.")
+            
+        return True
+
+
     def reset_exchange_entries(self, company_id, journal_id):
-        moves = self.search([('journal_id', '=', journal_id), ('company_id', '=', company_id)])
+        print("Starting reset_exchange_entries for company_id:", company_id, "journal_id:", journal_id)
+        moves = self.search([('journal_id', '=', journal_id), ('company_id', '=', company_id), ('state', '=', 'posted')])
+        print(f"Found {len(moves)} posted moves to process")
+        processed_moves = set()
+        processed_moves.add(495812)
+        print("Added move ID 495812 to processed_moves")
+
         for move in moves:
-            print(move.name)
-            if move.mapped('line_ids').mapped('matched_debit_ids') or move.mapped('line_ids').mapped('matched_credit_ids'):
+            print(f"Processing move: {move.name} (ID: {move.id})")
+            if move.id in processed_moves:
+                print(f"Move {move.id} already processed, skipping")
                 continue
-            try:
-                move.call_draft()
-                move.call_cancel()
-            except Exception as e:
-                print(e)
+                
+            # Check if move is reconciled
+            matched_debits = move.mapped('line_ids').mapped('matched_debit_ids')
+            matched_credits = move.mapped('line_ids').mapped('matched_credit_ids')
+            print(f"Move {move.id} has {len(matched_debits)} matched debits and {len(matched_credits)} matched credits")
+            
+            # If not reconciled, just reset this move
+            if not matched_debits and not matched_credits:
+                print(f"Move {move.id} is not reconciled, resetting directly")
+                try:
+                    move.call_draft()
+                    move.call_cancel()
+                    processed_moves.add(move.id)
+                    print(f"Successfully reset move {move.id}")
+                except Exception as e:
+                    print(f"Error resetting move {move.id}: {e}")
+                continue
+            # elif any(line.currency_id.id == 87 for line in move.line_ids.mapped('matched_debit_ids.credit_move_id')) or \
+            #      any(line.currency_id.id == 87 for line in move.line_ids.mapped('matched_credit_ids.debit_move_id')):
+            #     print(f"Move {move.id} is reconciled with invoice in currency ID 87")
+            #     try:
+            #         # Get the invoice IDs with currency 87
+            #         invoice_ids = []
+            #         for line in move.line_ids:
+            #             invoice_ids.extend([ml.move_id.id for ml in line.matched_debit_ids.mapped('credit_move_id')
+            #                                if ml.currency_id.id == 87 and ml.move_id.move_type == 'out_invoice'])
+            #             invoice_ids.extend([ml.move_id.id for ml in line.matched_credit_ids.mapped('debit_move_id')
+            #                                if ml.currency_id.id == 87 and ml.move_id.move_type == 'out_invoice'])
+            #
+            #         if invoice_ids:
+            #             print(f"Found invoices with currency 87: {invoice_ids}")
+            #             # Pass the invoice IDs to bulk_reassign_reconcile method
+            #             self.bulk_reassign_reconcile(invoice_ids)
+            #             processed_moves.add(move.id)
+            #             print(f"Successfully processed move {move.id} with bulk_reassign_reconcile")
+            #     except Exception as e:
+            #         print(f"Error processing move {move.id} with currency 87: {e}")
+            #     continue
+            
+            # Find all reconciled moves
+            all_reconciled_moves = set()
+            same_journal_moves = set()
+            print(f"Finding reconciled moves for move {move.id}")
+            
+            for debit in matched_debits:
+                all_reconciled_moves.add(debit.credit_move_id.move_id.id)
+                all_reconciled_moves.add(debit.debit_move_id.move_id.id)
+                if debit.credit_move_id.move_id.journal_id.id == journal_id:
+                    same_journal_moves.add(debit.credit_move_id.move_id.id)
+                if debit.debit_move_id.move_id.journal_id.id == journal_id:
+                    same_journal_moves.add(debit.debit_move_id.move_id.id)
+                    
+            for credit in matched_credits:
+                all_reconciled_moves.add(credit.credit_move_id.move_id.id)
+                all_reconciled_moves.add(credit.debit_move_id.move_id.id)
+                if credit.credit_move_id.move_id.journal_id.id == journal_id:
+                    same_journal_moves.add(credit.credit_move_id.move_id.id)
+                if credit.debit_move_id.move_id.journal_id.id == journal_id:
+                    same_journal_moves.add(credit.debit_move_id.move_id.id)
+            
+            print(f"Move {move.id} has {len(all_reconciled_moves)} reconciled moves, {len(same_journal_moves)} in same journal")
+            
+            # Check if there are any reconciled moves from different journals
+            other_journal_moves = all_reconciled_moves - same_journal_moves
+            if other_journal_moves:
+                print(f"Move {move.id} has reconciled moves from other journals, skipping")
+                # Skip this move as it's reconciled with moves from other journals
+                continue
+                
+            # Reset both the current move and its reconciled moves from the same journal
+            if same_journal_moves:
+                same_journal_moves.add(move.id)
+                print(f"Resetting {len(same_journal_moves)} reconciled moves from same journal")
+                for move_id in same_journal_moves:
+                    if move_id in processed_moves:
+                        print(f"Move {move_id} already processed, skipping")
+                        continue
+                    try:
+                        print(f"Resetting move {move_id}")
+                        self.browse(move_id).call_draft()
+                        self.browse(move_id).call_cancel()
+                        processed_moves.add(move_id)
+                        print(f"Successfully reset move {move_id}")
+                    except Exception as e:
+                        print(f"Error resetting move {move_id}: {e}")
+        
+        print(f"Completed reset_exchange_entries, processed {len(processed_moves)} moves")
         return True
 
     def call_draft(self):
@@ -44,104 +216,162 @@ class AccountMove(models.Model):
         Returns:
             bool: True on success
         """
-        self = self.with_context(company_ids = [2, 32])
+        print("Starting bulk_reassign_reconcile with", len(move_ids), "moves")
+        self = self.with_context(company_ids=[2, 32])
         print(move_ids)
         print(len(move_ids))
-        other_move_ids = []
+        
+        # Pre-browse all moves to avoid repeated database calls
+        print("Pre-browsing all moves...")
+        moves_dict = {move.id: move for move in self.browse(move_ids)}
+        print("Finished pre-browsing", len(moves_dict), "moves")
+        
+        # Process out_invoice moves first
+        print("Categorizing moves...")
+        invoice_moves = []
+        other_moves = []
         for move_id in move_ids:
-            move = self.browse(move_id)
-            if move.currency_id.id != 87:
-                continue
-            if move.move_type != 'out_invoice':
-                other_move_ids.append(move_id)
-                continue
-            pay_term_lines = move.line_ids \
-                .filtered(lambda line: line.account_type in ('asset_receivable', 'liability_payable'))
+            move = moves_dict[move_id]
+            if move.move_type == 'out_invoice':
+                invoice_moves.append(move)
+            else:
+                other_moves.append(move)
+        
+        print("Found", len(invoice_moves), "invoice moves and", len(other_moves), "other moves")
+        
+        # Process invoice moves
+        print("Processing invoice moves...")
+        invoice_move_data = []
+        for i, move in enumerate(invoice_moves):
+            if i % 10 == 0:
+                print(f"Processing invoice move {i+1}/{len(invoice_moves)}")
+            pay_term_lines = move.line_ids.filtered(lambda line: line.account_type in ('asset_receivable', 'liability_payable'))
             invoice_partials = []
             partial_list = []
+            
+            # Collect all partials in one pass
+            print(f"Collecting partials for move {move.id} ({move.name})")
             for partial in pay_term_lines.matched_debit_ids:
                 partial_list.append(partial.id)
                 if partial.credit_move_id.id in move.line_ids.ids:
                     invoice_partials.append(partial.debit_move_id)
                 else:
                     invoice_partials.append(partial.credit_move_id)
+                    
             for partial in pay_term_lines.matched_credit_ids:
                 partial_list.append(partial.id)
                 if partial.debit_move_id.id in move.line_ids.ids:
                     invoice_partials.append(partial.credit_move_id)
                 else:
                     invoice_partials.append(partial.debit_move_id)
-            print(move.name)
-            for par in partial_list:
+            
+            print(move.name, "- Found", len(partial_list), "partials and", len(invoice_partials), "invoice partials")
+            invoice_move_data.append((move, partial_list, invoice_partials))
+            
+            # Remove all partials first
+            print(f"Removing {len(partial_list)} partials for move {move.id}")
+            for j, par in enumerate(partial_list):
+                if j % 10 == 0 and len(partial_list) > 10:
+                    print(f"Removing partial {j+1}/{len(partial_list)} for move {move.id}")
                 try:
                     move.js_remove_outstanding_partial(par)
-                except:
-                    print("ERROR REMOVE")
+                except Exception as e:
+                    print("ERROR REMOVE:", str(e))
                     continue
-            self.env.cr.execute("update account_move_line set amount_residual = amount_residual_currency where currency_id = company_currency_id and company_id = 32;")
-            self.env.cr.commit()
-            for line in invoice_partials:
+        
+        # Process other moves
+        print("Processing other moves...")
+        other_move_data = []
+        for i, move in enumerate(other_moves):
+            if i % 10 == 0:
+                print(f"Processing other move {i+1}/{len(other_moves)}")
+            pay_term_lines = move.line_ids.filtered(lambda line: line.account_type in ('asset_receivable', 'liability_payable'))
+            invoice_partials = {}
+            partial_list = []
+            
+            # Process matched_debit_ids
+            print(f"Processing matched_debit_ids for move {move.id} ({move.name})")
+            for partial in pay_term_lines.matched_debit_ids:
+                partial_list.append(partial.id)
+                if partial.credit_move_id.id in move.line_ids.ids:
+                    debit_move = partial.debit_move_id
+                    if debit_move.move_id.move_type == 'out_invoice':
+                        invoice_partials.setdefault(debit_move.move_id, []).append(partial.credit_move_id)
+                else:
+                    credit_move = partial.credit_move_id
+                    if credit_move.move_id.move_type == 'out_invoice':
+                        invoice_partials.setdefault(credit_move.move_id, []).append(partial.debit_move_id)
+            
+            # Process matched_credit_ids
+            print(f"Processing matched_credit_ids for move {move.id}")
+            for partial in pay_term_lines.matched_credit_ids:
+                partial_list.append(partial.id)
+                if partial.debit_move_id.id in move.line_ids.ids:
+                    credit_move = partial.credit_move_id
+                    if credit_move.move_id.move_type == 'out_invoice':
+                        invoice_partials.setdefault(credit_move.move_id, []).append(partial.debit_move_id)
+                else:
+                    debit_move = partial.debit_move_id
+                    if debit_move.move_id.move_type == 'out_invoice':
+                        invoice_partials.setdefault(debit_move.move_id, []).append(partial.credit_move_id)
+            
+            print(move.name, "- Found", len(partial_list), "partials and", len(invoice_partials), "invoice moves to reassign")
+            other_move_data.append((move, partial_list, invoice_partials))
+            
+            # Remove all partials first
+            print(f"Removing {len(partial_list)} partials for move {move.id}")
+            for j, par in enumerate(partial_list):
+                if j % 10 == 0 and len(partial_list) > 10:
+                    print(f"Removing partial {j+1}/{len(partial_list)} for move {move.id}")
+                try:
+                    move.js_remove_outstanding_partial(par)
+                except Exception as e:
+                    print("ERROR REMOVE:", str(e))
+                    continue
+        
+        # Execute SQL update after all removals
+        print("Executing SQL update for company_id=32...")
+        self.env.cr.execute("update account_move_line set amount_residual = amount_residual_currency where currency_id = company_currency_id and company_id = 32;")
+        self.env.cr.commit()
+        print("SQL update completed and committed")
+        
+        # Now reassign all partials for invoice moves
+        print("Reassigning partials for invoice moves...")
+        for i, (move, _, invoice_partials) in enumerate(invoice_move_data):
+            if i % 10 == 0:
+                print(f"Reassigning for invoice move {i+1}/{len(invoice_move_data)}")
+            print(f"Reassigning {len(invoice_partials)} partials for move {move.id} ({move.name})")
+            for j, line in enumerate(invoice_partials):
+                if j % 10 == 0 and len(invoice_partials) > 10:
+                    print(f"Reassigning partial {j+1}/{len(invoice_partials)} for move {move.id}")
                 print("line")
                 print(line)
                 try:
                     print(move, line)
                     move.js_assign_outstanding_line(line.id)
-                except:
-                    print("Error Assign")
+                except Exception as e:
+                    print("Error Assign:", str(e))
                     continue
-        for move_id in other_move_ids:
-            move = self.browse(move_id)
-            pay_term_lines = move.line_ids \
-                .filtered(lambda line: line.account_type in ('asset_receivable', 'liability_payable'))
-            invoice_partials = {}
-            partial_list = []
-            for partial in pay_term_lines.matched_debit_ids:
-                partial_list.append(partial.id)
-                if partial.credit_move_id.id in move.line_ids.ids:
-                    if partial.debit_move_id.move_id.move_type == 'out_invoice':
-                        if partial.debit_move_id.move_id in invoice_partials.keys():
-                            invoice_partials[partial.debit_move_id.move_id].append(partial.credit_move_id)
-                        else:
-                            invoice_partials.update({partial.debit_move_id.move_id: [partial.credit_move_id]})
-                else:
-                    if partial.credit_move_id.move_id.move_type == 'out_invoice':
-                        if partial.credit_move_id.move_id in invoice_partials.keys():
-                            invoice_partials[partial.credit_move_id.move_id].append(partial.debit_move_id)
-                        else:
-                            invoice_partials.update({partial.credit_move_id.move_id: [partial.debit_move_id]})
-            for partial in pay_term_lines.matched_credit_ids:
-                partial_list.append(partial.id)
-                if partial.debit_move_id.id in move.line_ids.ids:
-                    if partial.credit_move_id.move_id.move_type == 'out_invoice':
-                        if partial.credit_move_id.move_id in invoice_partials.keys():
-                            invoice_partials[partial.credit_move_id.move_id].append(partial.debit_move_id)
-                        else:
-                            invoice_partials.update(
-                                {partial.credit_move_id.move_id: [partial.debit_move_id]})
-                else:
-                    if partial.debit_move_id.move_id.move_type == 'out_invoice':
-                        if partial.debit_move_id.move_id in invoice_partials.keys():
-                            invoice_partials[partial.debit_move_id.move_id].append(partial.credit_move_id)
-                        else:
-                            invoice_partials.update({partial.debit_move_id.move_id: [partial.credit_move_id]})
-            print(move.name)
-            for par in partial_list:
-                try:
-                    move.js_remove_outstanding_partial(par)
-                except:
-                    print("ERROR REMOVE")
-                    continue
-            self.env.cr.execute("update account_move_line set amount_residual = amount_residual_currency where currency_id = company_currency_id and company_id = 32;")
-            self.env.cr.commit()
-            for mov in invoice_partials.keys():
-                print(mov)
-                for line in invoice_partials[mov]:
+        
+        # Now reassign all partials for other moves
+        print("Reassigning partials for other moves...")
+        for i, (move, _, invoice_partials_dict) in enumerate(other_move_data):
+            if i % 10 == 0:
+                print(f"Processing other move reassignment {i+1}/{len(other_move_data)}")
+            print(f"Processing reassignments for move {move.id} ({move.name})")
+            for mov, lines in invoice_partials_dict.items():
+                print(f"Reassigning {len(lines)} lines for invoice {mov.id} ({mov.name})")
+                for j, line in enumerate(lines):
+                    if j % 10 == 0 and len(lines) > 10:
+                        print(f"Reassigning line {j+1}/{len(lines)} for invoice {mov.id}")
                     try:
                         print(mov, line)
                         mov.js_assign_outstanding_line(line.id)
-                    except:
-                        print("Error Assign")
+                    except Exception as e:
+                        print("Error Assign:", str(e))
                         continue
+        
+        print("bulk_reassign_reconcile completed successfully")
         return True
 
     def call_js_remove_outstanding_partials(self, x_list):
