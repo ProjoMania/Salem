@@ -44,8 +44,9 @@ class SurveyUserInput(models.Model):
     @api.model
     def create(self, vals):
         res = super(SurveyUserInput, self).create(vals)
-        applicant_id=self.env['hr.applicant'].sudo().browse(request.session.get('REQ').get('applicant_id'))
-        if applicant_id:
-            res.email=applicant_id.email_from
-            res.applicant_id=applicant_id.id
+        applicant_id=request.session.get('REQ',{}).get('applicant_id')
+        applicant_obj=self.env['hr.applicant'].sudo().browse(applicant_id)
+        if applicant_obj:
+            res.email=applicant_obj.email_from
+            res.applicant_id=applicant_obj.id
         return res
