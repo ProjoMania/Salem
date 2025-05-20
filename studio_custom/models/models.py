@@ -76,7 +76,6 @@ class AccountMove(models.Model):
                 full_reconcile_id.write({'exchange_move_id': False})
             if move.id in processed_moves:
                 continue
-                
             matched_debits = move.mapped('line_ids').mapped('matched_debit_ids')
             matched_credits = move.mapped('line_ids').mapped('matched_credit_ids')
             
