@@ -97,6 +97,9 @@ class AccountMove(models.Model):
 
         for move in moves:
             print(f"Processing move: {move.name} (ID: {move.id})")
+            full_reconcile_id = self.env['account.partial.reconcile'].search([('exchange_move_id', '=', move.id)])
+            if full_reconcile_id:
+                full_reconcile_id.write({'exchange_move_id': False})
             if move.id in processed_moves:
                 print(f"Move {move.id} already processed, skipping")
                 continue
