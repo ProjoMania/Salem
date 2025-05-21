@@ -47,11 +47,11 @@ class AccountMove(models.Model):
                         move.with_context(company_ids = [32, 2]).call_js_remove_outstanding_partials(partial_list)
                         pay_term_lines._compute_amount_residual()
                         # Re-assign lines
-                        for line in invoice_partials:
-                            move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
-                    
+                        # for line in invoice_partials:
+                        #     move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
+
                     self.env.cr.commit()
-                    
+
                 except Exception as e:
                     self.env.cr.rollback()
                     batch_errors.append(move_id)
