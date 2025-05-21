@@ -28,5 +28,19 @@
             </xpath>
         </template>
 
+        <template id="survey_fill_form_start" inherit_id="survey.survey_fill_form_start">
+            <xpath expr="//button" position="replace">
+                <button type="submit" value="start" class="btn btn-primary btn-lg disabled">
+                        <t t-if="survey.certification">
+                            Start Certification
+                        </t>
+                        <t t-else="">
+                            Start Test
+                        </t>
+                    </button>
+            </xpath>
+        </template>
+
+
     </data>
 </odoo>
