@@ -5,22 +5,29 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def reconcile_payments(self, move_ids):
+        _logger = logging.getLogger(__name__)
+        _logger.info("Starting reconcile_payments...")
         moves = self.with_context(company_ids = [32, 2]).search([('id', 'in', move_ids)])
         
         total_moves = len(moves)
+        _logger.info(f"Total moves to process: {total_moves}")
         
         error_move_ids = []  # List to track moves with errors
+        error_details = {}  # Dict to track error messages for each move
         processed = 0
         
         move_ids = moves.ids
         batch_size = 250  # Process 10 invoices at a time
+        _logger.info(f"Processing in batches of {batch_size}")
         
         for start_idx in range(0, len(move_ids), batch_size):
             batch = move_ids[start_idx:start_idx + batch_size]
+            _logger.info(f"\nProcessing batch starting at index {start_idx}")
             batch_errors = []
             
             for move_id in batch:
                 try:
+                    _logger.info(f"Processing move ID: {move_id}")
                     move = self.with_context(company_ids = [32, 2]).env['account.move'].browse(move_id)
                     # Store lines to reassign later
                     pay_term_lines = move.line_ids.filtered(
@@ -44,23 +51,42 @@ class AccountMove(models.Model):
                     
                     # Remove all outstanding partials
                     if partial_list:
+                        _logger.info(f"Removing {len(partial_list)} outstanding partials")
                         move.with_context(company_ids = [32, 2]).call_js_remove_outstanding_partials(partial_list)
                         pay_term_lines._compute_amount_residual()
                         # Re-assign lines
-                        # for line in invoice_partials:
-                        #     move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
-
+                        _logger.info(f"Re-assigning {len(invoice_partials)} lines")
+                        for line in invoice_partials:
+                            move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
+                        
                     self.env.cr.commit()
+                    _logger.info(f"Successfully processed move ID: {move_id}")
 
                 except Exception as e:
                     self.env.cr.rollback()
-                    batch_errors.append(move_id)
+                    if move_id not in error_move_ids and move_id not in batch_errors:
+                        batch_errors.append(move_id)
+                        error_details[move_id] = str(e)
+                        _logger.error(f"Error processing move ID {move_id}: {e}")
                 
                 processed += 1
                 progress = int(50 * processed / total_moves)
+                _logger.info(f"Progress: {processed}/{total_moves} moves ({(processed/total_moves*100):.1f}%)")
+                
             self.env.cr.execute("select setval('mail_tracking_value_id_seq', (select max(id) from mail_tracking_value));")
             self.env.cr.commit()
-            error_move_ids.extend(batch_errors)
+            error_move_ids.extend([x for x in batch_errors if x not in error_move_ids])
+            _logger.info(f"Completed batch. Errors in this batch: {len(batch_errors)}")
+        
+        _logger.info("\n=== RECONCILIATION REPORT ===")
+        _logger.info(f"Total moves processed: {total_moves}")
+        _logger.info(f"Successful moves: {total_moves - len(error_move_ids)}")
+        _logger.info(f"Failed moves: {len(error_move_ids)}")
+        if error_move_ids:
+            _logger.info("\nDetailed Error Report:")
+            for move_id in error_move_ids:
+                _logger.info(f"Move ID {move_id}: {error_details.get(move_id, 'Unknown error')}")
+        _logger.info("===========================")
         
         return True
 
