@@ -122,10 +122,9 @@ class AccountJournal(models.Model):
         result = {}
         for journal in self:
             journal_vals = query_res[journal.id] if journal.id in query_res.keys() else {"journal_id": journal.id, "balance_end_real": 0, "amount_currency": 0, "journal_currency": journal.currency_id.id}
-            print(journal.name)
-            print(journal_vals['balance_end_real'] if journal_vals[
-                                                        'journal_currency'] == self.env.company.currency_id.id else
-                journal_vals['amount_currency'])
+            # print(journal_vals['balance_end_real'] if journal_vals[
+            #                                             'journal_currency'] == self.env.company.currency_id.id else
+            #     journal_vals['amount_currency'])
             result[journal.id] = (
                 bool(journal_vals['journal_id']),
                 journal_vals['balance_end_real'] if journal_vals[
