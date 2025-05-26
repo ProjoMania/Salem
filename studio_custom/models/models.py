@@ -8,8 +8,8 @@ class AccountMove(models.Model):
         moves = self.with_context(company_ids = [32, 2]).search([('id', 'in', move_ids)])
         
         total_moves = len(moves)
-        
         error_move_ids = []  # List to track moves with errors
+        error_details = {}  # Dict to track error messages for each move
         processed = 0
         
         move_ids = moves.ids
@@ -47,20 +47,22 @@ class AccountMove(models.Model):
                         move.with_context(company_ids = [32, 2]).call_js_remove_outstanding_partials(partial_list)
                         pay_term_lines._compute_amount_residual()
                         # Re-assign lines
-                        # for line in invoice_partials:
-                        #     move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
-
+                        for line in invoice_partials:
+                            move.with_context(company_ids = [32, 2]).call_js_assign_outstanding_line(line.id)
+                        
                     self.env.cr.commit()
 
                 except Exception as e:
                     self.env.cr.rollback()
-                    batch_errors.append(move_id)
+                    if move_id not in error_move_ids and move_id not in batch_errors:
+                        batch_errors.append(move_id)
+                        error_details[move_id] = str(e)
                 
                 processed += 1
-                progress = int(50 * processed / total_moves)
+                
             self.env.cr.execute("select setval('mail_tracking_value_id_seq', (select max(id) from mail_tracking_value));")
             self.env.cr.commit()
-            error_move_ids.extend(batch_errors)
+            error_move_ids.extend([x for x in batch_errors if x not in error_move_ids])
         
         return True
 
