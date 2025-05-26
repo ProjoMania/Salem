@@ -10,7 +10,6 @@ class WebsiteProductDetails(http.Controller):
     def products_details(self, model=None):
         name = model.split('?')
         name1 = request.env[name[0]].sudo().search([('id', '=', name[1])])
-        print(name1)
         if name1:
             return http.request.render("aspl_reports_customization.website_valid_doc_template",
                                        {'id': name1, 'model': name[0], 'record': name1})
