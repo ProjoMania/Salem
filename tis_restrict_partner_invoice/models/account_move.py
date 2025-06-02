@@ -21,7 +21,17 @@ class AccountMove(models.Model):
             self.invoice_date_due = self.invoice_date + timedelta(days=self.partner_id.due_date_period)
 
     def action_post(self):
-        if self.partner_id.is_due_date_block and self.partner_id.due_date_period > 0:
+        # Check if invoice is related to an approved sale order
+        is_from_approved_sale = False
+        if self.invoice_origin:
+            sale_orders = self.env['sale.order'].search([('name', '=', self.invoice_origin)])
+            if sale_orders and any(order.is_approved for order in sale_orders):
+                is_from_approved_sale = True
+                
+        # Skip due date validation if from approved sale order
+        if is_from_approved_sale or not (self.partner_id.is_due_date_block and self.partner_id.due_date_period > 0):
+            return super(AccountMove, self).action_post()
+        else:
             res = super(AccountMove, self).action_post()
             account_moves = self.search(
                 [('partner_id', '=', self.partner_id.id), ('move_type', '=', 'out_invoice'),
@@ -37,5 +47,3 @@ class AccountMove(models.Model):
                     if self.partner_id.due_date_period < date_difference_int and self.move_type != 'out_refund':
                         raise UserError("Following customer invoice {} due dates are lapse".format(account_moves.name))
             return res
-        else:
-            return super(AccountMove, self).action_post()
