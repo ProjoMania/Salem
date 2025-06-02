@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Softhealer Technologies.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, SUPERUSER_ID
 from odoo.osv import expression
 
 class ShResUsers(models.Model):
@@ -77,7 +77,9 @@ class AccountMove(models.Model):
     def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
         current_user = self.env.user
         # partner_ids = self.env['res.partner'].search([('cash_collection_team_id.member_ids', 'in', [self.env.user.id])])
-        if not current_user.has_group('base.group_erp_manager') and current_user.has_group('sh_journal_restrict.group_journal_restrict_feature'):
+        if not current_user.has_group('base.group_erp_manager') and \
+           current_user.has_group('sh_journal_restrict.group_journal_restrict_feature') and \
+           current_user.id != SUPERUSER_ID:  # Skip restrictions for OdooBot/admin
             domain += ['|', ('journal_id', 'in', current_user.journal_ids.ids), ('journal_id.bypass_journal', '=', True)]
         return super(AccountMove, self).web_search_read(domain, specification, offset=offset, limit=limit, order=order,
                                        count_limit=count_limit)
@@ -88,6 +90,9 @@ class IRRule(models.Model):
 
     def _compute_domain(self, model_name, mode="read"):
         res = super(IRRule, self)._compute_domain(model_name, mode)
-        if model_name == 'account.move' and self.env.user.has_group('sh_journal_restrict.group_journal_restrict_feature'):
-            res += ['|', ('journal_id', 'in', self.env.user.journal_ids.ids), ('journal_id.bypass_journal', '=', True)]
+        current_user = self.env.user
+        if model_name == 'account.move' and \
+           current_user.has_group('sh_journal_restrict.group_journal_restrict_feature') and \
+           current_user.id != SUPERUSER_ID:  # Skip restrictions for OdooBot/admin
+            res += ['|', ('journal_id', 'in', current_user.journal_ids.ids), ('journal_id.bypass_journal', '=', True)]
         return res
