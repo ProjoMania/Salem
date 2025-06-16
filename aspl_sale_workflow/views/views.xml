@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- User Settings View -->
+    <record id="view_user_form" model="ir.ui.view">
+        <field name="name">res.users.form.workflow</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']//field[@name='action_id']" position="after">
+                <field name="receive_daily_SO_reports" string="Receive SO Report Daily"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Company Settings View -->
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.workflow</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="enable_multiple_workflows"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Pricelist Form View -->
+    <record id="view_pricelist_form" model="ir.ui.view">
+        <field name="name">product.pricelist.form.workflow</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="workflow_process"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='pricelist_rules']/field[@name='item_ids']/tree[2]/field[@name='min_quantity']" position="after">
+                <field name="workflow_process" invisible="1"/>
+                <field name="foc_by_vendor" invisible="workflow_process != 'workflow_2'"/>
+                <field name="foc_by_company" invisible="workflow_process != 'workflow_3'" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_pricelist_item_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.inherit</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fixed_price']" position="after">
+                <field name="workflow_process" invisible="1"/>
+                <field name="net_price"/>
+                <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
+                <field name="analytic_distribution_for_vendor"
+                       widget="analytic_distribution"
+                       groups="analytic.group_analytic_accounting"
+                       invisible="workflow_process not in ['workflow_2', 'workflow_3']"/>
+                <field name="analytic_distribution_for_company"
+                       widget="analytic_distribution"
+                       groups="analytic.group_analytic_accounting"
+                       invisible="workflow_process != 'workflow_3'"/>
+                <field name="foc_by_vendor" groups="product.group_sale_pricelist" invisible="workflow_process not in ['workflow_2', 'workflow_3']"/>
+                <field name="foc_by_company" groups="product.group_sale_pricelist" invisible="workflow_process != 'workflow_3'" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Sale Order Form View -->
+
+    <record id="inherited_so_quotation_tree_view" model="ir.ui.view">
+        <field name="name">inherited.so.quotation.tree.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <button string="Quick Preview" class="btn btn-outline-success" name="button_quick_preview" type="object"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_form_workflow" model="ir.ui.view">
+        <field name="name">sale.order.form.workflow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button type="object" name="check_credit_limit" string="Check Credit Limit" class="btn btn-primary"
+                        invisible="state not in ['sup_approval'] or not partner_credit_sale_limit or is_credit_limit_approved"
+                        groups="aspl_sale_workflow.group_supervisor"/>
+                <button type="object" name="check_sale_limit" string="Check Sale Limit" class="btn btn-primary"
+                        invisible="state not in ['sup_approval'] or not partner_credit_sale_limit or is_sale_limit_approved"
+                        groups="aspl_sale_workflow.group_supervisor"/>
+                <button type="object" name="send_for_approval" string="Send for Approval" class="btn btn-primary"
+                        invisible="state not in ['draft', 'sent'] or not partner_credit_sale_limit or not enable_send_for_approval"
+                        groups="aspl_sale_workflow.group_sales_rep"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="invisible">(state not in ['sent']) or not is_order_approved</attribute>
+                <!-- <attribute name="invisible">(state not in ['draft']) or (partner_credit_sale_limit and state in ['sup_approval'] and not is_order_approved)</attribute> -->
+                <attribute name="groups">aspl_sale_workflow.group_sales_rep</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">(state not in ['draft', 'approved']) or not is_order_approved</attribute>
+                <attribute name="groups">aspl_sale_workflow.group_sales_rep</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="workflow_process" readonly="not enable_multiple_workflows"/>
+                <field name="is_approval_needed"/>
+                <field name="is_order_approved" invisible="1"/>
+                <field name="enable_send_for_approval" invisible="1"/>
+                <field name="partner_credit_sale_limit" invisible="1"/>
+                <field name="is_credit_limit_approved" readonly="1" invisible="not partner_credit_sale_limit"/>
+                <field name="is_sale_limit_approved" readonly="1" invisible="not partner_credit_sale_limit"/>
+                <field name="pricelist_readonly" invisible="1"/>
+                <field name="enable_multiple_workflows" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="readonly">pricelist_readonly == True</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="after">
+                <field name="is_foc" readonly="1" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Res Partner Form View -->
+    <record id="res_partner_inherited_view_form" model="ir.ui.view">
+        <field name="name">res.partner.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="credit_sale_limit"/>
+                <field name="credit_limit" invisible="not credit_sale_limit"/>
+                <field name="sales_limit" invisible="not credit_sale_limit"/>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

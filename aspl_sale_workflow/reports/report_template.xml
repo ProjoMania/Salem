@@ -1,0 +1,62 @@
+<odoo>
+    <template id="report_daily_sale_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="margin-top: 0px; padding-top: 0px;">
+
+                        <!-- Order Title -->
+                        <h2 style="margin-top: 0px; text-align: center; margin-bottom: 10px;"><t t-esc="o.name"/></h2>
+                        <br/>
+
+                        <!-- Order Details Table -->
+                        <table class="table table-borderless">
+                            <tr style="text-align: left;">
+                                <th>Customer:</th>
+                                <td><t t-esc="o.partner_id.name"/></td>
+                                <th>Order Date:</th>
+                                <td><t t-esc="o.date_order.strftime('%Y-%m-%d')"/></td>
+                            </tr>
+                            <tr style="text-align: left;">
+                                <th>Order State:</th>
+                                <td><t t-esc="dict(o._fields['state'].selection).get(o.state, o.state)"/></td>
+                                <th></th>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <!-- Order Lines Table -->
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="line.product_id.name"/></td>
+                                        <td><t t-esc="line.product_uom_qty"/></td>
+                                        <td><t t-esc="line.price_unit"/></td>
+                                        <td><t t-esc="line.price_subtotal"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Order Total -->
+                        <span style="text-align: right; margin-top: 10px;">
+                            <strong>Total:</strong> <t t-esc="o.amount_total"/>
+                        </span>
+
+                        <!-- Force a page break after each order -->
+                        <div style="page-break-after: always;"></div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
