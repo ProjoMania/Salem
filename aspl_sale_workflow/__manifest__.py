@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Custom Sale Workflow',
+    'version': '1.0.0',
+    'author': 'Acespritech PVT LTD',
+    'category': 'Sales',
+    'summary': 'Custom workflows and FOC calculations on sales and pricelists.',
+    'description': 'This module adds support for multiple workflow processes on sales orders, integrates with pricelists, and provides FOC (Free of Cost) calculations based on vendor and company settings.',
+    'depends': ['sale_management', 'product', 'account', 'contacts'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/groups.xml',
+        'data/cron.xml',
+        'data/mail_template.xml',
+        'data/transfer_sequence.xml',
+        'views/views.xml',
+        'wizards/so_line_wizard.xml',
+        'wizards/warning_wizard_views.xml',
+        'reports/report_template.xml',
+        'reports/report_actions.xml',
+    ],
+    'installable': True,
+    'application': False,
+    'license': 'LGPL-3',
+}

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+aspl_sale_workflow.access_sale_order_line_wizard,access_sale_order_line_wizard,aspl_sale_workflow.model_sale_order_line_wizard,base.group_user,1,1,1,1
+aspl_sale_workflow.access_sale_order_line_wizard_line,access_sale_order_line_wizard_line,aspl_sale_workflow.model_sale_order_line_wizard_line,base.group_user,1,1,1,1
+aspl_sale_workflow.access_warning_wizard,access_warning_wizard,aspl_sale_workflow.model_warning_wizard,base.group_user,1,1,1,1

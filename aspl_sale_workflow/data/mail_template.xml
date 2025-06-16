@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="daily_sale_report_mail_temp" model="mail.template">
+            <field name="name">Daily Sale Report</field>
+            <field name="model_id" ref="base.model_res_users" />
+            <field name="email_from">{{object.company_id.email or ''}}</field>
+            <field name="email_to">{{object.email or ''}}</field>
+            <field name="subject">Regarding Daily Sales Report</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Dear <t t-out="object.name or ''"></t>
+                        <br/>
+                        <br/>
+                        <br/>
+                        Your daily sales report is attached here.
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>
