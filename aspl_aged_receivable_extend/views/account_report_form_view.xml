@@ -1,0 +1,12 @@
+<odoo>
+    <record id="account_report_form_muti_currency" model="ir.ui.view">
+        <field name="name">account.report.form.custom</field>
+        <field name="model">account.report</field>
+        <field name="inherit_id" ref="account_reports.account_report_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='filter_hide_0_lines']" position="after">
+                <field name = "report_code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

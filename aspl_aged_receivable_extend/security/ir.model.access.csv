@@ -1,2 +1,1 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-aspl_aged_receivable_extend.access_account_aged_extend,access_account_aged_extend,aspl_aged_receivable_extend.model_account_aged_receivable_extend,base.group_user,1,1,1,1

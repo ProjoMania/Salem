@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="account_reports_extended" name="Reports Extended" parent="account.menu_finance_reports" sequence="7">
+        <menuitem id="menu_action_account_report_aged_receivable_extended" name="Aged Receivable Extended" action="action_account_report_ar_extended" groups="account.group_account_readonly"/>
+        <menuitem id="menu_action_account_report_balance_sheet_extended" name="Balance Sheet Extended" action="action_account_report_bs_extended" groups="account.group_account_readonly"/>
+        <menuitem id="menu_action_account_report_profit_and_loss_extended" name="Profit and Loss Extended" action="action_account_report_pl_extended" groups="account.group_account_readonly"/>
+    </menuitem>
+</odoo>

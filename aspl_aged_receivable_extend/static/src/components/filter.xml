@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-inherit="account_reports.AccountReportFiltersCustomizable" t-inherit-mode="extension">
+        <xpath expr="." position="inside">
+            <t t-if="hasMutiCurrency">
+                <div>
+                    <t t-call="aspl_aged_receivable_extend.AccountReportMutiCurrancy"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

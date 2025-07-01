@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="aspl_aged_receivable_extend.AccountReportMutiCurrancy">
+        <Dropdown togglerClass="'btn btn-secondary'">
+            <t t-set-slot="toggler">
+                <i class="fa fa-money me-1"/>Currancy: <t t-esc="controller.options.selected_currencies"/>
+            </t>
+
+            <t t-foreach="controller.options.currencies" t-as="currency" t-key="currency_index">
+                <DropdownItem
+                    class="{ 'selected': controller.options.selected_currencies.id === currency.id }"
+                    onSelected="() => this.OnSelectCurrency(currency)"
+                >
+                    <t t-esc="currency.name"/>
+                </DropdownItem>
+            </t>
+        </Dropdown>
+    </t>
+</templates>

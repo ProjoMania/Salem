@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_account_report_ar_extended" model="ir.actions.client">
+            <field name="name">Aged Receivable Extended</field>
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'report_id': ref('aspl_aged_receivable_extend.aged_receivable_report_extended')}" />
+        </record>
+        <record id="action_account_report_bs_extended" model="ir.actions.client">
+            <field name="name">Balance Sheet Extended</field>
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'report_id': ref('aspl_aged_receivable_extend.balance_sheet_extended')}"/>
+        </record>
+        <record id="action_account_report_pl_extended" model="ir.actions.client">
+            <field name="name">Profit and Loss Extended</field>
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'report_id': ref('aspl_aged_receivable_extend.profit_and_loss_extended')}"/>
+        </record>
+    </data>
+</odoo>

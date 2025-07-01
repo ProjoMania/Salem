@@ -8,5 +8,10 @@
 # You can`t redistribute it and/or modify it.
 #
 #################################################################################
-from . import models
- 
+
+from odoo import models, fields, _
+
+class Rescompany(models.Model):
+    _inherit = "res.company"
+
+    enable_company = fields.Boolean(string='Multy Currency Reports')
