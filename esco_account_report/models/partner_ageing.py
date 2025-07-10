@@ -13,6 +13,11 @@ class report_account_aged_partner(models.AbstractModel):
     _name = "account.aged.partner.balance.report.handler"
     _inherit = "account.aged.partner.balance.report.handler"
 
+    def _init_options_hide_0_lines(self, options, previous_options=None):
+        res = super()._init_options_hide_0_lines(options, previous_options)
+        options['hide_0_lines'] = True
+        return res
+
     def _common_custom_unfold_all_batch_data_generator(self, internal_type, report, options, lines_to_expand_by_function):
         rslt = {} # In the form {full_sub_groupby_key: all_column_group_expression_totals for this groupby computation}
         report_periods = 8 # The report has 6 periods
