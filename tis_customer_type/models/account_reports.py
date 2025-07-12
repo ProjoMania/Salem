@@ -5,6 +5,9 @@ class AccountReport(models.AbstractModel):
     _inherit = 'account.report'
 
     def _init_options_partner(self, options, previous_options=None):
+        # Always ensure selected_partner_categories is set to avoid KeyError in templates
+        options['selected_partner_categories'] = []
+        
         options['partner_categories'] = previous_options and previous_options.get('partner_categories') or []
         options['customer_type'] = previous_options and previous_options.get('customer_type') or []
         selected_partner_customer_type_ids = [int(cust_type) for cust_type in options['customer_type']]
