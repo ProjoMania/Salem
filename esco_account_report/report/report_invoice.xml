@@ -292,7 +292,7 @@
                                 alt="Signature" style="height:140px;width:260px; margin-top: -30px;" />
                         </div>
                         <hr style="border-color: black; margin-top: -50px;" />
-                        <span t-field="o.user_id" />
+                        <span t-field="user.name" />
                     </div>
                 </div>
             </div>
