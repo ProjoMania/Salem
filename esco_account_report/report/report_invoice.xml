@@ -284,7 +284,10 @@
 
                         <!--                        Signature-->
                         <div style="height:140px; min-height:140px;">
-                            <img t-if="o.user_id.signature_image"
+                            <img t-if="user.signature_image"
+                                t-att-src="image_data_uri(user.signature_image)"
+                                alt="Signature" style="height:140px;width:260px; margin-top: -30px;" />
+                            <img t-if="not user.signature_image and o.user_id.signature_image"
                                 t-att-src="image_data_uri(o.user_id.signature_image)"
                                 alt="Signature" style="height:140px;width:260px; margin-top: -30px;" />
                         </div>
