@@ -19,7 +19,7 @@
                 <t t-if="doc"><t t-if="doc._name"><t t-set="name" t-value="doc._name"/></t></t>
                 <t t-if="o"><t t-if="o.id"><t t-set="id" t-value="o.id"/></t></t>
                 <t t-if="o._name"><t t-set="name" t-value="o._name"/><t t-set="id" t-value="o.id"/> </t>
-                <img t-if="(o.move_type == 'out_invoice' and o.company_id.show_barcode_in_invoice) or (o.move_type == 'in_invoice' and o.company_id.show_barcode_in_bill) or (o.move_type == 'out_refund' and o.company_id.show_barcode_in_credit_note) or (o.move_type == 'in_refund' and o.company_id.show_barcode_in_debit_note)" t-att-src="'data:image/*;base64,%s' % o.company_id.create_qr_code(name, id).decode('utf-8')"
+                <img t-if="o.company_id.show_barcode_in_invoice or o.company_id.show_barcode_in_bill or o.company_id.show_barcode_in_credit_note or o.company_id.show_barcode_in_debit_note" t-att-src="'data:image/*;base64,%s' % o.company_id.create_qr_code(name, id).decode('utf-8')"
                      width="100px" height="100px" class="pull-right" style="right:-30px; position:relative;top:-110px;"/>
             </div>
         </xpath>
