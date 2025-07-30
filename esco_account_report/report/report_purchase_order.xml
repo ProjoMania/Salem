@@ -79,9 +79,9 @@
                             <td class="table_header text-center">
                                 <span>Payment</span>
                             </td>
-                            <td class="table_header text-center">
+                            <!-- <td class="table_header text-center">
                                 <span>Delivery Date</span>
-                            </td>
+                            </td> -->
                             <td class="table_header text-center">
                                 <span>Conditions Terms</span>
                             </td>
@@ -96,9 +96,9 @@
                                 <span style="color: white">1</span>
                                 <span t-field="o.payment_type_id" />
                             </td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <span t-field="o.delivery_date" />
-                            </td>
+                            </td> -->
                             <td class="text-center">
                                 <span t-field="o.condition_term_id" />
                             </td>
